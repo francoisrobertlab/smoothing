@@ -294,6 +294,14 @@ public class BedTable extends HBox {
 		for (Integer selection : selections) {
 			if (selection >= 0) {
 				table.getItems().remove(selection.intValue());
+				List<Integer> styleClassKeys = new ArrayList<Integer>(fileCellClassesProperty.keySet());
+				Collections.sort(selections);
+				fileCellClassesProperty.remove(selection.intValue());
+				for (Integer styleClassKey : styleClassKeys) {
+					if (styleClassKey > selection.intValue()) {
+						fileCellClassesProperty.put(styleClassKey - 1, fileCellClassesProperty.get(styleClassKey));
+					}
+				}
 			}
 		}
 	}
