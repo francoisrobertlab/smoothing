@@ -9,6 +9,6 @@
 <HBox styleClass="splash" xmlns:fx="http://javafx.com/fxml">
 	<Label text="%label"/>
 	<stylesheets>
-		<URL value="@../../../../resources/application.css" />
+		<URL value="@../../../../application.css" />
 	</stylesheets>
 </HBox>

@@ -86,7 +86,7 @@ public class ExecutableServiceBean implements ExecutableService {
 		File executable = new File(directory, "smoothing.exe");
 		OperatingSystem operatingSystem = operatingSystemService.currentOS();
 		boolean is64bits = operatingSystemService.is64bit(operatingSystem);
-		String resource = "/resources/executables/"
+		String resource = "/executables/"
 				+ bundle.getString("smoothing." + operatingSystem.name() + "." + (is64bits ? "64" : "32"));
 		logger.trace("Extracting {} to {}", resource, executable);
 		try (InputStream input = new BufferedInputStream(getClass().getResourceAsStream(resource));

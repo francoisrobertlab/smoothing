@@ -39,7 +39,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_NoErrors() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -48,7 +48,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_NoErrors() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 
@@ -58,7 +58,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_NoTrack() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_no_track.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_no_track.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -70,7 +70,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_NoTrack() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_no_track.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_no_track.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 
@@ -80,7 +80,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_MultipleTracks() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_multiple_tracks.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_multiple_tracks.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -89,7 +89,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_MultipleTracks() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_multiple_tracks.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_multiple_tracks.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 
@@ -99,7 +99,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_Empty() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_empty.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_empty.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -111,7 +111,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_Empty() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_empty.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_empty.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 
@@ -121,7 +121,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_InvalidTrack() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_invalid_track.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_invalid_track.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -133,7 +133,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_InvalidTrack() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_invalid_track.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_invalid_track.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 
@@ -143,7 +143,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_NoName() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_no_name.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_no_name.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -155,7 +155,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_NoName() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_no_name.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_no_name.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 
@@ -165,7 +165,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void validateFirstTrack_NoDatabase() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_no_database.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_no_database.bed").toURI());
 
 		bedParserBean.validateFirstTrack(file, warningHandler);
 
@@ -177,7 +177,7 @@ public class BedParserBeanTest {
 
 	@Test
 	public void parseFirstTrack_NoDatabase() throws Throwable {
-		File file = new File(this.getClass().getResource("/resources/bed/bed_no_database.bed").toURI());
+		File file = new File(this.getClass().getResource("/bed/bed_no_database.bed").toURI());
 
 		BedTrack track = bedParserBean.parseFirstTrack(file);
 

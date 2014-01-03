@@ -59,6 +59,6 @@
 		</HBox>
 	</bottom>
 	<stylesheets>
-		<URL value="@../../../../resources/application.css" />
+		<URL value="@../../../../application.css" />
 	</stylesheets>
 </fx:root>

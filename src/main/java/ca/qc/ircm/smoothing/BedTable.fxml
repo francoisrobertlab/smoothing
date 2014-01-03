@@ -15,6 +15,6 @@
 		</columns>
 	</TableView>
 	<stylesheets>
-		<URL value="@../../../../resources/application.css" />
+		<URL value="@../../../../application.css" />
 	</stylesheets>
 </fx:root>
