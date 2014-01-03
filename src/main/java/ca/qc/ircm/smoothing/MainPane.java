@@ -3,9 +3,11 @@ package ca.qc.ircm.smoothing;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
@@ -38,7 +40,6 @@ import ca.qc.ircm.smoothing.service.SmoothingTask;
 import ca.qc.ircm.smoothing.service.SmoothingTaskFactory;
 import ca.qc.ircm.smoothing.util.javafx.FxmlResources;
 import ca.qc.ircm.smoothing.util.javafx.MessageDialog;
-import ca.qc.ircm.smoothing.util.javafx.MultipleFilesPane;
 import ca.qc.ircm.smoothing.util.javafx.NullOnExceptionConverter;
 
 /**
@@ -46,7 +47,7 @@ import ca.qc.ircm.smoothing.util.javafx.NullOnExceptionConverter;
  */
 public class MainPane extends BorderPane {
 	private class SmoothingParametersBean implements SmoothingParameters {
-		private List<File> files = multipleFiles.getFiles();
+		private List<File> files;
 		private Integer standardDeviation = standardDeviationProperty.get();
 		private Integer rounds = roundsProperty.get();
 		private Integer stepLength = stepLengthProperty.get();
@@ -55,8 +56,16 @@ public class MainPane extends BorderPane {
 		private Double minimumThreshold = minimumThresholdProperty.get();
 		private boolean includeMaximumTrack = includeMaximumTrackProperty.get();
 		private Double maximumThreshold = maximumThresholdProperty.get();
+		private Map<File, Color> colors;
 
 		private SmoothingParametersBean() {
+			List<BedWithColor> beds = bedTable.getItems();
+			files = new ArrayList<File>(beds.size());
+			colors = new HashMap<File, Color>();
+			for (BedWithColor bed : beds) {
+				files.add(bed.getFile());
+				colors.put(bed.getFile(), bed.getColor());
+			}
 		}
 
 		@Override
@@ -106,7 +115,7 @@ public class MainPane extends BorderPane {
 
 		@Override
 		public Color getColor(File file) {
-			return null;
+			return colors.get(file);
 		}
 	}
 
@@ -127,7 +136,9 @@ public class MainPane extends BorderPane {
 	private final BooleanProperty includeMinimumTrackProperty = new SimpleBooleanProperty();
 	private final DoubleProperty minimumThresholdProperty = new SimpleDoubleProperty();
 	@FXML
-	private MultipleFilesPane multipleFiles;
+	private Pane filePane;
+	@FXML
+	private BedTable bedTable;
 	@FXML
 	private Pane standardDeviationPane;
 	@FXML
@@ -166,7 +177,7 @@ public class MainPane extends BorderPane {
 
 		fileChooser.setTitle(bundle.getString("fileChooser.title"));
 		fileChooser.getExtensionFilters().add(new ExtensionFilter(bundle.getString("fileChooser.description"), "*"));
-		multipleFiles.setFileChooser(fileChooser);
+		bedTable.initialDirectoryProperty().bindBidirectional(fileChooser.initialDirectoryProperty());
 		standardDeviation.textProperty().bindBidirectional(standardDeviationProperty,
 				new NullOnExceptionConverter<Number>(new NumberStringConverter()));
 		rounds.textProperty().bindBidirectional(roundsProperty,
@@ -199,9 +210,10 @@ public class MainPane extends BorderPane {
 					bundle.getString("validationError.title"), errorHandler.messages());
 			return;
 		} else {
-			List<File> files = multipleFiles.getFiles();
+			List<BedWithColor> beds = bedTable.getItems();
 			BedWarningHandler bedWarningHandler = new BedWarningHandler();
-			for (File file : files) {
+			for (BedWithColor bed : beds) {
+				File file = bed.getFile();
 				try {
 					bedParser.validateFirstTrack(file, bedWarningHandler);
 				} catch (IOException e) {
@@ -243,7 +255,7 @@ public class MainPane extends BorderPane {
 		}
 	}
 
-	public void validate(ErrorHandler errorHandler) {
+	public void validate(ErrorHandlerDefault errorHandler) {
 		validateFiles(errorHandler);
 		validateStandardDeviation(errorHandler);
 		validateRounds(errorHandler);
@@ -253,28 +265,15 @@ public class MainPane extends BorderPane {
 		validateMinimumThreshold(errorHandler);
 	}
 
-	public void validateFiles(ErrorHandler errorHandler) {
-		multipleFiles.getStyleClass().removeAll("error");
-		boolean error = false;
-		multipleFiles.remvoveStyleClassFromCells("error");
-		Collection<File> files = multipleFiles.getFiles();
-		if (files == null || files.isEmpty()) {
-			errorHandler.handleError(bundle.getString("error.files.required"));
-			error = true;
-		} else {
-			for (File file : files) {
-				if (!file.isFile()) {
-					errorHandler.handleError(
-							MessageFormat.format(bundle.getString("error.files.notExists"), file.getName()),
-							file.getPath());
-					error = true;
-					multipleFiles.addStyleClass(file, "error");
-				}
-			}
+	public void validateFiles(ErrorHandlerDefault errorHandler) {
+		boolean oldHasError = errorHandler.hasErrors();
+		errorHandler.setHasError(false);
+		filePane.getStyleClass().remove("error");
+		bedTable.validate(errorHandler);
+		if (errorHandler.hasErrors()) {
+			filePane.getStyleClass().add("error");
 		}
-		if (error) {
-			multipleFiles.getStyleClass().add("error");
-		}
+		errorHandler.setHasError(oldHasError || errorHandler.hasErrors());
 	}
 
 	public void validateStandardDeviation(ErrorHandler errorHandler) {

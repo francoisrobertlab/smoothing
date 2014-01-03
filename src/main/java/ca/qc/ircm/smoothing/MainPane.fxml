@@ -4,6 +4,7 @@
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import ca.qc.ircm.smoothing.*?>
 <?import ca.qc.ircm.smoothing.util.javafx.*?>
 <?scenebuilder-preview-i18n-resources MainPane.properties?>
 
@@ -14,9 +15,9 @@
 		<VBox styleClass="vbox, main">
 			<VBox styleClass="vbox, section">
 				<Label text="%fileParameters" styleClass="header"/>
-				<HBox fx:id="filePane" styleClass="hbox">
+				<HBox fx:id="filePane" styleClass="hbox, file">
 					<Label text="%filesLabel"/>
-					<MultipleFilesPane fx:id="multipleFiles"/>
+					<BedTable fx:id="bedTable"/>
 				</HBox>
 			</VBox>
 			<VBox styleClass="vbox, section">
