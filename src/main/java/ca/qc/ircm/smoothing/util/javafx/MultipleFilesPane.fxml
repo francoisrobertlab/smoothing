@@ -31,6 +31,6 @@
 	</VBox>
 	<Button mnemonicParsing="false" onAction="#removeFiles" text="%remove" />
 	<stylesheets>
-		<URL value="@../../../../../../resources/application.css" />
+		<URL value="@../../../../../../application.css" />
 	</stylesheets>
 </fx:root>

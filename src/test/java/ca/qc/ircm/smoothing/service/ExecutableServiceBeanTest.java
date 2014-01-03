@@ -110,7 +110,7 @@ public class ExecutableServiceBeanTest {
 		File executable = new File(commandLine.getExecutable());
 		assertEquals(true, executable.exists());
 		assertEquals(true, executable.canExecute());
-		String executableResource = "/resources/executables/smoothing_32.exe";
+		String executableResource = "/executables/smoothing_32.exe";
 		File expectedExecutable = new File(this.getClass().getResource(executableResource).toURI());
 		assertEquals(FileUtils.checksumCRC32(expectedExecutable), FileUtils.checksumCRC32(executable));
 	}
@@ -127,7 +127,7 @@ public class ExecutableServiceBeanTest {
 		File executable = new File(commandLine.getExecutable());
 		assertEquals(true, executable.exists());
 		assertEquals(true, executable.canExecute());
-		String executableResource = "/resources/executables/smoothing_64.exe";
+		String executableResource = "/executables/smoothing_64.exe";
 		File expectedExecutable = new File(this.getClass().getResource(executableResource).toURI());
 		assertEquals(FileUtils.checksumCRC32(expectedExecutable), FileUtils.checksumCRC32(executable));
 	}
