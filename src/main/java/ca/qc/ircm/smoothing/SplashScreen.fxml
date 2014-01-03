@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?scenebuilder-preview-i18n-resources SplashScreen.properties?>
+
+<HBox styleClass="splash" xmlns:fx="http://javafx.com/fxml">
+	<Label text="%label"/>
+	<stylesheets>
+		<URL value="@../../../../resources/application.css" />
+	</stylesheets>
+</HBox>

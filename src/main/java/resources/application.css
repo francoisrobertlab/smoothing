@@ -1,0 +1,142 @@
+/* General */
+.vbox {
+	-fx-spacing: 5px;
+}
+.hbox {
+	-fx-spacing: 5px;
+}
+.label.header {
+	-fx-font: bold 16 sans-serif;
+}
+.vbox.section {
+	-fx-border-color: black;
+	-fx-border-radius: 5;
+	-fx-border-style: solid;
+	-fx-border-width: 1;
+	-fx-spacing: 15;
+	-fx-padding: 5;
+}
+
+/* Dialog */
+.dialog {
+	-fx-padding: 10;
+}
+.dialog .vbox.message {
+	-fx-padding: 10px;
+}
+.dialog .scroll-pane.main {
+	-fx-background-color: white;
+}
+.dialog .hbox.buttonContainer {
+	-fx-alignment: center;
+	-fx-padding: 20 0 0 0;
+}
+
+/* Error */
+.hbox.error .label {
+	-fx-text-fill: red;
+}
+.hbox.error .check-box {
+	-fx-text-fill: red;
+}
+.hbox.error .radio-button {
+	-fx-text-fill: red;
+}
+.label.error {
+	-fx-text-fill: red;
+}
+.text-field.error {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, FFFF99;
+}
+.list-cell.error {
+	-fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, FFFF99;
+}
+.list-cell.error:odd {
+    -fx-background-color: derive(FFFF99,-5%);
+}
+.list-view:focused .list-cell.error:focused {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-control-inner-background;
+    -fx-background-insets: 0, 1, 2;
+}
+.list-view:focused .list-cell.error:focused:odd {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, derive(-fx-control-inner-background,-5%);
+    -fx-background-insets: 0, 1, 2;
+}
+.list-view:focused .list-cell.error:filled:focused:selected {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background: -fx-accent;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.list-view:focused .list-cell.error:filled:selected, .list-view:focused .list-cell.error:filled:selected:hover {
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.list-view:focused .list-cell.error:filled:focused:selected:hover {
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
+    -fx-background-insets: 0, 1, 2;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.list-cell.error:filled:selected:focused, .list-cell.error:filled:selected, .list-view:horizontal .list-cell.error:filled:selected {
+    -fx-background-color: derive(FFFF99,-25%);
+    -fx-text-fill: -fx-selection-bar-text;
+}
+.list-cell.error:filled:selected:focused:disabled, .list-cell.error:filled:selected:disabled {
+    -fx-opacity: -fx-disabled-opacity;
+}
+.list-cell.error:filled:hover {
+    -fx-background-color: -fx-cell-hover-color;
+    -fx-text-fill: -fx-text-inner-color;
+}
+.list-view:focused .list-cell.error:filled:focused:hover {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-cell-hover-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-text-fill: -fx-text-inner-color;
+}
+.list-view:horizontal .list-cell.error:filled:selected, .list-view:horizontal .list-cell.error:filled:selected:hover {
+    -fx-background-color: linear-gradient(to right, derive(-fx-accent,-7%), derive(-fx-accent,-25%));
+}
+
+/* Multiple files selection */
+.hbox.files {
+	-fx-alignment: center-left;
+}
+.hbox.files .vbox.move {
+	-fx-alignment: center-left;
+	-fx-fill-width: false;
+}
+.hbox.files .vbox.files {
+	-fx-alignment: center-left;
+}
+.hbox.files .file {
+	-fx-padding: 0 5;
+}
+.hbox.files .file .text {
+	-fx-padding: 0 5 0 0;
+}
+.hbox.files .button.up {
+	-fx-graphic: url('images/go-up-4_16.png');
+	-fx-content-display: graphic-only;
+}
+.hbox.files .button.down {
+	-fx-graphic: url('images/go-down-4_16.png');
+	-fx-content-display: graphic-only;
+}
+
+/* Resizable pane */
+.resizable {
+	-fx-padding: 5;
+}
+.resizable .resize {
+	-fx-background-color: grey;
+}
+
+/* Splash screen */
+.splash {
+	-fx-background-color: lightgrey;
+}
+.splash .label {
+	-fx-font: bold 96 sans-serif;
+}

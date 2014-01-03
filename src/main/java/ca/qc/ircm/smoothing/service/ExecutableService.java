@@ -1,0 +1,21 @@
+package ca.qc.ircm.smoothing.service;
+
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * Launch external programs.
+ */
+public interface ExecutableService {
+	/**
+	 * Listens for events coming from vap program.
+	 */
+	public interface SmoothingEventListener {
+		/**
+		 * Program's progression changed.
+		 */
+		public void processProgress(double progress);
+	}
+
+	public void smoothing(File parameters, SmoothingEventListener listener) throws IOException;
+}

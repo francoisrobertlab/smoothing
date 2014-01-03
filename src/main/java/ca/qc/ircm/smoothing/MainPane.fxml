@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import ca.qc.ircm.smoothing.util.javafx.*?>
+<?scenebuilder-preview-i18n-resources MainPane.properties?>
+
+<fx:root type="BorderPane" styleClass="border-pane, main" xmlns:fx="http://javafx.com/fxml">
+	<top>
+	</top>
+	<center>
+		<VBox styleClass="vbox, main">
+			<VBox styleClass="vbox, section">
+				<Label text="%fileParameters" styleClass="header"/>
+				<HBox fx:id="filePane" styleClass="hbox">
+					<Label text="%filesLabel"/>
+					<MultipleFilesPane fx:id="multipleFiles"/>
+				</HBox>
+			</VBox>
+			<VBox styleClass="vbox, section">
+				<Label text="%smoothingParameters" styleClass="header"/>
+				<HBox fx:id="standardDeviationPane" styleClass="hbox">
+					<Label text="%standardDeviation"/>
+					<TextField fx:id="standardDeviation"/>
+				</HBox>
+				<HBox fx:id="roundsPane" styleClass="hbox">
+					<Label text="%rounds"/>
+					<TextField fx:id="rounds"/>
+				</HBox>
+				<HBox fx:id="stepLengthPane" styleClass="hbox">
+					<Label text="%stepLength"/>
+					<TextField fx:id="stepLength"/>
+				</HBox>
+			</VBox>
+			<VBox styleClass="vbox, section">
+				<Label text="%trackParameters" styleClass="header"/>
+				<HBox fx:id="includeSmoothedTrackPane" styleClass="hbox">
+					<CheckBox fx:id="includeSmoothedTrack" text="%includeSmoothedTrack"/>
+				</HBox>
+				<HBox fx:id="includeMaximumTrackPane" styleClass="hbox">
+					<CheckBox fx:id="includeMaximumTrack" text="%includeMaximumTrack"/>
+					<Label text="%maximumThreshold"/>
+					<TextField fx:id="maximumThreshold"/>
+				</HBox>
+				<HBox fx:id="includeMinimumTrackPane" styleClass="hbox">
+					<CheckBox fx:id="includeMinimumTrack" text="%includeMinimumTrack"/>
+					<Label text="%minimumThreshold"/>
+					<TextField fx:id="minimumThreshold"/>
+				</HBox>
+			</VBox>
+		</VBox>
+	</center>
+	<bottom>
+		<HBox styleClass="hbox, run">
+			<Button text="%run" onAction="#run"/>
+		</HBox>
+	</bottom>
+	<stylesheets>
+		<URL value="@../../../../resources/application.css" />
+	</stylesheets>
+</fx:root>
