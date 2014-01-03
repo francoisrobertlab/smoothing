@@ -1,6 +1,7 @@
 package ca.qc.ircm.smoothing;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,6 +42,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
+
+import javax.inject.Inject;
+
+import ca.qc.ircm.smoothing.service.BedParser;
+import ca.qc.ircm.smoothing.service.BedTrack;
 import ca.qc.ircm.smoothing.util.FileUtils;
 import ca.qc.ircm.smoothing.util.drag.DragExitedHandler;
 import ca.qc.ircm.smoothing.util.drag.DragFilesOverHandler;
@@ -163,6 +169,7 @@ public class BedTable extends HBox {
 	private TableColumn<BedWithColor, Color> colorColumn;
 	private FileChooser fileChooser = new FileChooser();
 	private final List<String> fileCellDefaultClasses;
+	private BedParser bedParser;
 
 	public BedTable() {
 		bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
@@ -240,17 +247,16 @@ public class BedTable extends HBox {
 					for (File file : event.getDragboard().getFiles()) {
 						file = FileUtils.resolveWindowsShorcut(file);
 						BedWithColor bed = new BedWithColor(file);
-						// TODO Get color from file.
-						bed.setColor(DEFAULT_COLOR);
+						setColor(bed, file);
 						table.getItems().add(bed);
 					}
 					event.setDropCompleted(true);
 					event.consume();
 				} else if (event.getDragboard().hasString()) {
 					for (String path : event.getDragboard().getString().split("\\n")) {
-						BedWithColor bed = new BedWithColor(new File(path));
-						// TODO Get color from file.
-						bed.setColor(DEFAULT_COLOR);
+						File file = new File(path);
+						BedWithColor bed = new BedWithColor(file);
+						setColor(bed, file);
 						table.getItems().add(bed);
 					}
 					event.setDropCompleted(true);
@@ -278,8 +284,7 @@ public class BedTable extends HBox {
 			}
 			for (File selection : selections) {
 				BedWithColor bed = new BedWithColor(selection);
-				// TODO Get color from file.
-				bed.setColor(DEFAULT_COLOR);
+				setColor(bed, selection);
 				if (!table.getItems().contains(bed)) {
 					table.getItems().add(bed);
 				}
@@ -332,5 +337,22 @@ public class BedTable extends HBox {
 		if (error) {
 			getStyleClass().add("error");
 		}
+	}
+
+	private void setColor(BedWithColor bed, File file) {
+		bed.setColor(DEFAULT_COLOR);
+		try {
+			BedTrack track = bedParser.parseFirstTrack(file);
+			if (track.getColor() != null) {
+				bed.setColor(track.getColor());
+			}
+		} catch (IOException e) {
+			// Ignore.
+		}
+	}
+
+	@Inject
+	public void setBedParser(BedParser bedParser) {
+		this.bedParser = bedParser;
 	}
 }
