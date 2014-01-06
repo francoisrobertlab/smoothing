@@ -103,6 +103,8 @@ public class SmoothingServiceBean implements SmoothingService {
 				logger.warn("Could not delete smoothing output {} to alter color", smoothingOutput);
 			}
 		}
+
+		progressBar.setProgress(1.0);
 	}
 
 	private File smoothingOutput(File file) {
