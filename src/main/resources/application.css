@@ -62,6 +62,13 @@
 .hbox.bed .indexed-cell.error {
 	-fx-text-fill: red;
 }
+.color-cell .label {
+	-fx-background-radius: 7px;
+	-fx-border-width: 1px;
+	-fx-border-color: black;
+	-fx-border-radius: 7px;
+	-fx-padding: 2px 15px;
+}
 
 /* Multiple files selection */
 .hbox.files {

@@ -1,15 +1,23 @@
 package ca.qc.ircm.smoothing.service;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javafx.scene.paint.Color;
 
 import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +74,33 @@ public class SmoothingServiceBean implements SmoothingService {
 		} finally {
 			if (!executableParameters.delete()) {
 				logger.warn("Could not delete file {}", executableParameters);
+			}
+		}
+
+		// Alter color.
+		Color color = parameters.getColor(file);
+		if (color != null) {
+			File temporaryBed = File.createTempFile("alter_color", ".bed");
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(smoothingOutput),
+					"UTF-8"));
+					BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(temporaryBed), "UTF-8"))) {
+				Pattern pattern = Pattern.compile("color\\=(\\d+)\\,(\\d+)\\,(\\d+)");
+				String line;
+				while ((line = reader.readLine()) != null) {
+					Matcher matcher = pattern.matcher(line);
+					if (matcher.find()) {
+						line = matcher.replaceAll("color=" + (int) (color.getRed() * 255) + ","
+								+ (int) (color.getGreen() * 255) + "," + (int) (color.getBlue() * 255));
+					}
+					writer.write(line);
+					writer.write("\n");
+				}
+			}
+			if (smoothingOutput.delete()) {
+				FileUtils.moveFile(temporaryBed, smoothingOutput);
+			} else {
+				logger.warn("Could not delete smoothing output {} to alter color", smoothingOutput);
 			}
 		}
 	}

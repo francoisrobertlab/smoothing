@@ -21,10 +21,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import javafx.collections.SetChangeListener;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Cell;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -50,6 +52,7 @@ import ca.qc.ircm.smoothing.service.BedTrack;
 import ca.qc.ircm.smoothing.util.FileUtils;
 import ca.qc.ircm.smoothing.util.drag.DragExitedHandler;
 import ca.qc.ircm.smoothing.util.drag.DragFilesOverHandler;
+import ca.qc.ircm.smoothing.util.javafx.ColorConverter;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCell;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCellFactory;
 import ca.qc.ircm.smoothing.util.javafx.FxmlResources;
@@ -114,21 +117,61 @@ public class BedTable extends HBox {
 
 	private class ColorCell<S> extends TableCell<S, Color> {
 		private final ColorPicker colorPicker = new ColorPicker();
+		private final Label label = new Label();
+		private final ColorConverter converter = new ColorConverter();
 
 		private ColorCell() {
+			getStyleClass().add("color-cell");
+			setGraphic(label);
+			colorPicker.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					commitEdit(colorPicker.getValue());
+				}
+			});
+			colorPicker.setOnHidden(new EventHandler<Event>() {
+				@Override
+				public void handle(Event event) {
+					if (isEditing()) {
+						cancelEdit();
+					}
+				}
+			});
 		}
 
 		@Override
 		protected void updateItem(Color color, boolean empty) {
 			super.updateItem(color, empty);
 			if (!empty) {
-				setGraphic(colorPicker);
-			}
-			if (color != null) {
+				if (color == null) {
+					color = DEFAULT_COLOR;
+				}
+				label.setText(converter.toString(color));
+				label.setStyle("-fx-background-color:" + converter.toString(color) + "; -fx-text-fill: ladder("
+						+ converter.toString(color) + ", white 49%, black 50%)");
 				colorPicker.setValue(color);
+				setGraphic(label);
 			} else {
-				colorPicker.setValue(DEFAULT_COLOR);
+				setGraphic(null);
 			}
+		}
+
+		@Override
+		public void cancelEdit() {
+			super.cancelEdit();
+			setGraphic(label);
+		}
+
+		@Override
+		public void commitEdit(Color color) {
+			super.commitEdit(color);
+			setGraphic(label);
+		}
+
+		@Override
+		public void startEdit() {
+			super.startEdit();
+			setGraphic(colorPicker);
 		}
 	}
 
