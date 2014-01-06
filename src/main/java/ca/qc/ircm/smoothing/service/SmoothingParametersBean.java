@@ -23,7 +23,7 @@ public class SmoothingParametersBean implements SmoothingParameters {
 
 	@Override
 	public Color getColor(File file) {
-		return colors.get(file);
+		return colors != null ? colors.get(file) : null;
 	}
 
 	@Override

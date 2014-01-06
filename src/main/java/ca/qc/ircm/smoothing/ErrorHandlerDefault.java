@@ -55,6 +55,7 @@ public class ErrorHandlerDefault implements ErrorHandler {
 		return hasError;
 	}
 
+	@Override
 	public List<String> messages() {
 		List<String> messages = new ArrayList<String>();
 		for (ValidationError error : errors()) {
@@ -66,5 +67,9 @@ public class ErrorHandlerDefault implements ErrorHandler {
 	@Override
 	public Collection<ValidationError> errors() {
 		return errors;
+	}
+
+	public void setHasError(boolean hasError) {
+		this.hasError = hasError;
 	}
 }

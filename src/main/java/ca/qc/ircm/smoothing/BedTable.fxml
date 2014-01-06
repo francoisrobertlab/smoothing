@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?scenebuilder-preview-i18n-resources BedTable.properties?>
+
+<fx:root type="HBox" styleClass="hbox, bed" xmlns:fx="http://javafx.com/fxml">
+	<Button mnemonicParsing="false" onAction="#browse" text="%browse"/>
+	<TableView fx:id="table" prefHeight="200">
+		<columns>
+			<TableColumn fx:id="fileColumn" text="%fileLabel" prefWidth="400"/>
+			<TableColumn fx:id="colorColumn" text="%colorLabel" prefWidth="150"/>
+		</columns>
+	</TableView>
+	<stylesheets>
+		<URL value="@../../../../application.css" />
+	</stylesheets>
+</fx:root>

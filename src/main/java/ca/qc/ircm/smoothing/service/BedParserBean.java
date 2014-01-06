@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.scene.paint.Color;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -208,11 +210,24 @@ public class BedParserBean implements BedParser {
 				track.name = value;
 			} else if (name.equals("db")) {
 				track.database = value;
+			} else if (name.equals("color")) {
+				track.color = parseColor(value);
 			}
 
 			start = matcher.end();
 		}
 
 		return track;
+	}
+
+	private Color parseColor(String colorValue) {
+		Pattern pattern = Pattern.compile(bundle.getString("color.pattern"));
+		Matcher matcher = pattern.matcher(colorValue);
+		if (matcher.matches()) {
+			return new Color(Double.valueOf(matcher.group(1)) / 255, Double.valueOf(matcher.group(2)) / 255,
+					Double.valueOf(matcher.group(3)) / 255, 1.0);
+		} else {
+			return null;
+		}
 	}
 }

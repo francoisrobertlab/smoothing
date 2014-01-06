@@ -2,11 +2,14 @@ package ca.qc.ircm.smoothing.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 
 import java.io.File;
 import java.util.Locale;
+
+import javafx.scene.paint.Color;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +57,7 @@ public class BedParserBeanTest {
 
 		assertEquals("pairedReads", track.getName());
 		assertEquals("hg19", track.getDatabase());
+		assertEquals(Color.DARKORANGE, track.getColor());
 	}
 
 	@Test
@@ -76,6 +80,7 @@ public class BedParserBeanTest {
 
 		assertEquals(null, track.getName());
 		assertEquals(null, track.getDatabase());
+		assertEquals(null, track.getColor());
 	}
 
 	@Test
@@ -95,6 +100,7 @@ public class BedParserBeanTest {
 
 		assertEquals("pairedReads", track.getName());
 		assertEquals("hg19", track.getDatabase());
+		assertEquals(Color.DARKORANGE, track.getColor());
 	}
 
 	@Test
@@ -117,6 +123,7 @@ public class BedParserBeanTest {
 
 		assertEquals(null, track.getName());
 		assertEquals(null, track.getDatabase());
+		assertEquals(null, track.getColor());
 	}
 
 	@Test
@@ -139,6 +146,7 @@ public class BedParserBeanTest {
 
 		assertEquals("pairedReads", track.getName());
 		assertEquals("hg19", track.getDatabase());
+		assertEquals(Color.DARKORANGE, track.getColor());
 	}
 
 	@Test
@@ -161,6 +169,7 @@ public class BedParserBeanTest {
 
 		assertEquals(null, track.getName());
 		assertEquals("hg19", track.getDatabase());
+		assertEquals(Color.DARKORANGE, track.getColor());
 	}
 
 	@Test
@@ -183,5 +192,26 @@ public class BedParserBeanTest {
 
 		assertEquals("pairedReads", track.getName());
 		assertEquals(null, track.getDatabase());
+		assertEquals(Color.DARKORANGE, track.getColor());
+	}
+
+	@Test
+	public void validateFirstTrack_NoColor() throws Throwable {
+		File file = new File(this.getClass().getResource("/bed/bed_no_color.bed").toURI());
+
+		bedParserBean.validateFirstTrack(file, warningHandler);
+
+		verify(warningHandler, never()).handleWarning(warningCaptor.capture());
+	}
+
+	@Test
+	public void parseFirstTrack_NoColor() throws Throwable {
+		File file = new File(this.getClass().getResource("/bed/bed_no_color.bed").toURI());
+
+		BedTrack track = bedParserBean.parseFirstTrack(file);
+
+		assertEquals("pairedReads", track.getName());
+		assertEquals("hg19", track.getDatabase());
+		assertEquals(null, track.getColor());
 	}
 }

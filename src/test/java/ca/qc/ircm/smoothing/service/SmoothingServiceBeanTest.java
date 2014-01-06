@@ -8,12 +8,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Collections;
+import java.util.HashMap;
 
+import javafx.scene.paint.Color;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.Before;
 import org.junit.Rule;
@@ -61,6 +68,7 @@ public class SmoothingServiceBeanTest {
 		parameters.setIncludeMinimumTrack(false);
 		parameters.setMaximumThreshold(3.0);
 		parameters.setMinimumThreshold(-3.0);
+		parameters.setColors(new HashMap<File, Color>());
 		track = new BedTrackDefault();
 		track.setName("unit_track");
 		track.setDatabase("unit_database");
@@ -150,5 +158,32 @@ public class SmoothingServiceBeanTest {
 		verify(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
 		verify(progressBar).setFile(bed);
 		verify(progressBar, atLeastOnce()).setProgress(any(Double.class));
+	}
+
+	@Test
+	public void smoothing_Color() throws Throwable {
+		final File bed = temporaryFolder.newFile("abc.bed");
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(bed), "UTF-8"))) {
+			writer.write("track color=128,0,128");
+		}
+		final File smoothedBed = temporaryFolder.newFile("abc_smoothed.bed");
+		doAnswer(new Answer<Void>() {
+			@Override
+			public Void answer(InvocationOnMock invocation) throws Throwable {
+				FileUtils.copyFile(bed, smoothedBed);
+				return null;
+			}
+		}).when(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+		parameters.setFiles(Collections.nCopies(1, bed));
+		parameters.getColors().put(bed, Color.AQUA);
+
+		smoothingServiceBean.smoothing(parameters, progressBar);
+
+		verify(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(smoothedBed), "UTF-8"))) {
+			String trackLine = reader.readLine();
+			assertEquals("track color=0,255,255", trackLine);
+		}
 	}
 }

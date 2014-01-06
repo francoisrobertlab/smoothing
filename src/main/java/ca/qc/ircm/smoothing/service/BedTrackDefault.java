@@ -1,8 +1,11 @@
 package ca.qc.ircm.smoothing.service;
 
+import javafx.scene.paint.Color;
+
 public class BedTrackDefault implements BedTrack {
 	public String name;
 	public String database;
+	public Color color;
 
 	public BedTrackDefault() {
 	}
@@ -23,6 +26,15 @@ public class BedTrackDefault implements BedTrack {
 
 	public void setDatabase(String database) {
 		this.database = database;
+	}
+
+	@Override
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	@Override

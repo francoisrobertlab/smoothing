@@ -1,5 +1,7 @@
 package ca.qc.ircm.smoothing.service;
 
+import javafx.scene.paint.Color;
+
 /**
  * Track inside a BED file.
  */
@@ -17,4 +19,11 @@ public interface BedTrack {
 	 * @return track's database
 	 */
 	public String getDatabase();
+
+	/**
+	 * Returns track's color.
+	 * 
+	 * @return track's color
+	 */
+	public Color getColor();
 }
