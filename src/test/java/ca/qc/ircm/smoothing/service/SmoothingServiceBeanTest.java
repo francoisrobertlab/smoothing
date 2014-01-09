@@ -73,6 +73,7 @@ public class SmoothingServiceBeanTest {
 		track.setName("unit_track");
 		track.setDatabase("unit_database");
 		when(bedParser.parseFirstTrack(any(File.class))).thenReturn(track);
+		when(progressBar.step(any(Double.class))).thenReturn(progressBar);
 	}
 
 	private File smoothedBed(File bed) {

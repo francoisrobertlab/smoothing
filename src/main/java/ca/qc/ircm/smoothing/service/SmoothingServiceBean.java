@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.qc.ircm.progress_bar.ProgressBar;
-import ca.qc.ircm.progress_bar.StepProgressBar;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
 
 /**
@@ -59,7 +58,7 @@ public class SmoothingServiceBean implements SmoothingService {
 		double step = 1.0 / Math.max(files.size(), 1);
 		for (File file : files) {
 			progressBar.setFile(file);
-			smoothing(file, parameters, new StepProgressBar(progressBar, step));
+			smoothing(file, parameters, progressBar.step(step));
 		}
 	}
 
