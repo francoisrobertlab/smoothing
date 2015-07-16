@@ -171,13 +171,6 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>javafx</groupId>
-			<artifactId>javafx</artifactId>
-			<version>${javafx.version}</version>
-			<scope>system</scope>
-			<systemPath>${javafx.jar}</systemPath>
-		</dependency>
-		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.5</version>
@@ -265,13 +258,9 @@
 		</plugins>
 	</reporting>
 	<properties>
-		<javac.version>1.7</javac.version>
-		<javafx.version>2.2.21</javafx.version>
-		<enforce-javafx.skip>false</enforce-javafx.skip>
+		<javac.version>1.8</javac.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<javafx.jar>${java.home}/lib/jfxrt.jar</javafx.jar>
 		<javafx.ant>${env.JAVA_HOME}/lib/ant-javafx.jar</javafx.ant>
-		<javafx.version>2.2</javafx.version>
 		<javafx.finalName>${project.build.finalName}-jar-with-dependencies.jar</javafx.finalName>
 		<javafx.bundle>${project.artifactId}</javafx.bundle>
 		<mainClass>ca.qc.ircm.smoothing.MainApplication</mainClass>
