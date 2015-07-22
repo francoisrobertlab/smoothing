@@ -7,15 +7,18 @@ import java.io.IOException;
  * Launch external programs.
  */
 public interface ExecutableService {
+    /**
+     * Listens for events coming from vap program.
+     */
+    public interface SmoothingEventListener {
 	/**
-	 * Listens for events coming from vap program.
+	 * Program's progression changed.
+	 * 
+	 * @param progress
+	 *            new progression
 	 */
-	public interface SmoothingEventListener {
-		/**
-		 * Program's progression changed.
-		 */
-		public void processProgress(double progress);
-	}
+	public void processProgress(double progress);
+    }
 
-	public void smoothing(File parameters, SmoothingEventListener listener) throws IOException;
+    public void smoothing(File parameters, SmoothingEventListener listener) throws IOException;
 }
