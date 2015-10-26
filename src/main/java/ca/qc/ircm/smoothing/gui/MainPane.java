@@ -1,4 +1,4 @@
-package ca.qc.ircm.smoothing;
+package ca.qc.ircm.smoothing.gui;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +33,9 @@ import javafx.util.converter.NumberStringConverter;
 
 import javax.inject.Inject;
 
+import ca.qc.ircm.smoothing.BedWithColor;
+import ca.qc.ircm.smoothing.ErrorHandler;
+import ca.qc.ircm.smoothing.ErrorHandlerDefault;
 import ca.qc.ircm.smoothing.service.BedParser;
 import ca.qc.ircm.smoothing.service.BedParser.Warning;
 import ca.qc.ircm.smoothing.service.SmoothingParameters;

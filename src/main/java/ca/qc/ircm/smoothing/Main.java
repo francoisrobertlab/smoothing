@@ -2,6 +2,8 @@ package ca.qc.ircm.smoothing;
 
 import javafx.application.Application;
 
+import ca.qc.ircm.smoothing.gui.MainApplication;
+
 /**
  * Starts program.
  */

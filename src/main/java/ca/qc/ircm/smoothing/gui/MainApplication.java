@@ -1,4 +1,4 @@
-package ca.qc.ircm.smoothing;
+package ca.qc.ircm.smoothing.gui;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ca.qc.ircm.smoothing.ApplicationModule;
 import ca.qc.ircm.smoothing.util.javafx.FxmlResources;
 import ca.qc.ircm.smoothing.util.javafx.JavaFXUtils;
 import ca.qc.ircm.smoothing.util.javafx.MessageDialog;

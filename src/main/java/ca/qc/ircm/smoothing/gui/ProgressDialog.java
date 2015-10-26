@@ -1,4 +1,4 @@
-package ca.qc.ircm.smoothing;
+package ca.qc.ircm.smoothing.gui;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
