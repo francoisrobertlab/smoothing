@@ -1,0 +1,13 @@
+.progress-dialog {
+	-fx-padding: 10;
+}
+.progress-dialog .progress-dialog-box {
+	-fx-spacing: 5px;
+}
+.progress-dialog .message-box {
+	-fx-padding: 10px;
+}
+.progress-dialog .button-box {
+	-fx-alignment: center;
+	-fx-padding: 20 0 0 0;
+}

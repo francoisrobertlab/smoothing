@@ -1,51 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import ca.qc.ircm.smoothing.*?>
-<?import ca.qc.ircm.smoothing.util.javafx.*?>
-<?scenebuilder-preview-i18n-resources MainPane.properties?>
+<?scenebuilder-preview-i18n-resources mainpane.properties?>
 
-<fx:root type="BorderPane" styleClass="border-pane, main" xmlns:fx="http://javafx.com/fxml">
-	<top>
-	</top>
+<BorderPane fx:id="view" styleClass="main-pane" fx:controller="ca.qc.ircm.smoothing.gui.MainPanePresenter" xmlns:fx="http://javafx.com/fxml">
 	<center>
-		<VBox styleClass="vbox, main">
-			<VBox styleClass="vbox, section">
+		<VBox styleClass="main-pane-box">
+			<VBox styleClass="main-pane-section">
 				<Label text="%fileParameters" styleClass="header"/>
-				<HBox fx:id="filePane" styleClass="hbox, file">
+				<HBox fx:id="filePane" styleClass="field-box">
 					<Label text="%filesLabel"/>
-					<BedTable fx:id="bedTable"/>
 				</HBox>
 			</VBox>
-			<VBox styleClass="vbox, section">
+			<VBox styleClass="main-pane-section">
 				<Label text="%smoothingParameters" styleClass="header"/>
-				<HBox fx:id="standardDeviationPane" styleClass="hbox">
+				<HBox fx:id="standardDeviationPane" styleClass="field-box">
 					<Label text="%standardDeviation"/>
 					<TextField fx:id="standardDeviation"/>
 				</HBox>
-				<HBox fx:id="roundsPane" styleClass="hbox">
+				<HBox fx:id="roundsPane" styleClass="field-box">
 					<Label text="%rounds"/>
 					<TextField fx:id="rounds"/>
 				</HBox>
-				<HBox fx:id="stepLengthPane" styleClass="hbox">
+				<HBox fx:id="stepLengthPane" styleClass="field-box">
 					<Label text="%stepLength"/>
 					<TextField fx:id="stepLength"/>
 				</HBox>
 			</VBox>
-			<VBox styleClass="vbox, section">
+			<VBox styleClass="main-pane-section">
 				<Label text="%trackParameters" styleClass="header"/>
-				<HBox fx:id="includeSmoothedTrackPane" styleClass="hbox">
+				<HBox fx:id="includeSmoothedTrackPane" styleClass="field-box">
 					<CheckBox fx:id="includeSmoothedTrack" text="%includeSmoothedTrack"/>
 				</HBox>
-				<HBox fx:id="includeMaximumTrackPane" styleClass="hbox">
+				<HBox fx:id="includeMaximumTrackPane" styleClass="field-box">
 					<CheckBox fx:id="includeMaximumTrack" text="%includeMaximumTrack"/>
 					<Label text="%maximumThreshold"/>
 					<TextField fx:id="maximumThreshold"/>
 				</HBox>
-				<HBox fx:id="includeMinimumTrackPane" styleClass="hbox">
+				<HBox fx:id="includeMinimumTrackPane" styleClass="field-box">
 					<CheckBox fx:id="includeMinimumTrack" text="%includeMinimumTrack"/>
 					<Label text="%minimumThreshold"/>
 					<TextField fx:id="minimumThreshold"/>
@@ -54,11 +47,8 @@
 		</VBox>
 	</center>
 	<bottom>
-		<HBox styleClass="hbox, run">
+		<HBox styleClass="button-box">
 			<Button text="%run" onAction="#run"/>
 		</HBox>
 	</bottom>
-	<stylesheets>
-		<URL value="@../../../../application.css" />
-	</stylesheets>
-</fx:root>
+</BorderPane>

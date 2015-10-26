@@ -1,38 +1,29 @@
 package ca.qc.ircm.smoothing.gui;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javafx.fxml.FXML;
-import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import ca.qc.ircm.smoothing.util.javafx.FxmlResources;
 
 /**
  * Splash screen.
  */
-public class SplashScreen extends Stage {
-	private final ResourceBundle bundle;
+public class SplashScreen {
+    private final Stage stage;
 
-	@FXML
-	private ProgressIndicator progressIndicator;
+    public SplashScreen() {
+	stage = new Stage(StageStyle.UNDECORATED);
 
-	public SplashScreen() {
-		initStyle(StageStyle.UNDECORATED);
+	SplashScreenView view = new SplashScreenView();
 
-		bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
+	Scene scene = new Scene(view.getView());
+	stage.setScene(scene);
+    }
 
-		Parent layout = (Parent) FxmlResources.loadFxml(this, bundle);
-		layout.setCursor(Cursor.WAIT);
-		Scene scene = new Scene(layout);
-		setScene(scene);
-	}
+    public void show() {
+	stage.show();
+    }
 
-	public void setProgress(double value) {
-		progressIndicator.setProgress(value);
-	}
+    public void hide() {
+	stage.hide();
+    }
 }

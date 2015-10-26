@@ -19,48 +19,49 @@ import javafx.stage.Window;
 /**
  * About window.
  */
+@Deprecated
 public class MessageDialog extends Stage {
-	public static enum Type {
-		ERROR, INFORMATION, QUESTION, WARNING,
+    public static enum Type {
+	ERROR, INFORMATION, QUESTION, WARNING,
+    }
+
+    private final ResourceBundle bundle;
+    @FXML
+    private VBox messageBox;
+    @FXML
+    private Button ok;
+
+    public MessageDialog(Window owner, Type type, String title, String... messages) {
+	bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
+	init(owner, type, title, Arrays.asList(messages));
+    }
+
+    public MessageDialog(Window owner, Type type, String title, List<String> messages) {
+	bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
+	init(owner, type, title, messages);
+    }
+
+    private void init(Window owner, Type type, String title, List<String> messages) {
+	this.initOwner(owner);
+	this.initModality(Modality.WINDOW_MODAL);
+
+	BorderPane layout = (BorderPane) FxmlResources.loadFxml(this, bundle);
+	JavaFXUtils.setMaxSizeForScreen(layout);
+
+	Scene scene = new Scene(layout);
+	this.setScene(scene);
+	this.setTitle(title);
+
+	for (String message : messages) {
+	    messageBox.getChildren().add(new Label(message));
 	}
 
-	private final ResourceBundle bundle;
-	@FXML
-	private VBox messageBox;
-	@FXML
-	private Button ok;
+	ok.requestFocus();
 
-	public MessageDialog(Window owner, Type type, String title, String... messages) {
-		bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
-		init(owner, type, title, Arrays.asList(messages));
-	}
+	this.show();
+    }
 
-	public MessageDialog(Window owner, Type type, String title, List<String> messages) {
-		bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
-		init(owner, type, title, messages);
-	}
-
-	private void init(Window owner, Type type, String title, List<String> messages) {
-		this.initOwner(owner);
-		this.initModality(Modality.WINDOW_MODAL);
-
-		BorderPane layout = (BorderPane) FxmlResources.loadFxml(this, bundle);
-		JavaFXUtils.setMaxSizeForScreen(layout);
-
-		Scene scene = new Scene(layout);
-		this.setScene(scene);
-		this.setTitle(title);
-
-		for (String message : messages) {
-			messageBox.getChildren().add(new Label(message));
-		}
-
-		ok.requestFocus();
-
-		this.show();
-	}
-
-	public void close(ActionEvent event) {
-		this.close();
-	}
+    public void close(ActionEvent event) {
+	this.close();
+    }
 }

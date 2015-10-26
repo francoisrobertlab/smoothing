@@ -1,31 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?scenebuilder-preview-i18n-resource ProgressDialog.properties?>
+<?scenebuilder-preview-i18n-resource progressdialog.properties?>
 
-<BorderPane styleClass="dialog, progress" xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:id="view" styleClass="progress-dialog" fx:controller="ca.qc.ircm.smoothing.gui.ProgressDialogPresenter" xmlns:fx="http://javafx.com/fxml">
 	<center>
-		<VBox styleClass="vbox">
-			<HBox styleClass="hbox">
+		<VBox styleClass="progress-dialog-box">
+			<HBox styleClass="progress-box">
 				<Label text="%label"/>
 				<ProgressBar fx:id="progressBar" prefWidth="300" prefHeight="20"/>
 				<ProgressIndicator fx:id="progressIndicator"/>
 			</HBox>
-			<HBox styleClass="hbox">
+			<HBox styleClass="message-box">
 				<Label fx:id="message"/>
 			</HBox>
 		</VBox>
 	</center>
 	<bottom>
-		<HBox styleClass="hbox, buttonContainer">
+		<HBox styleClass="button-box">
 			<Button fx:id="cancel" text="%cancel" onAction="#cancel" cancelButton="true"/>
 		</HBox>
 	</bottom>
-	<stylesheets>
-		<URL value="@../../../../application.css" />
-	</stylesheets>
 </BorderPane>

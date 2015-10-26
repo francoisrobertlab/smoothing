@@ -1,62 +1,47 @@
 package ca.qc.ircm.smoothing.gui;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.concurrent.Worker;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import ca.qc.ircm.smoothing.util.javafx.FxmlResources;
-import ca.qc.ircm.smoothing.util.javafx.JavaFXUtils;
+
+import ca.qc.ircm.util.javafx.JavaFXUtils;
 
 /**
  * Progress dialog for file filtering.
  */
-public class ProgressDialog extends Stage {
-	private final ResourceBundle bundle;
-	private final Worker<?> worker;
-	@FXML
-	private ProgressBar progressBar;
-	@FXML
-	private ProgressIndicator progressIndicator;
-	@FXML
-	private Label message;
-	@FXML
-	private Button cancel;
+public class ProgressDialog {
+    private final ResourceBundle resources;
+    private final Stage stage;
 
-	public ProgressDialog(Window owner, Worker<?> worker) {
-		this.initOwner(owner);
-		this.initModality(Modality.WINDOW_MODAL);
-		this.worker = worker;
-		bundle = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
+    public ProgressDialog(Window owner, Worker<?> worker) {
+	ProgressDialogView view = new ProgressDialogView();
+	ProgressDialogPresenter presenter = (ProgressDialogPresenter) view.getPresenter();
+	resources = view.getResourceBundle();
 
-		BorderPane layout = (BorderPane) FxmlResources.loadFxml(this, bundle);
-		JavaFXUtils.setMaxSizeForScreen(layout);
+	stage = new Stage();
+	stage.initOwner(owner);
+	stage.initModality(Modality.WINDOW_MODAL);
+	JavaFXUtils.setMaxSizeForScreen(stage);
 
-		Scene scene = new Scene(layout);
-		this.setScene(scene);
-		this.setTitle(bundle.getString("title"));
+	presenter.progressProperty().bind(worker.progressProperty());
+	presenter.messageProperty().bind(worker.messageProperty());
+	presenter.cancelledProperty().addListener((ov, o, n) -> {
+	    worker.cancel();
+	});
+	presenter.focusOnDefault();
 
-		progressBar.progressProperty().bind(worker.progressProperty());
-		progressIndicator.progressProperty().bind(worker.progressProperty());
-		message.textProperty().bind(worker.messageProperty());
+	Scene scene = new Scene(view.getView());
+	stage.setScene(scene);
+	stage.setTitle(resources.getString("title"));
 
-		cancel.requestFocus();
+	stage.show();
+    }
 
-		this.show();
-	}
-
-	public void cancel(ActionEvent event) {
-		worker.cancel();
-		this.close();
-	}
+    public void hide() {
+	stage.hide();
+    }
 }
