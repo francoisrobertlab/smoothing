@@ -12,11 +12,12 @@
 	<description>Executes smoothing on some bed files</description>
 	<properties>
 		<javac.version>1.8</javac.version>
+		<mainClass>ca.qc.ircm.smoothing.Main</mainClass>
 		<slf4j.version>1.7.5</slf4j.version>
+		<afterburner.version>1.6.1</afterburner.version>
 		<javafx.ant>${env.JAVA_HOME}/lib/ant-javafx.jar</javafx.ant>
 		<javafx.finalName>${project.build.finalName}-jar-with-dependencies.jar</javafx.finalName>
 		<javafx.bundle>${project.artifactId}</javafx.bundle>
-		<mainClass>ca.qc.ircm.smoothing.MainApplication</mainClass>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -82,6 +83,11 @@
 			<version>3.0</version>
 		</dependency>
 		<dependency>
+			<groupId>com.airhacks</groupId>
+			<artifactId>afterburner.fx</artifactId>
+			<version>${afterburner.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>annotations</artifactId>
 			<version>2.0.1</version>
@@ -100,6 +106,8 @@
 				<directory>src/main/java</directory>
 				<includes>
 					<include>**/*.fxml</include>
+					<include>**/*.css</include>
+					<include>**/*.png</include>
 				</includes>
 			</resource>
 			<resource>
