@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>ca.qc.ircm.utils</groupId>
 			<artifactId>progress_bar</artifactId>
-			<version>3.0.0</version>
+			<version>3.3</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
