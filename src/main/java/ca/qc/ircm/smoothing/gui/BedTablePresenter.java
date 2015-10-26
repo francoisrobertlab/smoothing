@@ -108,7 +108,7 @@ public class BedTablePresenter {
     }
 
     private class BedWithColorFileCallback implements
-	    Callback<TableColumn.CellDataFeatures<BedWithColor, File>, ObservableValue<File>> {
+    Callback<TableColumn.CellDataFeatures<BedWithColor, File>, ObservableValue<File>> {
 	@Override
 	public ObservableValue<File> call(CellDataFeatures<BedWithColor, File> features) {
 	    return features.getValue().fileProperty();
@@ -183,7 +183,7 @@ public class BedTablePresenter {
     }
 
     private class ColorCellValueFactory implements
-	    Callback<TableColumn.CellDataFeatures<BedWithColor, Color>, ObservableValue<Color>> {
+    Callback<TableColumn.CellDataFeatures<BedWithColor, Color>, ObservableValue<Color>> {
 	@Override
 	public ObservableValue<Color> call(CellDataFeatures<BedWithColor, Color> features) {
 	    return features.getValue().colorProperty();
@@ -215,6 +215,7 @@ public class BedTablePresenter {
     private TableColumn<BedWithColor, Color> colorColumn;
     private FileChooser fileChooser = new FileChooser();
     private final List<String> fileCellDefaultClasses;
+    @Inject
     private BedParser bedParser;
 
     public BedTablePresenter() {
@@ -225,7 +226,8 @@ public class BedTablePresenter {
     @FXML
     private void initialize() {
 	fileChooser.setTitle(resources.getString("fileChooser.title"));
-	fileChooser.getExtensionFilters().add(new ExtensionFilter(resources.getString("fileChooser.description"), "*"));
+	fileChooser.getExtensionFilters().add(
+		new ExtensionFilter(resources.getString("fileChooser.description"), "*", "*.*"));
 	table.setItems(FXCollections.observableList(new ArrayList<BedWithColor>()));
 	table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	table.setEditable(true);
@@ -396,10 +398,5 @@ public class BedTablePresenter {
 	} catch (IOException e) {
 	    // Ignore.
 	}
-    }
-
-    @Inject
-    public void setBedParser(BedParser bedParser) {
-	this.bedParser = bedParser;
     }
 }

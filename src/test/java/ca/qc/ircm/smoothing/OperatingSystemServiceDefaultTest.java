@@ -12,22 +12,22 @@ import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
  */
 @RunWith(TestRunnerLog4J.class)
 public class OperatingSystemServiceDefaultTest {
-	private OperatingSystemServiceBean operatingSystemServiceBean;
+    private OperatingSystemServiceBean operatingSystemServiceBean;
 
-	@Before
-	public void beforeTest() {
-		operatingSystemServiceBean = new OperatingSystemServiceBean();
-	}
+    @Before
+    public void beforeTest() {
+	operatingSystemServiceBean = new OperatingSystemServiceBean();
+    }
 
-	@Test
-	@Ignore("Cannot test since it would depend on the operating system")
-	public void currentOS() throws Throwable {
-		// Cannot test since it would depend on the operating system.
-	}
+    @Test
+    @Ignore("Cannot test since it would depend on the operating system")
+    public void currentOS() throws Throwable {
+	// Cannot test since it would depend on the operating system.
+    }
 
-	@Test
-	@Ignore("Cannot test since it would depend on the operating system")
-	public void is64bit() {
-		// Cannot test since it would depend on the operating system.
-	}
+    @Test
+    @Ignore("Cannot test since it would depend on the operating system")
+    public void is64bit() {
+	// Cannot test since it would depend on the operating system.
+    }
 }

@@ -172,9 +172,11 @@ public class MainPanePresenter {
     private TextField minimumThreshold;
     private BedTablePresenter bedTable;
     private FileChooser fileChooser = new FileChooser();
-    private BedParser bedParser;
-    private SmoothingTaskFactory smoothingTaskFactory;
     private Locale locale = Locale.getDefault();
+    @Inject
+    private BedParser bedParser;
+    @Inject
+    private SmoothingTaskFactory smoothingTaskFactory;
 
     @FXML
     private void initialize() {
@@ -352,15 +354,5 @@ public class MainPanePresenter {
 
     public void validateMinimumThreshold(ErrorHandler errorHandler) {
 	// Nothing to validate.
-    }
-
-    @Inject
-    public void setBedParser(BedParser bedParser) {
-	this.bedParser = bedParser;
-    }
-
-    @Inject
-    public void setSmoothingTaskFactory(SmoothingTaskFactory smoothingTaskFactory) {
-	this.smoothingTaskFactory = smoothingTaskFactory;
     }
 }
