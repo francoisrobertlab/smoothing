@@ -40,7 +40,7 @@ import ca.qc.ircm.smoothing.service.BedParser.Warning;
 import ca.qc.ircm.smoothing.service.SmoothingParameters;
 import ca.qc.ircm.smoothing.service.SmoothingTask;
 import ca.qc.ircm.smoothing.service.SmoothingTaskFactory;
-import ca.qc.ircm.smoothing.util.javafx.NullOnExceptionConverter;
+import ca.qc.ircm.util.javafx.NullOnExceptionStringConverter;
 import ca.qc.ircm.util.javafx.message.MessageDialog;
 import ca.qc.ircm.util.javafx.message.MessageDialog.MessageDialogType;
 
@@ -178,24 +178,25 @@ public class MainPanePresenter {
 
     @FXML
     private void initialize() {
-	bedTable = new BedTablePresenter();
-	filePane.getChildren().add(bedTable);
+	BedTableView bedTableView = new BedTableView();
+	bedTable = (BedTablePresenter) bedTableView.getPresenter();
+	filePane.getChildren().add(bedTableView.getView());
 	fileChooser.setTitle(resources.getString("fileChooser.title"));
 	fileChooser.getExtensionFilters().add(new ExtensionFilter(resources.getString("fileChooser.description"), "*"));
 	bedTable.initialDirectoryProperty().bindBidirectional(fileChooser.initialDirectoryProperty());
 	standardDeviation.textProperty().bindBidirectional(standardDeviationProperty,
-		new NullOnExceptionConverter<Number>(new NumberStringConverter()));
+		new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
 	rounds.textProperty().bindBidirectional(roundsProperty,
-		new NullOnExceptionConverter<Number>(new NumberStringConverter()));
+		new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
 	stepLength.textProperty().bindBidirectional(stepLengthProperty,
-		new NullOnExceptionConverter<Number>(new NumberStringConverter()));
+		new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
 	includeSmoothedTrack.selectedProperty().bindBidirectional(includeSmoothedTrackProperty);
 	includeMaximumTrack.selectedProperty().bindBidirectional(includeMaximumTrackProperty);
 	maximumThreshold.textProperty().bindBidirectional(maximumThresholdProperty,
-		new NullOnExceptionConverter<Number>(new NumberStringConverter()));
+		new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
 	includeMinimumTrack.selectedProperty().bindBidirectional(includeMinimumTrackProperty);
 	minimumThreshold.textProperty().bindBidirectional(minimumThresholdProperty,
-		new NullOnExceptionConverter<Number>(new NumberStringConverter()));
+		new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
 
 	// Default values.
 	standardDeviationProperty.set(200);

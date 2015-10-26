@@ -38,7 +38,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -61,7 +61,7 @@ import ca.qc.ircm.util.javafx.JavaFXUtils;
 /**
  * Table containing BED files.
  */
-public class BedTablePresenter extends HBox {
+public class BedTablePresenter {
     private static final Color DEFAULT_COLOR = Color.DARKORANGE;
 
     private class CellIndexListener implements ChangeListener<Number> {
@@ -108,7 +108,7 @@ public class BedTablePresenter extends HBox {
     }
 
     private class BedWithColorFileCallback implements
-    Callback<TableColumn.CellDataFeatures<BedWithColor, File>, ObservableValue<File>> {
+	    Callback<TableColumn.CellDataFeatures<BedWithColor, File>, ObservableValue<File>> {
 	@Override
 	public ObservableValue<File> call(CellDataFeatures<BedWithColor, File> features) {
 	    return features.getValue().fileProperty();
@@ -183,7 +183,7 @@ public class BedTablePresenter extends HBox {
     }
 
     private class ColorCellValueFactory implements
-    Callback<TableColumn.CellDataFeatures<BedWithColor, Color>, ObservableValue<Color>> {
+	    Callback<TableColumn.CellDataFeatures<BedWithColor, Color>, ObservableValue<Color>> {
 	@Override
 	public ObservableValue<Color> call(CellDataFeatures<BedWithColor, Color> features) {
 	    return features.getValue().colorProperty();
@@ -205,6 +205,8 @@ public class BedTablePresenter extends HBox {
 	    }));
     @FXML
     private ResourceBundle resources;
+    @FXML
+    private Pane view;
     @FXML
     private TableView<BedWithColor> table;
     @FXML
@@ -322,7 +324,7 @@ public class BedTablePresenter extends HBox {
     @FXML
     private void browse(ActionEvent event) {
 	JavaFXUtils.setValidInitialDirectory(fileChooser);
-	List<File> selections = fileChooser.showOpenMultipleDialog(getScene().getWindow());
+	List<File> selections = fileChooser.showOpenMultipleDialog(view.getScene().getWindow());
 	if (selections != null) {
 	    if (!selections.isEmpty()) {
 		fileChooser.setInitialDirectory(selections.get(0).getParentFile());
@@ -380,7 +382,7 @@ public class BedTablePresenter extends HBox {
 	    }
 	}
 	if (error) {
-	    getStyleClass().add("error");
+	    view.getStyleClass().add("error");
 	}
     }
 
