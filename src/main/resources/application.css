@@ -103,11 +103,3 @@
 .resizable .resize {
 	-fx-background-color: grey;
 }
-
-/* Splash screen */
-.splash {
-	-fx-background-color: lightgrey;
-}
-.splash .label {
-	-fx-font: bold 96 sans-serif;
-}

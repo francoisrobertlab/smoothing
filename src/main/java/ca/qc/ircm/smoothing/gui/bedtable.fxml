@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?scenebuilder-preview-i18n-resources BedTable.properties?>
+<?scenebuilder-preview-i18n-resources bedtable.properties?>
 
-<fx:root type="HBox" styleClass="hbox, bed" xmlns:fx="http://javafx.com/fxml">
+<HBox fx:id="view" styleClass="bed-files" fx:controller="ca.qc.ircm.smoothing.gui.BedTablePresenter" xmlns:fx="http://javafx.com/fxml">
 	<Button mnemonicParsing="false" onAction="#browse" text="%browse"/>
 	<TableView fx:id="table" prefHeight="200">
 		<columns>
@@ -14,7 +12,4 @@
 			<TableColumn fx:id="colorColumn" text="%colorLabel" prefWidth="150"/>
 		</columns>
 	</TableView>
-	<stylesheets>
-		<URL value="@../../../../application.css" />
-	</stylesheets>
-</fx:root>
+</HBox>

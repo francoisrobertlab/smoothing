@@ -1,0 +1,21 @@
+.main-pane .main-pane-box {
+	-fx-spacing: 5px;
+}
+.main-pane .main-pane-section {
+	-fx-border-color: black;
+	-fx-border-radius: 5;
+	-fx-border-style: solid;
+	-fx-border-width: 1;
+	-fx-spacing: 15;
+	-fx-padding: 5;
+}
+.main-pane .field-box {
+	-fx-spacing: 5px;
+	-fx-alignment: center-left;
+}
+.main-pane .label.header {
+	-fx-font: bold 16 sans-serif;
+}
+.main-pane .button-box {
+	-fx-spacing: 5px;
+}

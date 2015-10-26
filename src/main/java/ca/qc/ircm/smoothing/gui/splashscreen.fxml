@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?scenebuilder-preview-i18n-resources splashscreen.properties?>
+
+<HBox fx:id="view" styleClass="splash" fx:controller="ca.qc.ircm.smoothing.gui.SplashScreenPresenter" xmlns:fx="http://javafx.com/fxml">
+	<Label text="%label"/>
+</HBox>
