@@ -1,15 +1,18 @@
 package ca.qc.ircm.smoothing.service;
 
 import java.io.File;
-import java.util.List;
-
-import javafx.scene.paint.Color;
 
 /**
- * Smoothing parameters.
+ * Smoothing parameters for smoothing executable program.
  */
-public interface SmoothingParameters {
-    public List<File> getFiles();
+public interface SmoothingCoreParameters {
+    public File getInput();
+
+    public File getOutput();
+
+    public String getTrackName();
+
+    public String getTrackDatabase();
 
     public int getStandardDeviation();
 
@@ -26,6 +29,4 @@ public interface SmoothingParameters {
     public boolean isIncludeMaximumTrack();
 
     public Double getMaximumThreshold();
-
-    public Color getColor(File file);
 }

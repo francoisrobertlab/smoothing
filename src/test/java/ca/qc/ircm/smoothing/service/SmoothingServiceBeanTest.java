@@ -12,7 +12,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.Collections;
@@ -51,6 +50,8 @@ public class SmoothingServiceBeanTest {
     private ProgressBar progressBar;
     @Captor
     private ArgumentCaptor<File> fileCaptor;
+    @Captor
+    private ArgumentCaptor<SmoothingCoreParameters> smoothingCoreParametersCaptor;
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
     private SmoothingParametersBean parameters;
@@ -92,45 +93,35 @@ public class SmoothingServiceBeanTest {
 	}
     }
 
-    private void validateParametersFile(File file, File bed, SmoothingParametersBean parameters, String datasetName,
-	    String assemblyName) throws IOException {
-	try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"))) {
-	    assertEquals(bed.getAbsolutePath(), reader.readLine());
-	    assertEquals(smoothedBed(bed).getAbsolutePath(), reader.readLine());
-	    assertEquals(datasetName, reader.readLine());
-	    assertEquals(assemblyName, reader.readLine());
-	    assertEquals(parameters.getStandardDeviation(), Integer.valueOf(reader.readLine()));
-	    assertEquals(parameters.getRounds(), Integer.valueOf(reader.readLine()));
-	    assertEquals(parameters.getStepLength(), Integer.valueOf(reader.readLine()));
-	    assertEquals(parameters.isIncludeSmoothedTrack(), reader.readLine().equals("1"));
-	    assertEquals(parameters.isIncludeMaximumTrack(), reader.readLine().equals("1"));
-	    assertEquals(parameters.isIncludeMinimumTrack(), reader.readLine().equals("1"));
-	    assertEquals(parameters.getMaximumThreshold(), Double.valueOf(reader.readLine()), 0.1);
-	    assertEquals(parameters.getMinimumThreshold(), Double.valueOf(reader.readLine()), 0.1);
-	}
-    }
-
     @Test
     public void smoothing() throws Throwable {
 	final File bed = new File("abc.bed");
-	doAnswer(new Answer<Void>() {
-	    @Override
-	    public Void answer(InvocationOnMock invocation) throws Throwable {
-		validateParametersFile((File) invocation.getArguments()[0], bed, parameters, "unit_track",
-			"unit_database");
-		SmoothingEventListener listener = (SmoothingEventListener) invocation.getArguments()[1];
-		listener.processProgress(0.3);
-		listener.processProgress(0.6);
-		listener.processProgress(1.0);
-		return null;
-	    }
-	}).when(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+	doAnswer(invocation -> {
+	    SmoothingEventListener listener = (SmoothingEventListener) invocation.getArguments()[1];
+	    listener.processProgress(0.3);
+	    listener.processProgress(0.6);
+	    listener.processProgress(1.0);
+	    return null;
+	}).when(executableService).smoothing(any(SmoothingCoreParameters.class), any(SmoothingEventListener.class));
 	parameters.setFiles(Collections.nCopies(1, bed));
 
 	smoothingServiceBean.smoothing(parameters, progressBar);
 
 	verify(bedParser).parseFirstTrack(bed);
-	verify(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+	verify(executableService).smoothing(smoothingCoreParametersCaptor.capture(), any(SmoothingEventListener.class));
+	SmoothingCoreParameters coreParameters = smoothingCoreParametersCaptor.getValue();
+	assertEquals(bed, coreParameters.getInput());
+	assertEquals(smoothedBed(bed), coreParameters.getOutput());
+	assertEquals(track.getName(), coreParameters.getTrackName());
+	assertEquals(track.getDatabase(), coreParameters.getTrackDatabase());
+	assertEquals(parameters.getStandardDeviation(), coreParameters.getStandardDeviation());
+	assertEquals(parameters.getRounds(), coreParameters.getRounds());
+	assertEquals(parameters.getStepLength(), coreParameters.getStepLength());
+	assertEquals(parameters.isIncludeSmoothedTrack(), coreParameters.isIncludeSmoothedTrack());
+	assertEquals(parameters.isIncludeMaximumTrack(), coreParameters.isIncludeMaximumTrack());
+	assertEquals(parameters.isIncludeMinimumTrack(), coreParameters.isIncludeMinimumTrack());
+	assertEquals(parameters.getMaximumThreshold(), coreParameters.getMaximumThreshold(), 0.01);
+	assertEquals(parameters.getMinimumThreshold(), coreParameters.getMinimumThreshold(), 0.01);
 	verify(progressBar).setMessage(any());
 	verify(progressBar, atLeastOnce()).setProgress(any(Double.class));
     }
@@ -140,23 +131,32 @@ public class SmoothingServiceBeanTest {
 	final File bed = new File("abc.bed");
 	track.setName(null);
 	track.setDatabase(null);
-	doAnswer(new Answer<Void>() {
-	    @Override
-	    public Void answer(InvocationOnMock invocation) throws Throwable {
-		validateParametersFile((File) invocation.getArguments()[0], bed, parameters, "", "");
-		SmoothingEventListener listener = (SmoothingEventListener) invocation.getArguments()[1];
-		listener.processProgress(0.3);
-		listener.processProgress(0.6);
-		listener.processProgress(1.0);
-		return null;
-	    }
-	}).when(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+	doAnswer(invocation -> {
+	    SmoothingEventListener listener = (SmoothingEventListener) invocation.getArguments()[1];
+	    listener.processProgress(0.3);
+	    listener.processProgress(0.6);
+	    listener.processProgress(1.0);
+	    return null;
+	}).when(executableService).smoothing(any(SmoothingCoreParameters.class), any(SmoothingEventListener.class));
 	parameters.setFiles(Collections.nCopies(1, bed));
 
 	smoothingServiceBean.smoothing(parameters, progressBar);
 
 	verify(bedParser).parseFirstTrack(bed);
-	verify(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+	verify(executableService).smoothing(smoothingCoreParametersCaptor.capture(), any(SmoothingEventListener.class));
+	SmoothingCoreParameters coreParameters = smoothingCoreParametersCaptor.getValue();
+	assertEquals(bed, coreParameters.getInput());
+	assertEquals(smoothedBed(bed), coreParameters.getOutput());
+	assertEquals("", coreParameters.getTrackName());
+	assertEquals("", coreParameters.getTrackDatabase());
+	assertEquals(parameters.getStandardDeviation(), coreParameters.getStandardDeviation());
+	assertEquals(parameters.getRounds(), coreParameters.getRounds());
+	assertEquals(parameters.getStepLength(), coreParameters.getStepLength());
+	assertEquals(parameters.isIncludeSmoothedTrack(), coreParameters.isIncludeSmoothedTrack());
+	assertEquals(parameters.isIncludeMaximumTrack(), coreParameters.isIncludeMaximumTrack());
+	assertEquals(parameters.isIncludeMinimumTrack(), coreParameters.isIncludeMinimumTrack());
+	assertEquals(parameters.getMaximumThreshold(), coreParameters.getMaximumThreshold(), 0.01);
+	assertEquals(parameters.getMinimumThreshold(), coreParameters.getMinimumThreshold(), 0.01);
 	verify(progressBar).setMessage(any());
 	verify(progressBar, atLeastOnce()).setProgress(any(Double.class));
     }
@@ -174,13 +174,13 @@ public class SmoothingServiceBeanTest {
 		FileUtils.copyFile(bed, smoothedBed);
 		return null;
 	    }
-	}).when(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+	}).when(executableService).smoothing(any(SmoothingCoreParameters.class), any(SmoothingEventListener.class));
 	parameters.setFiles(Collections.nCopies(1, bed));
 	parameters.getColors().put(bed, Color.AQUA);
 
 	smoothingServiceBean.smoothing(parameters, progressBar);
 
-	verify(executableService).smoothing(any(File.class), any(SmoothingEventListener.class));
+	verify(executableService).smoothing(any(SmoothingCoreParameters.class), any(SmoothingEventListener.class));
 	try (BufferedReader reader = new BufferedReader(
 		new InputStreamReader(new FileInputStream(smoothedBed), "UTF-8"))) {
 	    String trackLine = reader.readLine();

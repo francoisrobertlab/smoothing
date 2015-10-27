@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +31,83 @@ import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
  * Default implementation of {@link SmoothingService}.
  */
 public class SmoothingServiceBean implements SmoothingService {
+    private static class SmoothingCoreParametersDelegate implements SmoothingCoreParameters {
+	private final SmoothingParameters parameters;
+	private File input;
+	private File output;
+	private String trackName;
+	private String trackDatabase;
+
+	private SmoothingCoreParametersDelegate(SmoothingParameters parameters, File input, File output,
+		String trackName, String trackDatabase) {
+	    this.parameters = parameters;
+	    this.input = input;
+	    this.output = output;
+	    this.trackName = trackName;
+	    this.trackDatabase = trackDatabase;
+	}
+
+	@Override
+	public File getInput() {
+	    return input;
+	}
+
+	@Override
+	public File getOutput() {
+	    return output;
+	}
+
+	@Override
+	public String getTrackName() {
+	    return trackName;
+	}
+
+	@Override
+	public String getTrackDatabase() {
+	    return trackDatabase;
+	}
+
+	@Override
+	public int getStandardDeviation() {
+	    return parameters.getStandardDeviation();
+	}
+
+	@Override
+	public int getRounds() {
+	    return parameters.getRounds();
+	}
+
+	@Override
+	public int getStepLength() {
+	    return parameters.getStepLength();
+	}
+
+	@Override
+	public boolean isIncludeSmoothedTrack() {
+	    return parameters.isIncludeSmoothedTrack();
+	}
+
+	@Override
+	public boolean isIncludeMinimumTrack() {
+	    return parameters.isIncludeMinimumTrack();
+	}
+
+	@Override
+	public Double getMinimumThreshold() {
+	    return parameters.getMinimumThreshold();
+	}
+
+	@Override
+	public boolean isIncludeMaximumTrack() {
+	    return parameters.isIncludeMaximumTrack();
+	}
+
+	@Override
+	public Double getMaximumThreshold() {
+	    return parameters.getMaximumThreshold();
+	}
+    }
+
     private static class SmoothingEventListenerBean implements SmoothingEventListener {
 	private final ProgressBar progressBar;
 
@@ -72,8 +148,11 @@ public class SmoothingServiceBean implements SmoothingService {
 	File smoothingOutput = smoothingOutput(file);
 	File executableParameters = File.createTempFile("smoothing_parameters", ".txt");
 	try {
-	    writeParameters(executableParameters, file, smoothingOutput, parameters, track);
-	    executableService.smoothing(executableParameters, new SmoothingEventListenerBean(progressBar));
+	    String trackName = track != null && track.getName() != null ? track.getName() : "";
+	    String trackDatabase = track != null && track.getDatabase() != null ? track.getDatabase() : "";
+	    SmoothingCoreParameters coreParameters = new SmoothingCoreParametersDelegate(parameters, file,
+		    smoothingOutput, trackName, trackDatabase);
+	    executableService.smoothing(coreParameters, new SmoothingEventListenerBean(progressBar));
 	} finally {
 	    if (!executableParameters.delete()) {
 		logger.warn("Could not delete file {}", executableParameters);
@@ -123,38 +202,6 @@ public class SmoothingServiceBean implements SmoothingService {
 	    return new File(file.getParentFile(), smoothingOutputName.toString());
 	} else {
 	    return new File(smoothingOutputName.toString());
-	}
-    }
-
-    private void writeParameters(File output, File file, File smoothingOutput, SmoothingParameters parameters,
-	    BedTrack track) throws IOException {
-	try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output), "UTF-8"))) {
-	    writer.write(file.getAbsolutePath());
-	    writer.write("\n");
-	    writer.write(smoothingOutput.getAbsolutePath());
-	    writer.write("\n");
-	    writer.write(track != null && track.getName() != null ? track.getName() : "");
-	    writer.write("\n");
-	    writer.write(track != null && track.getDatabase() != null ? track.getDatabase() : "");
-	    writer.write("\n");
-	    writer.write(String.valueOf(parameters.getStandardDeviation()));
-	    writer.write("\n");
-	    writer.write(String.valueOf(parameters.getRounds()));
-	    writer.write("\n");
-	    writer.write(String.valueOf(parameters.getStepLength()));
-	    writer.write("\n");
-	    writer.write(parameters.isIncludeSmoothedTrack() ? "1" : "0");
-	    writer.write("\n");
-	    writer.write(parameters.isIncludeMaximumTrack() ? "1" : "0");
-	    writer.write("\n");
-	    writer.write(parameters.isIncludeMinimumTrack() ? "1" : "0");
-	    writer.write("\n");
-	    writer.write(parameters.getMaximumThreshold() != null ? String.valueOf(parameters.getMaximumThreshold())
-		    : "");
-	    writer.write("\n");
-	    writer.write(parameters.getMinimumThreshold() != null ? String.valueOf(parameters.getMinimumThreshold())
-		    : "");
-	    writer.write("\n");
 	}
     }
 }

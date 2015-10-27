@@ -55,21 +55,33 @@ public class ExecutableServiceBean implements ExecutableService {
     private Provider<Executor> executorProvider;
 
     @Inject
-    protected ExecutableServiceBean(OperatingSystemService operatingSystemService,
-	    Provider<Executor> executorProvider) {
+    protected ExecutableServiceBean(OperatingSystemService operatingSystemService, Provider<Executor> executorProvider) {
 	this.operatingSystemService = operatingSystemService;
 	this.executorProvider = executorProvider;
     }
 
     @Override
-    public void smoothing(File parameters, SmoothingEventListener listener) throws IOException {
+    public void smoothing(SmoothingCoreParameters parameters, SmoothingEventListener listener) throws IOException {
 	File directory = new File(SystemUtils.getUserHome(), "smoothing");
 	if (!directory.exists() && !directory.mkdir()) {
 	    throw new IOException("Could not create directory " + directory);
 	}
 	File executable = extractExecutable(directory);
 	CommandLine commandLine = new CommandLine(executable);
-	commandLine.addArgument(parameters.getAbsolutePath());
+	commandLine.addArgument(parameters.getInput().getAbsolutePath());
+	commandLine.addArgument(parameters.getOutput().getAbsolutePath());
+	commandLine.addArgument(parameters.getTrackName());
+	commandLine.addArgument(parameters.getTrackDatabase());
+	commandLine.addArgument(String.valueOf(parameters.getStandardDeviation()));
+	commandLine.addArgument(String.valueOf(parameters.getRounds()));
+	commandLine.addArgument(String.valueOf(parameters.getStepLength()));
+	commandLine.addArgument(parameters.isIncludeSmoothedTrack() ? "1" : "0");
+	commandLine.addArgument(parameters.isIncludeMaximumTrack() ? "1" : "0");
+	commandLine.addArgument(parameters.isIncludeMinimumTrack() ? "1" : "0");
+	commandLine.addArgument(parameters.getMaximumThreshold() != null ? String.valueOf(parameters
+		.getMaximumThreshold()) : "");
+	commandLine.addArgument(parameters.getMinimumThreshold() != null ? String.valueOf(parameters
+		.getMinimumThreshold()) : "");
 	Executor executor = executorProvider.get();
 	if (listener != null) {
 	    OutputStream output = new TeeOutputStream(System.out, new SmoothingEventGenerator(listener));

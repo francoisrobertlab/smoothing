@@ -50,9 +50,9 @@ import ca.qc.ircm.util.javafx.message.MessageDialog.MessageDialogType;
 public class MainPanePresenter {
     private class SmoothingParametersBean implements SmoothingParameters {
 	private List<File> files;
-	private Integer standardDeviation = standardDeviationProperty.get();
-	private Integer rounds = roundsProperty.get();
-	private Integer stepLength = stepLengthProperty.get();
+	private int standardDeviation = standardDeviationProperty.get();
+	private int rounds = roundsProperty.get();
+	private int stepLength = stepLengthProperty.get();
 	private boolean includeSmoothedTrack = includeSmoothedTrackProperty.get();
 	private boolean includeMinimumTrack = includeMinimumTrackProperty.get();
 	private Double minimumThreshold = minimumThresholdProperty.get();
@@ -76,17 +76,17 @@ public class MainPanePresenter {
 	}
 
 	@Override
-	public Integer getStandardDeviation() {
+	public int getStandardDeviation() {
 	    return standardDeviation;
 	}
 
 	@Override
-	public Integer getRounds() {
+	public int getRounds() {
 	    return rounds;
 	}
 
 	@Override
-	public Integer getStepLength() {
+	public int getStepLength() {
 	    return stepLength;
 	}
 

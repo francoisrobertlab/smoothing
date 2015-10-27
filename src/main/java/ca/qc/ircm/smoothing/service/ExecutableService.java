@@ -1,6 +1,5 @@
 package ca.qc.ircm.smoothing.service;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -13,12 +12,12 @@ public interface ExecutableService {
     public interface SmoothingEventListener {
 	/**
 	 * Program's progression changed.
-	 * 
+	 *
 	 * @param progress
 	 *            new progression
 	 */
 	public void processProgress(double progress);
     }
 
-    public void smoothing(File parameters, SmoothingEventListener listener) throws IOException;
+    public void smoothing(SmoothingCoreParameters parameters, SmoothingEventListener listener) throws IOException;
 }

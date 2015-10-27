@@ -23,8 +23,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import ca.qc.ircm.smoothing.OperatingSystem;
 import ca.qc.ircm.smoothing.OperatingSystemService;
@@ -45,6 +43,8 @@ public class ExecutableServiceBeanTest {
     private Provider<Executor> executorProvider;
     @Mock
     private Executor executor;
+    @Mock
+    private SmoothingCoreParameters smoothingCoreParameters;
     @Captor
     private ArgumentCaptor<ExecuteStreamHandler> streamHandlerCaptor;
     @Captor
@@ -58,9 +58,26 @@ public class ExecutableServiceBeanTest {
 	when(executorProvider.get()).thenReturn(executor);
     }
 
+    private SmoothingCoreParametersBean parameters() {
+	SmoothingCoreParametersBean parameters = new SmoothingCoreParametersBean();
+	parameters.input(new File("input.txt"));
+	parameters.output(new File("output.txt"));
+	parameters.trackName("track_name");
+	parameters.trackDatabase("track_database");
+	parameters.standardDeviation(200);
+	parameters.rounds(2);
+	parameters.stepLength(10);
+	parameters.includeSmoothedTrack(true);
+	parameters.includeMaximumTrack(true);
+	parameters.includeMinimumTrack(false);
+	parameters.maximumThreshold(3.0);
+	parameters.minimumThreshold(3.0);
+	return parameters;
+    }
+
     @Test
     public void smoothing() throws Throwable {
-	File parameters = new File("parameters.txt");
+	SmoothingCoreParametersBean parameters = parameters();
 	StringBuilder processOutput = new StringBuilder();
 	processOutput.append("Start\n");
 	processOutput.append("\t10%\n");
@@ -68,16 +85,13 @@ public class ExecutableServiceBeanTest {
 	processOutput.append("\t68%\n");
 	processOutput.append("\t100%\n");
 	processOutput.append("End\n");
-	final ByteArrayInputStream input = new ByteArrayInputStream(
-		processOutput.toString().getBytes(Charset.defaultCharset()));
-	doAnswer(new Answer<Void>() {
-	    @Override
-	    public Void answer(InvocationOnMock invocation) throws Throwable {
-		ExecuteStreamHandler streamHandler = (ExecuteStreamHandler) invocation.getArguments()[0];
-		streamHandler.setProcessOutputStream(input);
-		streamHandler.start();
-		return null;
-	    }
+	final ByteArrayInputStream input = new ByteArrayInputStream(processOutput.toString().getBytes(
+		Charset.defaultCharset()));
+	doAnswer(invocation -> {
+	    ExecuteStreamHandler streamHandler = (ExecuteStreamHandler) invocation.getArguments()[0];
+	    streamHandler.setProcessOutputStream(input);
+	    streamHandler.start();
+	    return null;
 	}).when(executor).setStreamHandler(any(ExecuteStreamHandler.class));
 
 	executableServiceBean.smoothing(parameters, listener);
@@ -90,6 +104,18 @@ public class ExecutableServiceBeanTest {
 	File executable = new File(commandLine.getExecutable());
 	assertEquals(true, executable.exists());
 	assertEquals(true, executable.canExecute());
+	assertEquals(parameters.getInput().getAbsolutePath(), commandLine.getArguments()[0]);
+	assertEquals(parameters.getOutput().getAbsolutePath(), commandLine.getArguments()[1]);
+	assertEquals(parameters.getTrackName(), commandLine.getArguments()[2]);
+	assertEquals(parameters.getTrackDatabase(), commandLine.getArguments()[3]);
+	assertEquals(String.valueOf(parameters.getStandardDeviation()), commandLine.getArguments()[4]);
+	assertEquals(String.valueOf(parameters.getRounds()), commandLine.getArguments()[5]);
+	assertEquals(String.valueOf(parameters.getStepLength()), commandLine.getArguments()[6]);
+	assertEquals("1", commandLine.getArguments()[7]);
+	assertEquals("1", commandLine.getArguments()[8]);
+	assertEquals("0", commandLine.getArguments()[9]);
+	assertEquals(String.valueOf(parameters.getMaximumThreshold()), commandLine.getArguments()[10]);
+	assertEquals(String.valueOf(parameters.getMinimumThreshold()), commandLine.getArguments()[11]);
 	// Validate events.
 	Thread.sleep(200);
 	streamHandlerCaptor.getValue().stop();
@@ -101,7 +127,7 @@ public class ExecutableServiceBeanTest {
 
     @Test
     public void smoothing_Windows32() throws Throwable {
-	File parameters = new File("parameters.txt");
+	SmoothingCoreParametersBean parameters = parameters();
 
 	executableServiceBean.smoothing(parameters, listener);
 
@@ -118,7 +144,7 @@ public class ExecutableServiceBeanTest {
     @Test
     public void smoothing_Windows64() throws Throwable {
 	when(operatingSystemService.is64bit(any(OperatingSystem.class))).thenReturn(true);
-	File parameters = new File("parameters.txt");
+	SmoothingCoreParametersBean parameters = parameters();
 
 	executableServiceBean.smoothing(parameters, listener);
 
@@ -136,7 +162,7 @@ public class ExecutableServiceBeanTest {
     public void smoothing_Mac64() throws Throwable {
 	when(operatingSystemService.currentOS()).thenReturn(OperatingSystem.MAC);
 	when(operatingSystemService.is64bit(any(OperatingSystem.class))).thenReturn(true);
-	File parameters = new File("parameters.txt");
+	SmoothingCoreParametersBean parameters = parameters();
 
 	executableServiceBean.smoothing(parameters, listener);
 
