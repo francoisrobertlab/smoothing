@@ -35,7 +35,7 @@ import javax.inject.Inject;
 import ca.qc.ircm.smoothing.BedWithColor;
 import ca.qc.ircm.smoothing.ErrorHandler;
 import ca.qc.ircm.smoothing.ErrorHandlerDefault;
-import ca.qc.ircm.smoothing.service.BedParser;
+import ca.qc.ircm.smoothing.bed.BedParser;
 import ca.qc.ircm.smoothing.service.SmoothingParameters;
 import ca.qc.ircm.smoothing.service.SmoothingTask;
 import ca.qc.ircm.smoothing.service.SmoothingTaskFactory;
@@ -223,7 +223,7 @@ public class MainPanePresenter {
 	    for (BedWithColor bed : beds) {
 		File file = bed.getFile();
 		try {
-		    bedParser.validateFirstTrack(file, bedWarningHandler, locale);
+		    bedParser.validate(file, locale, bedWarningHandler);
 		} catch (IOException e) {
 		    bedWarningHandler.handleError(MessageFormat.format(resources.getString("error.files.IOException"),
 			    file));

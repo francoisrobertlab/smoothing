@@ -33,6 +33,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import ca.qc.ircm.progress_bar.ProgressBar;
+import ca.qc.ircm.smoothing.bed.BedService;
+import ca.qc.ircm.smoothing.bed.BedTrackDefault;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
 import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
 
@@ -45,7 +47,7 @@ public class SmoothingServiceBeanTest {
     @Mock
     private ExecutableService executableService;
     @Mock
-    private BedParser bedParser;
+    private BedService bedService;
     @Mock
     private ProgressBar progressBar;
     @Captor
@@ -59,7 +61,7 @@ public class SmoothingServiceBeanTest {
 
     @Before
     public void beforeTest() throws Throwable {
-	smoothingServiceBean = new SmoothingServiceBean(executableService, bedParser);
+	smoothingServiceBean = new SmoothingServiceBean(executableService, bedService);
 	parameters = new SmoothingParametersBean();
 	parameters.setStandardDeviation(200);
 	parameters.setRounds(2);
@@ -73,7 +75,7 @@ public class SmoothingServiceBeanTest {
 	track = new BedTrackDefault();
 	track.setName("unit_track");
 	track.setDatabase("unit_database");
-	when(bedParser.parseFirstTrack(any(File.class))).thenReturn(track);
+	when(bedService.parseFirstTrack(any(File.class))).thenReturn(track);
 	when(progressBar.step(any(Double.class))).thenReturn(progressBar);
     }
 
@@ -107,7 +109,7 @@ public class SmoothingServiceBeanTest {
 
 	smoothingServiceBean.smoothing(parameters, progressBar);
 
-	verify(bedParser).parseFirstTrack(bed);
+	verify(bedService).parseFirstTrack(bed);
 	verify(executableService).smoothing(smoothingCoreParametersCaptor.capture(), any(SmoothingEventListener.class));
 	SmoothingCoreParameters coreParameters = smoothingCoreParametersCaptor.getValue();
 	assertEquals(bed, coreParameters.getInput());
@@ -142,7 +144,7 @@ public class SmoothingServiceBeanTest {
 
 	smoothingServiceBean.smoothing(parameters, progressBar);
 
-	verify(bedParser).parseFirstTrack(bed);
+	verify(bedService).parseFirstTrack(bed);
 	verify(executableService).smoothing(smoothingCoreParametersCaptor.capture(), any(SmoothingEventListener.class));
 	SmoothingCoreParameters coreParameters = smoothingCoreParametersCaptor.getValue();
 	assertEquals(bed, coreParameters.getInput());

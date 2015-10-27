@@ -1,3 +1,6 @@
 track name=pairedReads description="Clone Paired Reads" useScore=1
 chr21	1000	5000	cloneA	960	+	1005	4995	0,1,2	2	567,488	0,3512
 chr22	2000	6000	cloneB	900	-	2006	5994	0,1,2	2	433,399	0,3601
+track type=wiggle_0 name=wpairedReads description="Wiggle Clone Paired Reads" useScore=1
+chr11	1000	5000	0.25
+chr12	2000	6000	-0.15

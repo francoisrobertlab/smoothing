@@ -25,6 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ca.qc.ircm.progress_bar.ProgressBar;
+import ca.qc.ircm.smoothing.bed.BedService;
+import ca.qc.ircm.smoothing.bed.BedTrack;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
 
 /**
@@ -122,13 +124,17 @@ public class SmoothingServiceBean implements SmoothingService {
     }
 
     private final Logger logger = LoggerFactory.getLogger(SmoothingServiceBean.class);
-    private final ExecutableService executableService;
-    private final BedParser bedParser;
-
     @Inject
-    protected SmoothingServiceBean(ExecutableService executableService, BedParser bedParser) {
+    private ExecutableService executableService;
+    @Inject
+    private BedService bedService;
+
+    protected SmoothingServiceBean() {
+    }
+
+    protected SmoothingServiceBean(ExecutableService executableService, BedService bedService) {
 	this.executableService = executableService;
-	this.bedParser = bedParser;
+	this.bedService = bedService;
     }
 
     @Override
@@ -143,7 +149,7 @@ public class SmoothingServiceBean implements SmoothingService {
     }
 
     private void smoothing(File file, SmoothingParameters parameters, ProgressBar progressBar) throws IOException {
-	BedTrack track = bedParser.parseFirstTrack(file);
+	BedTrack track = bedService.parseFirstTrack(file);
 
 	File smoothingOutput = smoothingOutput(file);
 	File executableParameters = File.createTempFile("smoothing_parameters", ".txt");

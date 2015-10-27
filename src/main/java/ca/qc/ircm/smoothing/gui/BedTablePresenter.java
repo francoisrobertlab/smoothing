@@ -48,8 +48,8 @@ import javax.inject.Inject;
 
 import ca.qc.ircm.smoothing.BedWithColor;
 import ca.qc.ircm.smoothing.ErrorHandler;
-import ca.qc.ircm.smoothing.service.BedParser;
-import ca.qc.ircm.smoothing.service.BedTrack;
+import ca.qc.ircm.smoothing.bed.BedService;
+import ca.qc.ircm.smoothing.bed.BedTrack;
 import ca.qc.ircm.smoothing.util.FileUtils;
 import ca.qc.ircm.smoothing.util.drag.DragExitedHandler;
 import ca.qc.ircm.smoothing.util.drag.DragFilesOverHandler;
@@ -108,7 +108,7 @@ public class BedTablePresenter {
     }
 
     private class BedWithColorFileCallback implements
-    Callback<TableColumn.CellDataFeatures<BedWithColor, File>, ObservableValue<File>> {
+	    Callback<TableColumn.CellDataFeatures<BedWithColor, File>, ObservableValue<File>> {
 	@Override
 	public ObservableValue<File> call(CellDataFeatures<BedWithColor, File> features) {
 	    return features.getValue().fileProperty();
@@ -183,7 +183,7 @@ public class BedTablePresenter {
     }
 
     private class ColorCellValueFactory implements
-    Callback<TableColumn.CellDataFeatures<BedWithColor, Color>, ObservableValue<Color>> {
+	    Callback<TableColumn.CellDataFeatures<BedWithColor, Color>, ObservableValue<Color>> {
 	@Override
 	public ObservableValue<Color> call(CellDataFeatures<BedWithColor, Color> features) {
 	    return features.getValue().colorProperty();
@@ -216,7 +216,7 @@ public class BedTablePresenter {
     private FileChooser fileChooser = new FileChooser();
     private final List<String> fileCellDefaultClasses;
     @Inject
-    private BedParser bedParser;
+    private BedService bedService;
 
     public BedTablePresenter() {
 	fileCellDefaultClasses = Collections.unmodifiableList(new ArrayList<>(new FileTableCell<BedWithColor>()
@@ -388,12 +388,13 @@ public class BedTablePresenter {
 	}
     }
 
-    private void setColor(BedWithColor bed, File file) {
+    private void setColor(final BedWithColor bed, File file) {
 	bed.setColor(DEFAULT_COLOR);
 	try {
-	    BedTrack track = bedParser.parseFirstTrack(file);
-	    if (track.getColor() != null) {
-		bed.setColor(track.getColor());
+	    BedTrack track = bedService.parseFirstTrack(file);
+	    if (track != null && track.getColor() != null) {
+		java.awt.Color color = track.getColor();
+		bed.setColor(Color.rgb(color.getRed(), color.getGreen(), color.getBlue()));
 	    }
 	} catch (IOException e) {
 	    // Ignore.
