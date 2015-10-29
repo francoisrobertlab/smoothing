@@ -251,9 +251,9 @@ public class BedParserBean implements BedParser {
 		    if (expectedNumberOfColumns == null) {
 			expectedNumberOfColumns = line.getColumnCount();
 		    } else if (line.getColumnCount() != expectedNumberOfColumns) {
-			logger.debug("Annotation at line {} have {} columns instead of expexted {} columns",
-				lineNumberReader.getLineNumber(), line.getColumnCount(), expectedNumberOfColumns);
-			noter.handle(message(bundle, Warning.INVALID_COLUMN_NUMBER, line.getLineNumber()));
+			String message = message(bundle, Warning.INVALID_COLUMN_NUMBER, line.getLineNumber());
+			logger.debug("{}", message);
+			noter.handle(message);
 		    }
 		    ParsedBedAnnotationDefault annotation = parseAnnotation(line, track, bundle, noter);
 		    annotation.valid = !noter.hasWarning();
@@ -270,9 +270,9 @@ public class BedParserBean implements BedParser {
     private void validateBrowser(Line line, ResourceBundle bundle, WarningHandler warningHandler) {
 	String value = line.getContent();
 	if (!Pattern.matches(bundle.getString("browser.pattern"), value)) {
-	    logger.debug("Browser at line {} does not match pattern {}", line.getLineNumber(),
-		    bundle.getString("browser.pattern"));
-	    warningHandler.handle(message(bundle, Warning.INVALID_BROWSER, line.getLineNumber()));
+	    String message = message(bundle, Warning.INVALID_BROWSER, line.getLineNumber());
+	    logger.debug("{}", message);
+	    warningHandler.handle(message);
 	}
     }
 
@@ -282,9 +282,9 @@ public class BedParserBean implements BedParser {
 
 	String value = line.getContent();
 	if (!Pattern.matches(bundle.getString("track.pattern"), value)) {
-	    logger.debug("Track at line {} does not match pattern {}", line.getLineNumber(),
-		    bundle.getString("track.pattern"));
-	    warningHandler.handle(message(bundle, Warning.INVALID_TRACK, line.getLineNumber()));
+	    String message = message(bundle, Warning.INVALID_TRACK, line.getLineNumber());
+	    logger.debug("{}", message);
+	    warningHandler.handle(message);
 	}
 
 	Pattern pattern = Pattern.compile(bundle.getString("track.attribute.pattern"));
@@ -306,9 +306,9 @@ public class BedParserBean implements BedParser {
 		    }
 		}
 		if (trackType == null) {
-		    logger.debug("Track type {} at line {} is not supported, using standard BED instead", value,
-			    line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_TRACK_TYPE, line.getLineNumber()));
+		    String message = message(bundle, Warning.INVALID_TRACK_TYPE, line.getLineNumber());
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 	    }
 
@@ -353,15 +353,16 @@ public class BedParserBean implements BedParser {
 	// Chromosome.
 	value = line.getColumns().get(Column.CHOMOSOME.ordinal());
 	if (value.equals("")) {
-	    logger.debug("Chromosome at line {} is empty", line.getLineNumber());
-	    warningHandler.handle(message(bundle, Warning.EMPTY_CHROMOSOME, line.getLineNumber()));
+	    String message = message(bundle, Warning.EMPTY_CHROMOSOME, line.getLineNumber());
+	    logger.debug("{}", message);
+	    warningHandler.handle(message);
 	} else {
 	    Pattern pattern = Pattern.compile(bundle.getString("chromosome.pattern"));
 	    Matcher matcher = pattern.matcher(value);
 	    if (!matcher.matches()) {
-		logger.debug("Chromosome {} at line {} does not match pattern {}", value, line.getLineNumber(),
-			bundle.getString("chromosome.pattern"));
-		warningHandler.handle(message(bundle, Warning.INVALID_CHROMOSOME, line.getLineNumber(), value));
+		String message = message(bundle, Warning.INVALID_CHROMOSOME, line.getLineNumber(), value);
+		logger.debug("{}", message);
+		warningHandler.handle(message);
 	    } else {
 		annotation.chromosome = matcher.group(1);
 	    }
@@ -370,28 +371,32 @@ public class BedParserBean implements BedParser {
 	// Start.
 	value = line.getColumns().get(Column.START.ordinal());
 	if (value.equals("")) {
-	    logger.debug("Start at line {} is empty", line.getLineNumber());
-	    warningHandler.handle(message(bundle, Warning.EMPTY_START, line.getLineNumber()));
+	    String message = message(bundle, Warning.EMPTY_START, line.getLineNumber());
+	    logger.debug("{}", message);
+	    warningHandler.handle(message);
 	} else {
 	    try {
 		annotation.start = Long.parseLong(value);
 	    } catch (NumberFormatException e) {
-		logger.debug("Start {} at line {} is not a number", value, line.getLineNumber());
-		warningHandler.handle(message(bundle, Warning.INVALID_START, line.getLineNumber(), value));
+		String message = message(bundle, Warning.INVALID_START, line.getLineNumber(), value);
+		logger.debug("{}", message);
+		warningHandler.handle(message);
 	    }
 	}
 
 	// End.
 	value = line.getColumns().get(Column.END.ordinal());
 	if (value.equals("")) {
-	    logger.debug("End at line {} is empty", line.getLineNumber());
-	    warningHandler.handle(message(bundle, Warning.EMPTY_END, line.getLineNumber()));
+	    String message = message(bundle, Warning.EMPTY_END, line.getLineNumber());
+	    logger.debug("{}", message);
+	    warningHandler.handle(message);
 	} else {
 	    try {
 		annotation.end = Long.parseLong(value);
 	    } catch (NumberFormatException e) {
-		logger.debug("End {} at line {} is not a number", value, line.getLineNumber());
-		warningHandler.handle(message(bundle, Warning.INVALID_END, line.getLineNumber(), value));
+		String message = message(bundle, Warning.INVALID_END, line.getLineNumber(), value);
+		logger.debug("{}", message);
+		warningHandler.handle(message);
 	    }
 	}
 
@@ -408,8 +413,9 @@ public class BedParserBean implements BedParser {
 		try {
 		    annotation.score = new Integer(value);
 		} catch (NumberFormatException e) {
-		    logger.debug("Score {} at line {} is not a number", value, line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_SCORE, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_SCORE, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 	    }
 
@@ -427,8 +433,9 @@ public class BedParserBean implements BedParser {
 
 		if (strand == null) {
 		    // No match was found.
-		    logger.debug("Strand {} at line {} does not match any strand", value, line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_STRAND, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_STRAND, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		} else {
 		    annotation.strand = strand;
 		}
@@ -441,15 +448,15 @@ public class BedParserBean implements BedParser {
 		try {
 		    annotation.thickStart = new Long(value);
 		} catch (NumberFormatException e) {
-		    logger.debug("Thick start {} at line {} is not a number", value, line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_THICK_START, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_THICK_START, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 		if (annotation.start != null && annotation.end != null && annotation.thickStart != null
 			&& (annotation.thickStart < annotation.start || annotation.thickStart > annotation.end)) {
-		    logger.debug("Thick start {} at line {} is not between start {} and end {}", value,
-			    line.getLineNumber(), annotation.start, annotation.end);
-		    warningHandler.handle(message(bundle, Warning.THICK_START_OUTSIDE_LOCATION, line.getLineNumber(),
-			    value));
+		    String message = message(bundle, Warning.THICK_START_OUTSIDE_LOCATION, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 	    }
 
@@ -460,15 +467,15 @@ public class BedParserBean implements BedParser {
 		try {
 		    annotation.thickEnd = new Long(value);
 		} catch (NumberFormatException e) {
-		    logger.debug("Thick end {} at line {} is not a number", value, line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_THICK_END, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_THICK_END, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 		if (annotation.start != null && annotation.end != null && annotation.thickEnd != null
 			&& (annotation.thickEnd < annotation.start || annotation.thickEnd > annotation.end)) {
-		    logger.debug("Thick end {} at line {} is not between start {} and end {}", value,
-			    line.getLineNumber(), annotation.start, annotation.end);
-		    warningHandler.handle(message(bundle, Warning.THICK_END_OUTSIDE_LOCATION, line.getLineNumber(),
-			    value));
+		    String message = message(bundle, Warning.THICK_END_OUTSIDE_LOCATION, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 	    }
 
@@ -478,9 +485,9 @@ public class BedParserBean implements BedParser {
 	    } else {
 		annotation.itemRgb = parseColor(bundle, value);
 		if (annotation.itemRgb == null) {
-		    logger.debug("Item RGB {} at line {} does not match pattern {}", value, line.getLineNumber(),
-			    bundle.getString("color.pattern"));
-		    warningHandler.handle(message(bundle, Warning.INVALID_ITEM_RGB, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_ITEM_RGB, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 	    }
 
@@ -492,8 +499,9 @@ public class BedParserBean implements BedParser {
 		try {
 		    annotation.blockCount = new Integer(value);
 		} catch (NumberFormatException e) {
-		    logger.debug("Block count {} at line {} is not a number", value, line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_BLOCK_COUNT, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_BLOCK_COUNT, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		    blockError = true;
 		}
 	    }
@@ -504,10 +512,10 @@ public class BedParserBean implements BedParser {
 	    } else {
 		String[] sizesAsString = value.split(",");
 		if (annotation.blockCount != null && sizesAsString.length != annotation.blockCount) {
-		    logger.debug("Block sizes {} at line {} has {} sizes and {} sizes were expected", value,
-			    line.getLineNumber(), sizesAsString.length, annotation.blockCount);
-		    warningHandler.handle(message(bundle, Warning.MISSMATCH_BLOCK_SIZES_COUNT, line.getLineNumber(),
-			    value, annotation.blockCount));
+		    String message = message(bundle, Warning.MISSMATCH_BLOCK_SIZES_COUNT, line.getLineNumber(), value,
+			    annotation.blockCount);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		    blockError = true;
 		}
 		annotation.blockSizes = new ArrayList<Long>();
@@ -517,10 +525,9 @@ public class BedParserBean implements BedParser {
 			annotation.blockSizes.add(new Long(size));
 		    } catch (NumberFormatException e) {
 			if (!formatException) {
-			    logger.debug("Block sizes {} at line {} does not match pattern {}", value,
-				    line.getLineNumber(), bundle.getString("blockSizes.pattern"));
-			    warningHandler.handle(message(bundle, Warning.INVALID_BLOCK_SIZES, line.getLineNumber(),
-				    value));
+			    String message = message(bundle, Warning.INVALID_BLOCK_SIZES, line.getLineNumber(), value);
+			    logger.debug("{}", message);
+			    warningHandler.handle(message);
 			    formatException = true;
 			    blockError = true;
 			}
@@ -534,10 +541,10 @@ public class BedParserBean implements BedParser {
 	    } else {
 		String[] startsAsString = value.split(",");
 		if (annotation.blockCount != null && startsAsString.length != annotation.blockCount) {
-		    logger.debug("Block starts {} at line {} has {} starts and {} starts were expected", value,
-			    line.getLineNumber(), startsAsString.length, annotation.blockCount);
-		    warningHandler.handle(message(bundle, Warning.MISSMATCH_BLOCK_STARTS_COUNT, line.getLineNumber(),
-			    value, annotation.blockCount));
+		    String message = message(bundle, Warning.MISSMATCH_BLOCK_STARTS_COUNT, line.getLineNumber(), value,
+			    annotation.blockCount);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		    blockError = true;
 		}
 
@@ -548,10 +555,9 @@ public class BedParserBean implements BedParser {
 			annotation.blockStarts.add(new Long(start));
 		    } catch (NumberFormatException e) {
 			if (!formatException) {
-			    logger.debug("Block starts {} at line {} does not match pattern {}", value,
-				    line.getLineNumber(), bundle.getString("blockStarts.pattern"));
-			    warningHandler.handle(message(bundle, Warning.INVALID_BLOCK_STARTS, line.getLineNumber(),
-				    value));
+			    String message = message(bundle, Warning.INVALID_BLOCK_STARTS, line.getLineNumber(), value);
+			    logger.debug("{}", message);
+			    warningHandler.handle(message);
 			    formatException = true;
 			    blockError = true;
 			}
@@ -563,8 +569,9 @@ public class BedParserBean implements BedParser {
 		// Validate first block.
 		if (annotation.blockStarts != null && !annotation.blockStarts.isEmpty()
 			&& annotation.blockStarts.get(0) != 0L) {
-		    logger.debug("First block starts {} at line {} is not 0", value, line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_FIRST_BLOCK_START, line.getLineNumber()));
+		    String message = message(bundle, Warning.INVALID_FIRST_BLOCK_START, line.getLineNumber());
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 
 		// Validate last block.
@@ -576,10 +583,9 @@ public class BedParserBean implements BedParser {
 		    blockCoverage += annotation.blockStarts.get(annotation.blockStarts.size() - 1);
 		    blockCoverage += annotation.blockSizes.get(annotation.blockSizes.size() - 1);
 		    if (blockCoverage != annotation.end) {
-			logger.debug(
-				"Last block at line {} in error: BED blocks must span chromStart to chromEnd. (chromStart + chromStarts[last] + blockSizes[last]) must equal chromEnd. ",
-				line.getLineNumber());
-			warningHandler.handle(message(bundle, Warning.INVALID_LAST_BLOCK, line.getLineNumber()));
+			String message = message(bundle, Warning.INVALID_LAST_BLOCK, line.getLineNumber());
+			logger.debug("{}", message);
+			warningHandler.handle(message);
 		    }
 		}
 	    }
@@ -587,14 +593,16 @@ public class BedParserBean implements BedParser {
 	    // Data value.
 	    value = line.getColumns().get(Column.DATA_VALUE.ordinal());
 	    if (value.equals("")) {
-		logger.debug("Data value at line {} is empty", line.getLineNumber());
-		warningHandler.handle(message(bundle, Warning.EMPTY_DATA_VALUE, line.getLineNumber()));
+		String message = message(bundle, Warning.EMPTY_DATA_VALUE, line.getLineNumber());
+		logger.debug("{}", message);
+		warningHandler.handle(message);
 	    } else {
 		try {
 		    annotation.dataValue = new Double(value);
 		} catch (NumberFormatException e) {
-		    logger.debug("Data value at line {} is invalid", line.getLineNumber());
-		    warningHandler.handle(message(bundle, Warning.INVALID_DATA_VALUE, line.getLineNumber(), value));
+		    String message = message(bundle, Warning.INVALID_DATA_VALUE, line.getLineNumber(), value);
+		    logger.debug("{}", message);
+		    warningHandler.handle(message);
 		}
 	    }
 	}
