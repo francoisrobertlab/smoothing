@@ -39,7 +39,7 @@ import ca.qc.ircm.smoothing.bed.BedParser;
 import ca.qc.ircm.smoothing.service.SmoothingParameters;
 import ca.qc.ircm.smoothing.service.SmoothingTask;
 import ca.qc.ircm.smoothing.service.SmoothingTaskFactory;
-import ca.qc.ircm.smoothing.validation.WarningHandler;
+import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 import ca.qc.ircm.util.javafx.NullOnExceptionStringConverter;
 import ca.qc.ircm.util.javafx.message.MessageDialog;
 import ca.qc.ircm.util.javafx.message.MessageDialog.MessageDialogType;
@@ -118,13 +118,6 @@ public class MainPanePresenter {
 	@Override
 	public Color getColor(File file) {
 	    return colors.get(file);
-	}
-    }
-
-    private class BedWarningHandler extends ErrorHandlerDefault implements WarningHandler {
-	@Override
-	public void handle(String warning) {
-	    this.handleError(warning);
 	}
     }
 
@@ -219,19 +212,19 @@ public class MainPanePresenter {
 	    return;
 	} else {
 	    List<BedWithColor> beds = bedTable.getItems();
-	    BedWarningHandler bedWarningHandler = new BedWarningHandler();
+	    WarningHandlerNoter bedWarningHandler = new WarningHandlerNoter();
 	    for (BedWithColor bed : beds) {
 		File file = bed.getFile();
 		try {
 		    bedParser.validate(file, locale, bedWarningHandler);
 		} catch (IOException e) {
-		    bedWarningHandler.handleError(MessageFormat.format(resources.getString("error.files.IOException"),
-			    file));
+		    bedWarningHandler
+			    .handle(MessageFormat.format(resources.getString("error.files.IOException"), file));
 		}
 	    }
-	    if (bedWarningHandler.hasErrors()) {
+	    if (bedWarningHandler.hasWarning()) {
 		new MessageDialog(view.getScene().getWindow(), MessageDialogType.ERROR,
-			resources.getString("validationError.title"), bedWarningHandler.messages());
+			resources.getString("validationError.title"), bedWarningHandler.getWarnings());
 		return;
 	    } else {
 		final Window window = view.getScene().getWindow();
