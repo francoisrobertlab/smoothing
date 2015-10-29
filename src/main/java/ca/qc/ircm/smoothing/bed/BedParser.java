@@ -30,7 +30,7 @@ public interface BedParser {
      * @param file
      *            BED file
      * @param handler
-     *            handles valid BED elements (and invalid BED elements if handler implements {@link InvalidBedHandler})
+     *            handles BED elements
      * @throws IOException
      *             could not parse BED file
      */

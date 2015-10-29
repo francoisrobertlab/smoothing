@@ -24,9 +24,6 @@ import ca.qc.ircm.smoothing.bio.Strand;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 
-/**
- * Parses annotations present in a file.
- */
 public class BedParserBean implements BedParser {
     private static class ParsedBedTrackDefault extends BedTrackDefault implements ParsedBedTrack {
 	private boolean valid;
@@ -82,8 +79,7 @@ public class BedParserBean implements BedParser {
 	 */
 	INVALID_FIRST_BLOCK_START,
 	/**
-	 * For all {@link BedAnnotation} that have blocks, this must be true: start + last block start + last block size
-	 * == end
+	 * For all annotations that have blocks, this must be true: start + last block start + last block size == end
 	 */
 	INVALID_LAST_BLOCK, EMPTY_DATA_VALUE, INVALID_DATA_VALUE;
     }
@@ -183,33 +179,11 @@ public class BedParserBean implements BedParser {
 
     private final Logger logger = LoggerFactory.getLogger(BedParserBean.class);
 
-    /**
-     * Parses BED file.
-     *
-     * @param file
-     *            BED file
-     * @param locale
-     *            user's locale
-     * @param warningHandler
-     *            handles warnings
-     * @throws IOException
-     *             could not parse BED file
-     */
     @Override
     public void validate(File file, Locale locale, WarningHandler warningHandler) throws IOException {
 	parseAndValidate(file, null, locale, warningHandler);
     }
 
-    /**
-     * Parses BED file.
-     *
-     * @param file
-     *            BED file
-     * @param handler
-     *            handles valid BED elements (and invalid BED elements if handler implements {@link InvalidBedHandler})
-     * @throws IOException
-     *             could not parse BED file
-     */
     @Override
     public void parse(File file, BedHandler handler) throws IOException {
 	parseAndValidate(file, handler, Locale.getDefault(), null);
