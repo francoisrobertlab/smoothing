@@ -1,10 +1,14 @@
 package ca.qc.ircm.smoothing.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.concurrent.Task;
 
 import javax.inject.Inject;
 
 import ca.qc.ircm.progress_bar.SimpleProgressBar;
+import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 
 import com.google.inject.assistedinject.Assisted;
 
@@ -28,6 +32,7 @@ public class SmoothingTask extends Task<Void> {
 
     private final SmoothingService smoothingService;
     private final SmoothingParameters parameters;
+    private List<String> warnings = new ArrayList<>();
 
     @Inject
     protected SmoothingTask(SmoothingService smoothingService, @Assisted SmoothingParameters parameters) {
@@ -37,7 +42,14 @@ public class SmoothingTask extends Task<Void> {
 
     @Override
     protected Void call() throws Exception {
-	smoothingService.smoothing(parameters, new InternalProgressBar());
+	WarningHandlerNoter warningHandler = new WarningHandlerNoter();
+	smoothingService.smoothing(parameters, new InternalProgressBar(), warningHandler);
+	warnings.clear();
+	warnings.addAll(warningHandler.getWarnings());
 	return null;
+    }
+
+    public List<String> getWarnings() {
+	return warnings;
     }
 }

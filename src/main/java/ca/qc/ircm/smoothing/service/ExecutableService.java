@@ -17,6 +17,10 @@ public interface ExecutableService {
 	 *            new progression
 	 */
 	public void processProgress(double progress);
+
+	public void setRawDataCount(int count);
+
+	public void setChromosomeCount(int count);
     }
 
     public void smoothing(SmoothingCoreParameters parameters, SmoothingEventListener listener) throws IOException;

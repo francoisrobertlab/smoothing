@@ -32,6 +32,8 @@ import ca.qc.ircm.smoothing.OperatingSystemService;
  */
 public class ExecutableServiceBean implements ExecutableService {
     private final static Pattern PROGRESS_PATTERN = Pattern.compile("\\s+(\\d+)%");
+    private final static Pattern RAW_DATA_COUNT_PATTERN = Pattern.compile("nbRawData=(\\d+)");
+    private final static Pattern CHROMOSOME_COUNT_PATTERN = Pattern.compile("nbrChrom=(\\d+)");
 
     private static class SmoothingEventGenerator extends LogOutputStream {
 	private final SmoothingEventListener listener;
@@ -45,6 +47,14 @@ public class ExecutableServiceBean implements ExecutableService {
 	    Matcher matcher = PROGRESS_PATTERN.matcher(line);
 	    if (matcher.matches()) {
 		listener.processProgress(Double.valueOf(matcher.group(1)) / 100);
+	    }
+	    matcher = RAW_DATA_COUNT_PATTERN.matcher(line);
+	    if (matcher.find()) {
+		listener.setRawDataCount(Integer.parseInt(matcher.group(1)));
+	    }
+	    matcher = CHROMOSOME_COUNT_PATTERN.matcher(line);
+	    if (matcher.find()) {
+		listener.setChromosomeCount(Integer.parseInt(matcher.group(1)));
 	    }
 	}
     }

@@ -78,8 +78,12 @@ public class ExecutableServiceBeanTest {
     @Test
     public void smoothing() throws Throwable {
 	SmoothingCoreParametersBean parameters = parameters();
+	int chromosomeCount = 18;
+	int dataCount = 171212;
 	StringBuilder processOutput = new StringBuilder();
 	processOutput.append("Start\n");
+	processOutput.append("nbRawData=" + dataCount + " from " + parameters.getInput().getAbsolutePath() + "\n");
+	processOutput.append("nbrChrom=" + chromosomeCount + ", nbrNt=12911834\n");
 	processOutput.append("\t10%\n");
 	processOutput.append("\t25%\n");
 	processOutput.append("\t68%\n");
@@ -119,6 +123,8 @@ public class ExecutableServiceBeanTest {
 	// Validate events.
 	Thread.sleep(200);
 	streamHandlerCaptor.getValue().stop();
+	verify(listener).setChromosomeCount(chromosomeCount);
+	verify(listener).setRawDataCount(dataCount);
 	verify(listener).processProgress(0.1);
 	verify(listener).processProgress(0.25);
 	verify(listener).processProgress(0.68);

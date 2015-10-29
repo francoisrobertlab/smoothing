@@ -28,6 +28,7 @@ import ca.qc.ircm.progress_bar.ProgressBar;
 import ca.qc.ircm.smoothing.bed.BedService;
 import ca.qc.ircm.smoothing.bed.BedTrack;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
+import ca.qc.ircm.smoothing.validation.WarningHandler;
 
 /**
  * Default implementation of {@link SmoothingService}.
@@ -112,6 +113,8 @@ public class SmoothingServiceBean implements SmoothingService {
 
     private static class SmoothingEventListenerBean implements SmoothingEventListener {
 	private final ProgressBar progressBar;
+	private Integer rawDataCount;
+	private Integer chromosomeCount;
 
 	private SmoothingEventListenerBean(ProgressBar progressBar) {
 	    this.progressBar = progressBar;
@@ -120,6 +123,16 @@ public class SmoothingServiceBean implements SmoothingService {
 	@Override
 	public void processProgress(double progress) {
 	    progressBar.setProgress(progress);
+	}
+
+	@Override
+	public void setRawDataCount(int count) {
+	    rawDataCount = count;
+	}
+
+	@Override
+	public void setChromosomeCount(int count) {
+	    chromosomeCount = count;
 	}
     }
 
@@ -138,18 +151,22 @@ public class SmoothingServiceBean implements SmoothingService {
     }
 
     @Override
-    public void smoothing(SmoothingParameters parameters, ProgressBar progressBar) throws IOException {
+    public void smoothing(SmoothingParameters parameters, ProgressBar progressBar, WarningHandler warningHandler)
+	    throws IOException {
 	List<File> files = parameters.getFiles();
 	double step = 1.0 / Math.max(files.size(), 1);
 	ResourceBundle resources = ResourceBundle.getBundle(SmoothingService.class.getName(), Locale.getDefault());
 	for (File file : files) {
-	    progressBar.setMessage(MessageFormat.format(resources.getString("file"), file.getName()));
-	    smoothing(file, parameters, progressBar.step(step));
+	    progressBar.setMessage(message(resources, "file", file.getName()));
+	    smoothing(file, parameters, progressBar.step(step), warningHandler, resources);
 	}
     }
 
-    private void smoothing(File file, SmoothingParameters parameters, ProgressBar progressBar) throws IOException {
+    private void smoothing(File file, SmoothingParameters parameters, ProgressBar progressBar,
+	    WarningHandler warningHandler, ResourceBundle resources) throws IOException {
 	BedTrack track = bedService.parseFirstTrack(file);
+	int expectedChromosomeCount = bedService.countFirstTrackChromosomes(file);
+	int expectedDataCount = bedService.countFirstTrackData(file);
 
 	File smoothingOutput = smoothingOutput(file);
 	File executableParameters = File.createTempFile("smoothing_parameters", ".txt");
@@ -158,7 +175,20 @@ public class SmoothingServiceBean implements SmoothingService {
 	    String trackDatabase = track != null && track.getDatabase() != null ? track.getDatabase() : "";
 	    SmoothingCoreParameters coreParameters = new SmoothingCoreParametersDelegate(parameters, file,
 		    smoothingOutput, trackName, trackDatabase);
-	    executableService.smoothing(coreParameters, new SmoothingEventListenerBean(progressBar));
+	    SmoothingEventListenerBean smoothingListener = new SmoothingEventListenerBean(progressBar);
+	    executableService.smoothing(coreParameters, smoothingListener);
+	    if (smoothingListener.chromosomeCount != null
+		    && smoothingListener.chromosomeCount != expectedChromosomeCount) {
+		String message = message(resources, "chromosomeCount.mismatch", file.getName(),
+			smoothingListener.chromosomeCount, expectedChromosomeCount);
+		logger.debug("{}", message);
+		warningHandler.handle(message);
+	    } else if (smoothingListener.rawDataCount != null && smoothingListener.rawDataCount != expectedDataCount) {
+		String message = message(resources, "rawDataCount.mismatch", file.getName(),
+			smoothingListener.rawDataCount, expectedDataCount);
+		logger.debug("{}", message);
+		warningHandler.handle(message);
+	    }
 	} finally {
 	    if (!executableParameters.delete()) {
 		logger.warn("Could not delete file {}", executableParameters);
@@ -209,5 +239,9 @@ public class SmoothingServiceBean implements SmoothingService {
 	} else {
 	    return new File(smoothingOutputName.toString());
 	}
+    }
+
+    private String message(ResourceBundle resources, String key, Object... replacements) {
+	return MessageFormat.format(resources.getString(key), replacements);
     }
 }

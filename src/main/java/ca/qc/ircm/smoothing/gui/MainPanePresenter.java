@@ -231,7 +231,7 @@ public class MainPanePresenter {
 	    }
 	    if (bedWarningHandler.hasErrors()) {
 		new MessageDialog(view.getScene().getWindow(), MessageDialogType.ERROR,
-			resources.getString("validationError.title"), errorHandler.messages());
+			resources.getString("validationError.title"), bedWarningHandler.messages());
 		return;
 	    } else {
 		final Window window = view.getScene().getWindow();
@@ -250,9 +250,15 @@ public class MainPanePresenter {
 			    new MessageDialog(window, MessageDialogType.ERROR, resources.getString("failed.title"),
 				    resources.getString("failed.message"), error.getMessage());
 			} else if (newValue == State.SUCCEEDED) {
-			    // Show confirm message.
-			    new MessageDialog(window, MessageDialogType.INFORMATION, resources
-				    .getString("succeeded.title"), resources.getString("succeeded.message"));
+			    if (task.getWarnings().isEmpty()) {
+				// Show confirm message.
+				new MessageDialog(window, MessageDialogType.INFORMATION, resources
+					.getString("succeeded.title"), resources.getString("succeeded.message"));
+			    } else {
+				// Show warnings.
+				new MessageDialog(window, MessageDialogType.WARNING, resources
+					.getString("warning.title"), task.getWarnings());
+			    }
 			}
 		    }
 		});
