@@ -9,7 +9,6 @@ import ca.qc.ircm.smoothing.gui.MainApplication;
  */
 public class Main {
     public static void main(String[] args) {
-	Log4JInit.init();
 	Application.launch(MainApplication.class, args);
     }
 }
