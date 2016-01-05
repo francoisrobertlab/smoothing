@@ -7,10 +7,13 @@ import javafx.concurrent.Task;
 
 import javax.inject.Inject;
 
-import ca.qc.ircm.progress_bar.SimpleProgressBar;
-import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.assistedinject.Assisted;
+
+import ca.qc.ircm.progress_bar.SimpleProgressBar;
+import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 
 /**
  * Create graphs based on analysis results.
@@ -30,6 +33,7 @@ public class SmoothingTask extends Task<Void> {
 	}
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(SmoothingTask.class);
     private final SmoothingService smoothingService;
     private final SmoothingParameters parameters;
     private List<String> warnings = new ArrayList<>();
@@ -42,11 +46,16 @@ public class SmoothingTask extends Task<Void> {
 
     @Override
     protected Void call() throws Exception {
-	WarningHandlerNoter warningHandler = new WarningHandlerNoter();
-	smoothingService.smoothing(parameters, new InternalProgressBar(), warningHandler);
-	warnings.clear();
-	warnings.addAll(warningHandler.getWarnings());
-	return null;
+	try {
+	    WarningHandlerNoter warningHandler = new WarningHandlerNoter();
+	    smoothingService.smoothing(parameters, new InternalProgressBar(), warningHandler);
+	    warnings.clear();
+	    warnings.addAll(warningHandler.getWarnings());
+	    return null;
+	} catch (Exception e) {
+	    logger.error("Smoothing did not complete normaly", e);
+	    throw e;
+	}
     }
 
     public List<String> getWarnings() {
