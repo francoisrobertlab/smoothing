@@ -26,7 +26,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -37,13 +36,12 @@ import ca.qc.ircm.progress_bar.ProgressBar;
 import ca.qc.ircm.smoothing.bed.BedService;
 import ca.qc.ircm.smoothing.bed.BedTrackDefault;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
-import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
+import ca.qc.ircm.smoothing.test.config.DefaultRules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 
 /**
  * Tests for {@link SmoothingServiceBean}.
  */
-@RunWith(TestRunnerLog4J.class)
 public class SmoothingServiceBeanTest {
     private SmoothingServiceBean smoothingServiceBean;
     @Mock
@@ -58,6 +56,8 @@ public class SmoothingServiceBeanTest {
     private ArgumentCaptor<File> fileCaptor;
     @Captor
     private ArgumentCaptor<SmoothingCoreParameters> smoothingCoreParametersCaptor;
+    @Rule
+    public DefaultRules defaultRules = new DefaultRules(this);
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
     private SmoothingParametersBean parameters;

@@ -2,17 +2,18 @@ package ca.qc.ircm.smoothing;
 
 import org.junit.Before;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
+import ca.qc.ircm.smoothing.test.config.DefaultRules;
 
 /**
  * Tests {@link OperatingSystemServiceDefault}.
  */
-@RunWith(TestRunnerLog4J.class)
 public class OperatingSystemServiceDefaultTest {
     private OperatingSystemServiceBean operatingSystemServiceBean;
+    @Rule
+    public DefaultRules defaultRules = new DefaultRules(this);
 
     @Before
     public void beforeTest() {

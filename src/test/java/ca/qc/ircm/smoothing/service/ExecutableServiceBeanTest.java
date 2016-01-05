@@ -18,8 +18,8 @@ import org.apache.commons.exec.Executor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -27,12 +27,11 @@ import org.mockito.Mock;
 import ca.qc.ircm.smoothing.OperatingSystem;
 import ca.qc.ircm.smoothing.OperatingSystemService;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
-import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
+import ca.qc.ircm.smoothing.test.config.DefaultRules;
 
 /**
  * Tests for {@link ExecutableServiceBean}.
  */
-@RunWith(TestRunnerLog4J.class)
 public class ExecutableServiceBeanTest {
     private ExecutableServiceBean executableServiceBean;
     @Mock
@@ -49,6 +48,8 @@ public class ExecutableServiceBeanTest {
     private ArgumentCaptor<ExecuteStreamHandler> streamHandlerCaptor;
     @Captor
     private ArgumentCaptor<CommandLine> commandLineCaptor;
+    @Rule
+    public DefaultRules defaultRules = new DefaultRules(this);
 
     @Before
     public void beforeTest() {
@@ -89,8 +90,8 @@ public class ExecutableServiceBeanTest {
 	processOutput.append("\t68%\n");
 	processOutput.append("\t100%\n");
 	processOutput.append("End\n");
-	final ByteArrayInputStream input = new ByteArrayInputStream(processOutput.toString().getBytes(
-		Charset.defaultCharset()));
+	final ByteArrayInputStream input = new ByteArrayInputStream(
+		processOutput.toString().getBytes(Charset.defaultCharset()));
 	doAnswer(invocation -> {
 	    ExecuteStreamHandler streamHandler = (ExecuteStreamHandler) invocation.getArguments()[0];
 	    streamHandler.setProcessOutputStream(input);

@@ -12,13 +12,12 @@ import static org.mockito.Mockito.when;
 import java.io.File;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
-import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
+import ca.qc.ircm.smoothing.test.config.DefaultRules;
 
-@RunWith(TestRunnerLog4J.class)
 public class BedServiceBeanTest {
     private BedServiceBean bedServiceBean;
     @Mock
@@ -33,6 +32,8 @@ public class BedServiceBeanTest {
     private ParsedBedAnnotation annotation2;
     @Mock
     private ParsedBedAnnotation annotation3;
+    @Rule
+    public DefaultRules defaultRules = new DefaultRules(this);
 
     @Before
     public void beforeTest() {

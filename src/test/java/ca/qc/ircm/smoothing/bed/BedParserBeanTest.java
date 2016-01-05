@@ -13,17 +13,16 @@ import java.io.File;
 import java.util.Locale;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
 import ca.qc.ircm.smoothing.bio.Strand;
-import ca.qc.ircm.smoothing.test.config.TestRunnerLog4J;
+import ca.qc.ircm.smoothing.test.config.DefaultRules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 
-@RunWith(TestRunnerLog4J.class)
 public class BedParserBeanTest {
     private BedParserBean bedParser;
     @Mock
@@ -38,6 +37,8 @@ public class BedParserBeanTest {
     private ArgumentCaptor<ParsedBedTrack> annotationsTrackCaptor;
     @Captor
     private ArgumentCaptor<String> warningCaptor;
+    @Rule
+    public DefaultRules defaultRules = new DefaultRules(this);
 
     @Before
     public void beforeTest() {
