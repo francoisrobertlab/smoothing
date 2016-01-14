@@ -15,12 +15,13 @@ import java.util.Locale;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
 import ca.qc.ircm.smoothing.bio.Strand;
-import ca.qc.ircm.smoothing.test.config.DefaultRules;
+import ca.qc.ircm.smoothing.test.config.Rules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 
 public class BedParserBeanTest {
@@ -38,7 +39,7 @@ public class BedParserBeanTest {
     @Captor
     private ArgumentCaptor<String> warningCaptor;
     @Rule
-    public DefaultRules defaultRules = new DefaultRules(this);
+    public RuleChain rules = Rules.defaultRules(this);
 
     @Before
     public void beforeTest() {

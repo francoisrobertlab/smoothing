@@ -14,9 +14,10 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.mockito.Mock;
 
-import ca.qc.ircm.smoothing.test.config.DefaultRules;
+import ca.qc.ircm.smoothing.test.config.Rules;
 
 public class BedServiceBeanTest {
     private BedServiceBean bedServiceBean;
@@ -33,7 +34,7 @@ public class BedServiceBeanTest {
     @Mock
     private ParsedBedAnnotation annotation3;
     @Rule
-    public DefaultRules defaultRules = new DefaultRules(this);
+    public RuleChain rules = Rules.defaultRules(this);
 
     @Before
     public void beforeTest() {

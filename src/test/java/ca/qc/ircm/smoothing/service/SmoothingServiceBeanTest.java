@@ -25,6 +25,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TemporaryFolder;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -36,7 +37,7 @@ import ca.qc.ircm.progress_bar.ProgressBar;
 import ca.qc.ircm.smoothing.bed.BedService;
 import ca.qc.ircm.smoothing.bed.BedTrackDefault;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
-import ca.qc.ircm.smoothing.test.config.DefaultRules;
+import ca.qc.ircm.smoothing.test.config.Rules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 
 /**
@@ -56,10 +57,9 @@ public class SmoothingServiceBeanTest {
     private ArgumentCaptor<File> fileCaptor;
     @Captor
     private ArgumentCaptor<SmoothingCoreParameters> smoothingCoreParametersCaptor;
-    @Rule
-    public DefaultRules defaultRules = new DefaultRules(this);
-    @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    @Rule
+    public RuleChain rules = Rules.defaultRules(this).around(temporaryFolder);
     private SmoothingParametersBean parameters;
     private BedTrackDefault track;
 

@@ -20,6 +20,7 @@ import org.apache.commons.lang3.SystemUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -27,7 +28,7 @@ import org.mockito.Mock;
 import ca.qc.ircm.smoothing.OperatingSystem;
 import ca.qc.ircm.smoothing.OperatingSystemService;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
-import ca.qc.ircm.smoothing.test.config.DefaultRules;
+import ca.qc.ircm.smoothing.test.config.Rules;
 
 /**
  * Tests for {@link ExecutableServiceBean}.
@@ -49,7 +50,7 @@ public class ExecutableServiceBeanTest {
     @Captor
     private ArgumentCaptor<CommandLine> commandLineCaptor;
     @Rule
-    public DefaultRules defaultRules = new DefaultRules(this);
+    public RuleChain rules = Rules.defaultRules(this);
 
     @Before
     public void beforeTest() {

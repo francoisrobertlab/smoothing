@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 
-import ca.qc.ircm.smoothing.test.config.DefaultRules;
+import ca.qc.ircm.smoothing.test.config.Rules;
 
 /**
  * Tests {@link OperatingSystemServiceDefault}.
@@ -13,7 +14,7 @@ import ca.qc.ircm.smoothing.test.config.DefaultRules;
 public class OperatingSystemServiceDefaultTest {
     private OperatingSystemServiceBean operatingSystemServiceBean;
     @Rule
-    public DefaultRules defaultRules = new DefaultRules(this);
+    public RuleChain rules = Rules.defaultRules(this);
 
     @Before
     public void beforeTest() {
