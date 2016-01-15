@@ -11,8 +11,8 @@
     <name>smoothing</name>
     <description>Executes smoothing on some bed files</description>
     <scm>
-        <connection>scm:git:https://bitbucket.org/benoitcoulombelab/smoothing.git</connection>
-        <developerConnection>scm:git:https://bitbucket.org/benoitcoulombelab/smoothing.git</developerConnection>
+        <connection>scm:git:git@bitbucket.org:benoitcoulombelab/smoothing.git</connection>
+        <developerConnection>scm:git:git@bitbucket.org:benoitcoulombelab/smoothing.git</developerConnection>
         <url>https://bitbucket.org/benoitcoulombelab/smoothing</url>
         <tag>HEAD</tag>
     </scm>
