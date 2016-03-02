@@ -1,264 +1,275 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>ircm-parent</artifactId>
-        <groupId>ca.qc.ircm</groupId>
-        <version>2</version>
-        <relativePath>../ircm-parent/pom.xml</relativePath>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>smoothing</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-    <name>smoothing</name>
-    <description>Executes smoothing on some bed files</description>
-    <scm>
-        <connection>scm:git:git@bitbucket.org:ircm/smoothing.git</connection>
-        <developerConnection>scm:git:git@bitbucket.org:ircm/smoothing.git</developerConnection>
-        <url>https://bitbucket.org/ircm/smoothing</url>
-        <tag>HEAD</tag>
-    </scm>
-    <issueManagement>
-        <system>Bitbucket</system>
-        <url>https://bitbucket.org/ircm/smoothing/issues</url>
-    </issueManagement>
-    <properties>
-        <javac.version>1.8</javac.version>
-        <mainClass>ca.qc.ircm.smoothing.Main</mainClass>
-        <slf4j.version>1.7.5</slf4j.version>
-        <afterburner.version>1.6.1</afterburner.version>
-        <javafx.ant>${env.JAVA_HOME}/lib/ant-javafx.jar</javafx.ant>
-        <javafx.finalName>${project.build.finalName}-jar-with-dependencies.jar</javafx.finalName>
-        <javafx.bundle>${project.artifactId}</javafx.bundle>
-    </properties>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-        <dependency>
-            <groupId>ca.qc.ircm.utils</groupId>
-            <artifactId>progress_bar</artifactId>
-            <version>3.3</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-vfs2</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-exec</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-assistedinject</artifactId>
-            <version>3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.airhacks</groupId>
-            <artifactId>afterburner.fx</artifactId>
-            <version>${afterburner.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>annotations</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-    </dependencies>
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.fxml</include>
-                    <include>**/*.css</include>
-                    <include>**/*.png</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-        </testResources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <excludes>
-                            <exclude>ca/qc/ircm/smoothing/test/**/*.java</exclude>
-                        </excludes>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <mainClass>${mainClass}</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>javafx-assembly</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                            <configuration>
-                                <target xmlns:fx="javafx:com.sun.javafx.tools.ant">
-                                    <echo message="Packaging jar with JavaFX" />
-                                    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${javafx.ant}" />
-                                    <fx:application id="fx-application" name="${javafx.bundle}" mainClass="${mainClass}" />
-                                    <fx:jar destfile="${project.build.directory}/${javafx.finalName}">
-                                        <fx:application refId="fx-application" />
-                                        <fileset dir="${project.build.outputDirectory}" />
-                                        <fileset dir="${project.build.directory}/dependency" />
-                                        <manifest>
-                                            <attribute name="Built-By" value="${user.name}" />
-                                            <attribute name="Build-Jdk" value="${java.version}" />
-                                            <attribute name="Specification-Title" value="${project.name}" />
-                                            <attribute name="Specification-Version" value="${project.version}" />
-                                            <attribute name="Specification-Vendor" value="${project.organization.name}" />
-                                            <attribute name="Implementation-Title" value="${project.name}" />
-                                            <attribute name="Implementation-Version" value="${project.version}" />
-                                            <attribute name="Implementation-Vendor-Id" value="${project.groupId}" />
-                                            <attribute name="Implementation-Vendor" value="${project.organization.name}" />
-                                            <attribute name="Implementation-Build" value="${buildNumber}" />
-                                            <attribute name="X-Compile-Source-JDK" value="${javac.version}" />
-                                            <attribute name="X-Compile-Target-JDK" value="${javac.version}" />
-                                        </manifest>
-                                    </fx:jar>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>ircm-parent</artifactId>
+    <groupId>ca.qc.ircm</groupId>
+    <version>2</version>
+    <relativePath>../ircm-parent/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>smoothing</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>smoothing</name>
+  <description>Executes smoothing on some bed files</description>
+  <scm>
+    <connection>scm:git:git@bitbucket.org:ircm/smoothing.git</connection>
+    <developerConnection>scm:git:git@bitbucket.org:ircm/smoothing.git</developerConnection>
+    <url>https://bitbucket.org/ircm/smoothing</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>Bitbucket</system>
+    <url>https://bitbucket.org/ircm/smoothing/issues</url>
+  </issueManagement>
+  <properties>
+    <javac.version>1.8</javac.version>
+    <mainClass>ca.qc.ircm.smoothing.Main</mainClass>
+    <slf4j.version>1.7.5</slf4j.version>
+    <afterburner.version>1.6.1</afterburner.version>
+    <javafx.ant>${env.JAVA_HOME}/lib/ant-javafx.jar</javafx.ant>
+    <javafx.finalName>${project.build.finalName}-jar-with-dependencies.jar</javafx.finalName>
+    <javafx.bundle>${project.artifactId}</javafx.bundle>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>1.9.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.5</version>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+    <dependency>
+      <groupId>ca.qc.ircm.utils</groupId>
+      <artifactId>progress_bar</artifactId>
+      <version>3.3</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-vfs2</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-exec</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-assistedinject</artifactId>
+      <version>3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.airhacks</groupId>
+      <artifactId>afterburner.fx</artifactId>
+      <version>${afterburner.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>annotations</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.fxml</include>
+          <include>**/*.css</include>
+          <include>**/*.png</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <excludes>
+              <exclude>ca/qc/ircm/smoothing/test/**/*.java</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>${mainClass}</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>javafx-assembly</id>
+              <phase>package</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <target xmlns:fx="javafx:com.sun.javafx.tools.ant">
+                  <echo message="Packaging jar with JavaFX" />
+                  <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+                    uri="javafx:com.sun.javafx.tools.ant" classpath="${javafx.ant}" />
+                  <fx:application id="fx-application"
+                    name="${javafx.bundle}" mainClass="${mainClass}" />
+                  <fx:jar
+                    destfile="${project.build.directory}/${javafx.finalName}">
+                    <fx:application refId="fx-application" />
+                    <fileset dir="${project.build.outputDirectory}" />
+                    <fileset dir="${project.build.directory}/dependency" />
+                    <manifest>
+                      <attribute name="Built-By" value="${user.name}" />
+                      <attribute name="Build-Jdk" value="${java.version}" />
+                      <attribute name="Specification-Title"
+                        value="${project.name}" />
+                      <attribute name="Specification-Version"
+                        value="${project.version}" />
+                      <attribute name="Specification-Vendor"
+                        value="${project.organization.name}" />
+                      <attribute name="Implementation-Title"
+                        value="${project.name}" />
+                      <attribute name="Implementation-Version"
+                        value="${project.version}" />
+                      <attribute name="Implementation-Vendor-Id"
+                        value="${project.groupId}" />
+                      <attribute name="Implementation-Vendor"
+                        value="${project.organization.name}" />
+                      <attribute name="Implementation-Build"
+                        value="${buildNumber}" />
+                      <attribute name="X-Compile-Source-JDK"
+                        value="${javac.version}" />
+                      <attribute name="X-Compile-Target-JDK"
+                        value="${javac.version}" />
+                    </manifest>
+                  </fx:jar>
 
-                                    <echo message="Attach JavaFX jar" />
-                                    <attachartifact file="${project.build.directory}/${javafx.finalName}" classifier="jar-with-dependencies" type="jar" />
+                  <echo message="Attach JavaFX jar" />
+                  <attachartifact
+                    file="${project.build.directory}/${javafx.finalName}"
+                    classifier="jar-with-dependencies" type="jar" />
 
-                                    <!--
-                                    <echo message="Produce native bundles" />
-                                    <fx:deploy nativeBundles="all" outdir="${project.build.directory}/native" outfile="${javafx.bundle}">
-                                            <fx:application refId="fx-application" />
-                                            <fx:resources>
-                                                    <fx:fileset file="${project.build.directory}/${javafx.finalName}" />
-                                            </fx:resources>
-                                            <fx:info title="${project.name}" description="${project.description}" copyright="2010 Institut de recherches cliniques de Montreal" />
-                                            <fx:preferences shortcut="true" menu="true" />
-                                    </fx:deploy>
-                                    -->
-                                </target>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>unpack-dependencies</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>unpack-dependencies</goal>
-                            </goals>
-                            <configuration>
-                                <includeScope>runtime</includeScope>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <configuration>
-                        <goals>install</goals>
-                        <tagNameFormat>@{project.version}</tagNameFormat>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <configuration>
-                    <reportsDirectories>
-                        <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                        <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
-                    </reportsDirectories>
-                </configuration>
-            </plugin>
-        </plugins>
-    </reporting>
+                  <!-- <echo message="Produce native bundles" /> <fx:deploy 
+                    nativeBundles="all" outdir="${project.build.directory}/native" outfile="${javafx.bundle}"> 
+                    <fx:application refId="fx-application" /> <fx:resources> <fx:fileset file="${project.build.directory}/${javafx.finalName}" 
+                    /> </fx:resources> <fx:info title="${project.name}" description="${project.description}" 
+                    copyright="2010 Institut de recherches cliniques de Montreal" /> <fx:preferences 
+                    shortcut="true" menu="true" /> </fx:deploy> -->
+                </target>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>unpack-dependencies</id>
+              <phase>package</phase>
+              <goals>
+                <goal>unpack-dependencies</goal>
+              </goals>
+              <configuration>
+                <includeScope>runtime</includeScope>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <configuration>
+            <goals>install</goals>
+            <tagNameFormat>@{project.version}</tagNameFormat>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <configuration>
+          <reportsDirectories>
+            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+            <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+          </reportsDirectories>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

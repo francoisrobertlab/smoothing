@@ -2,26 +2,26 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-	<appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
-		<param name="maxFileSize" value="2024KB"/>
-		<param name="maxBackupIndex" value="2"/>
-		<param name="file" value="${user.home}/smoothing/test.log"/>
-		<param name="append" value="true"/>
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="conversionPattern" value="%d{ISO8601} - %-5p - %m - %c%n"/>
-		</layout>
-	</appender>
-	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="conversionPattern" value="%d{ISO8601} - %-5p - %m - %c%n"/>
-		</layout>
-	</appender>
-    <logger name="ca.qc.ircm.smoothing">
-    	<level value="DEBUG"></level>
-    </logger>
-    <root>
-        <level value="WARN"></level>
-    	<appender-ref ref="fileAppender"/>
-    	<appender-ref ref="consoleAppender"/>
-    </root>
+  <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+    <param name="maxFileSize" value="2024KB" />
+    <param name="maxBackupIndex" value="2" />
+    <param name="file" value="${user.home}/smoothing/test.log" />
+    <param name="append" value="true" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="conversionPattern" value="%d{ISO8601} - %-5p - %m - %c%n" />
+    </layout>
+  </appender>
+  <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="conversionPattern" value="%d{ISO8601} - %-5p - %m - %c%n" />
+    </layout>
+  </appender>
+  <logger name="ca.qc.ircm.smoothing">
+    <level value="DEBUG"></level>
+  </logger>
+  <root>
+    <level value="WARN"></level>
+    <appender-ref ref="fileAppender" />
+    <appender-ref ref="consoleAppender" />
+  </root>
 </log4j:configuration>

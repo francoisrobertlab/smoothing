@@ -6,27 +6,27 @@ import java.io.File;
  * Smoothing parameters for smoothing executable program.
  */
 public interface SmoothingCoreParameters {
-    public File getInput();
+  public File getInput();
 
-    public File getOutput();
+  public File getOutput();
 
-    public String getTrackName();
+  public String getTrackName();
 
-    public String getTrackDatabase();
+  public String getTrackDatabase();
 
-    public int getStandardDeviation();
+  public int getStandardDeviation();
 
-    public int getRounds();
+  public int getRounds();
 
-    public int getStepLength();
+  public int getStepLength();
 
-    public boolean isIncludeSmoothedTrack();
+  public boolean isIncludeSmoothedTrack();
 
-    public boolean isIncludeMinimumTrack();
+  public boolean isIncludeMinimumTrack();
 
-    public Double getMinimumThreshold();
+  public Double getMinimumThreshold();
 
-    public boolean isIncludeMaximumTrack();
+  public boolean isIncludeMaximumTrack();
 
-    public Double getMaximumThreshold();
+  public Double getMaximumThreshold();
 }

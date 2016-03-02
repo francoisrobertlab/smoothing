@@ -8,22 +8,22 @@ import javafx.stage.StageStyle;
  * Splash screen.
  */
 public class SplashScreen {
-    private final Stage stage;
+  private final Stage stage;
 
-    public SplashScreen() {
-	stage = new Stage(StageStyle.UNDECORATED);
+  public SplashScreen() {
+    stage = new Stage(StageStyle.UNDECORATED);
 
-	SplashScreenView view = new SplashScreenView();
+    SplashScreenView view = new SplashScreenView();
 
-	Scene scene = new Scene(view.getView());
-	stage.setScene(scene);
-    }
+    Scene scene = new Scene(view.getView());
+    stage.setScene(scene);
+  }
 
-    public void show() {
-	stage.show();
-    }
+  public void show() {
+    stage.show();
+  }
 
-    public void hide() {
-	stage.hide();
-    }
+  public void hide() {
+    stage.hide();
+  }
 }
