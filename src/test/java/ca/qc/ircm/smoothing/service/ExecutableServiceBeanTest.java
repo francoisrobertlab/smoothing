@@ -51,10 +51,13 @@ public class ExecutableServiceBeanTest {
   @Rule
   public RuleChain rules = Rules.defaultRules(this);
 
+  /**
+   * Before test.
+   */
   @Before
   public void beforeTest() {
     executableServiceBean = new ExecutableServiceBean(operatingSystemService, executorProvider);
-    when(operatingSystemService.currentOS()).thenReturn(OperatingSystem.WINDOWS);
+    when(operatingSystemService.currentOs()).thenReturn(OperatingSystem.WINDOWS);
     when(operatingSystemService.is64bit(any(OperatingSystem.class))).thenReturn(false);
     when(executorProvider.get()).thenReturn(executor);
   }
@@ -168,7 +171,7 @@ public class ExecutableServiceBeanTest {
 
   @Test
   public void smoothing_Mac64() throws Throwable {
-    when(operatingSystemService.currentOS()).thenReturn(OperatingSystem.MAC);
+    when(operatingSystemService.currentOs()).thenReturn(OperatingSystem.MAC);
     when(operatingSystemService.is64bit(any(OperatingSystem.class))).thenReturn(true);
     SmoothingCoreParametersBean parameters = parameters();
 

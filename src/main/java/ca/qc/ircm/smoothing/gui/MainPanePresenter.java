@@ -266,6 +266,12 @@ public class MainPanePresenter {
     }
   }
 
+  /**
+   * Validates fields.
+   *
+   * @param errorHandler
+   *          handles validation errors.
+   */
   public void validate(ErrorHandlerDefault errorHandler) {
     validateFiles(errorHandler);
     validateStandardDeviation(errorHandler);
@@ -276,8 +282,8 @@ public class MainPanePresenter {
     validateMinimumThreshold(errorHandler);
   }
 
-  public void validateFiles(ErrorHandlerDefault errorHandler) {
-    boolean oldHasError = errorHandler.hasErrors();
+  private void validateFiles(ErrorHandlerDefault errorHandler) {
+    final boolean oldHasError = errorHandler.hasErrors();
     errorHandler.setHasError(false);
     filePane.getStyleClass().remove("error");
     bedTable.validate(errorHandler);
@@ -287,7 +293,7 @@ public class MainPanePresenter {
     errorHandler.setHasError(oldHasError || errorHandler.hasErrors());
   }
 
-  public void validateStandardDeviation(ErrorHandler errorHandler) {
+  private void validateStandardDeviation(ErrorHandler errorHandler) {
     standardDeviationPane.getStyleClass().remove("error");
     try {
       NumberStringConverter converter = new NumberStringConverter();
@@ -306,7 +312,7 @@ public class MainPanePresenter {
     }
   }
 
-  public void validateRounds(ErrorHandler errorHandler) {
+  private void validateRounds(ErrorHandler errorHandler) {
     roundsPane.getStyleClass().remove("error");
     try {
       NumberStringConverter converter = new NumberStringConverter();
@@ -325,7 +331,7 @@ public class MainPanePresenter {
     }
   }
 
-  public void validateStepLength(ErrorHandler errorHandler) {
+  private void validateStepLength(ErrorHandler errorHandler) {
     stepLengthPane.getStyleClass().remove("error");
     try {
       NumberStringConverter converter = new NumberStringConverter();
@@ -344,7 +350,7 @@ public class MainPanePresenter {
     }
   }
 
-  public void validateTracks(ErrorHandler errorHandler) {
+  private void validateTracks(ErrorHandler errorHandler) {
     if (!includeSmoothedTrackProperty.get() && !includeMaximumTrackProperty.get()
         && !includeMinimumTrackProperty.get()) {
       errorHandler.handleError(resources.getString("error.track.noTrack"));

@@ -78,7 +78,7 @@ public class BedParserBean implements BedParser {
                                    */
     INVALID_FIRST_BLOCK_START, /**
                                 * For all annotations that have blocks, this must be true: start +
-                                * last block start + last block size == end
+                                * last block start + last block size == end.
                                 */
     INVALID_LAST_BLOCK, EMPTY_DATA_VALUE, INVALID_DATA_VALUE;
   }
@@ -133,6 +133,7 @@ public class BedParserBean implements BedParser {
             columns.set(Column.DATA_VALUE.ordinal(), columns.get(Column.NAME.ordinal()));
             columns.set(Column.NAME.ordinal(), "");
             break;
+          default:
         }
       }
     }
@@ -383,8 +384,7 @@ public class BedParserBean implements BedParser {
 
       // Score.
       value = line.getColumns().get(Column.SCORE.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         try {
           annotation.score = new Integer(value);
         } catch (NumberFormatException e) {
@@ -396,8 +396,7 @@ public class BedParserBean implements BedParser {
 
       // Strand.
       value = line.getColumns().get(Column.STRAND.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         // Find matching strand.
         Strand strand = null;
         for (Strand strandEnum : Strand.values()) {
@@ -418,8 +417,7 @@ public class BedParserBean implements BedParser {
 
       // Thick start.
       value = line.getColumns().get(Column.THICK_START.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         try {
           annotation.thickStart = new Long(value);
         } catch (NumberFormatException e) {
@@ -440,8 +438,7 @@ public class BedParserBean implements BedParser {
 
       // Thick end.
       value = line.getColumns().get(Column.THICK_END.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         try {
           annotation.thickEnd = new Long(value);
         } catch (NumberFormatException e) {
@@ -460,8 +457,7 @@ public class BedParserBean implements BedParser {
 
       // Item RGB.
       value = line.getColumns().get(Column.ITEM_RGB.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         annotation.itemRgb = parseColor(bundle, value);
         if (annotation.itemRgb == null) {
           String message = message(bundle, Warning.INVALID_ITEM_RGB, line.getLineNumber(), value);
@@ -473,8 +469,7 @@ public class BedParserBean implements BedParser {
       // Block count.
       boolean blockError = false;
       value = line.getColumns().get(Column.BLOCK_COUNT.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         try {
           annotation.blockCount = new Integer(value);
         } catch (NumberFormatException e) {
@@ -488,8 +483,7 @@ public class BedParserBean implements BedParser {
 
       // Block sizes.
       value = line.getColumns().get(Column.BLOCK_SIZES.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         String[] sizesAsString = value.split(",");
         if (annotation.blockCount != null && sizesAsString.length != annotation.blockCount) {
           String message = message(bundle, Warning.MISSMATCH_BLOCK_SIZES_COUNT,
@@ -518,8 +512,7 @@ public class BedParserBean implements BedParser {
 
       // Block starts.
       value = line.getColumns().get(Column.BLOCK_STARTS.ordinal());
-      if (value.equals("")) {
-      } else {
+      if (!value.equals("")) {
         String[] startsAsString = value.split(",");
         if (annotation.blockCount != null && startsAsString.length != annotation.blockCount) {
           String message = message(bundle, Warning.MISSMATCH_BLOCK_STARTS_COUNT,

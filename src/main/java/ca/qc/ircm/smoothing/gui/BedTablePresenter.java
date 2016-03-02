@@ -10,7 +10,7 @@ import ca.qc.ircm.smoothing.util.drag.DragFilesOverHandler;
 import ca.qc.ircm.smoothing.util.javafx.ColorConverter;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCell;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCellFactory;
-import ca.qc.ircm.util.javafx.JavaFXUtils;
+import ca.qc.ircm.util.javafx.JavafxUtils;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleMapProperty;
@@ -250,7 +250,7 @@ public class BedTablePresenter {
     table.setOnDragDetected(new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent event) {
-        Dragboard db = table.startDragAndDrop(TransferMode.ANY);
+        final Dragboard db = table.startDragAndDrop(TransferMode.ANY);
         ClipboardContent content = new ClipboardContent();
         List<BedWithColor> beds = table.getSelectionModel().getSelectedItems();
         List<File> files = new ArrayList<File>(beds.size());
@@ -327,7 +327,7 @@ public class BedTablePresenter {
 
   @FXML
   private void browse(ActionEvent event) {
-    JavaFXUtils.setValidInitialDirectory(fileChooser);
+    JavafxUtils.setValidInitialDirectory(fileChooser);
     List<File> selections = fileChooser.showOpenMultipleDialog(view.getScene().getWindow());
     if (selections != null) {
       if (!selections.isEmpty()) {
@@ -364,6 +364,12 @@ public class BedTablePresenter {
     }
   }
 
+  /**
+   * Validate fields.
+   * 
+   * @param errorHandler
+   *          handles validation errors
+   */
   public void validate(ErrorHandler errorHandler) {
     for (ObservableSet<String> classes : fileCellClassesProperty.values()) {
       classes.remove("error");

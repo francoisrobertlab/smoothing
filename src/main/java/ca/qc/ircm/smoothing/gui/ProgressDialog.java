@@ -1,6 +1,6 @@
 package ca.qc.ircm.smoothing.gui;
 
-import ca.qc.ircm.util.javafx.JavaFXUtils;
+import ca.qc.ircm.util.javafx.JavafxUtils;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -16,19 +16,27 @@ public class ProgressDialog {
   private final ResourceBundle resources;
   private final Stage stage;
 
+  /**
+   * Creates a progress window.
+   *
+   * @param owner
+   *          window's owner
+   * @param worker
+   *          worker
+   */
   public ProgressDialog(Window owner, Worker<?> worker) {
     ProgressDialogView view = new ProgressDialogView();
-    ProgressDialogPresenter presenter = (ProgressDialogPresenter) view.getPresenter();
+    final ProgressDialogPresenter presenter = (ProgressDialogPresenter) view.getPresenter();
     resources = view.getResourceBundle();
 
     stage = new Stage();
     stage.initOwner(owner);
     stage.initModality(Modality.WINDOW_MODAL);
-    JavaFXUtils.setMaxSizeForScreen(stage);
+    JavafxUtils.setMaxSizeForScreen(stage);
 
     presenter.progressProperty().bind(worker.progressProperty());
     presenter.messageProperty().bind(worker.messageProperty());
-    presenter.cancelledProperty().addListener((ov, o, n) -> {
+    presenter.cancelledProperty().addListener((observable, oldvalue, newvalue) -> {
       worker.cancel();
     });
     presenter.focusOnDefault();

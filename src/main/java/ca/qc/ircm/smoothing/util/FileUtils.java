@@ -18,6 +18,13 @@ import java.text.ParseException;
 public class FileUtils {
   private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
+  /**
+   * Resolves Windows shortcut.
+   *
+   * @param file
+   *          file that can be a Windows shortcut
+   * @return resolved shortcut if file is a Windows shortcut, otherwise file parameter
+   */
   public static File resolveWindowsShorcut(File file) {
     if (SystemUtils.IS_OS_WINDOWS && file.getName().endsWith(".lnk")) {
       try {

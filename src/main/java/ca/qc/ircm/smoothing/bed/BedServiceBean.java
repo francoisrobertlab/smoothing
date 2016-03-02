@@ -39,6 +39,7 @@ public class BedServiceBean implements BedService {
         return true;
       }
     }
+
     FirstTrackBedHandler handler = new FirstTrackBedHandler();
     bedParser.parse(file, handler);
     return handler.firstTrack;
@@ -69,6 +70,7 @@ public class BedServiceBean implements BedService {
         return true;
       }
     }
+
     FirstTrackBedHandler handler = new FirstTrackBedHandler();
     bedParser.parse(file, handler);
     return handler.count;
@@ -99,6 +101,7 @@ public class BedServiceBean implements BedService {
         return true;
       }
     }
+
     FirstTrackBedHandler handler = new FirstTrackBedHandler();
     bedParser.parse(file, handler);
     return handler.chromosomes.size();

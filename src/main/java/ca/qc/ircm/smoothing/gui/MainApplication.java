@@ -5,7 +5,7 @@ import com.google.inject.Injector;
 
 import ca.qc.ircm.smoothing.ApplicationModule;
 import ca.qc.ircm.util.javafx.AfterburnerGuiceInitializer;
-import ca.qc.ircm.util.javafx.JavaFXUtils;
+import ca.qc.ircm.util.javafx.JavafxUtils;
 import ca.qc.ircm.util.javafx.message.MessageDialog;
 import ca.qc.ircm.util.javafx.message.MessageDialog.MessageDialogType;
 import javafx.application.Application;
@@ -47,6 +47,7 @@ public class MainApplication extends Application {
         return null;
       }
     }
+
     final InitialiseTask initialiseTask = new InitialiseTask();
     initialiseTask.setOnSucceeded(e -> splash.hide());
     initialiseTask.setOnFailed(e -> {
@@ -63,7 +64,7 @@ public class MainApplication extends Application {
     MainPaneView view = new MainPaneView();
 
     Stage stage = new Stage();
-    JavaFXUtils.setMaxSizeForScreen(stage);
+    JavafxUtils.setMaxSizeForScreen(stage);
     stage.setTitle(resources.getString("title"));
     Scene scene = new Scene(view.getView(), 1500, 800);
     stage.setScene(scene);

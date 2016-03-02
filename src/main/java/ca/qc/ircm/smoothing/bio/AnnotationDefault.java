@@ -108,28 +108,37 @@ public class AnnotationDefault implements Annotation {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (!(obj instanceof AnnotationDefault))
+    }
+    if (!(obj instanceof AnnotationDefault)) {
       return false;
+    }
     AnnotationDefault other = (AnnotationDefault) obj;
     if (chromosome == null) {
-      if (other.chromosome != null)
+      if (other.chromosome != null) {
         return false;
-    } else if (!chromosome.equals(other.chromosome))
+      }
+    } else if (!chromosome.equals(other.chromosome)) {
       return false;
+    }
     if (end == null) {
-      if (other.end != null)
+      if (other.end != null) {
         return false;
-    } else if (!end.equals(other.end))
+      }
+    } else if (!end.equals(other.end)) {
       return false;
+    }
     if (start == null) {
-      if (other.start != null)
+      if (other.start != null) {
         return false;
-    } else if (!start.equals(other.start))
+      }
+    } else if (!start.equals(other.start)) {
       return false;
+    }
     return true;
   }
 }

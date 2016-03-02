@@ -10,6 +10,9 @@ import javafx.stage.StageStyle;
 public class SplashScreen {
   private final Stage stage;
 
+  /**
+   * Creates splash screen.
+   */
   public SplashScreen() {
     stage = new Stage(StageStyle.UNDECORATED);
 

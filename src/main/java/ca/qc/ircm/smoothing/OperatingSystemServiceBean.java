@@ -13,7 +13,7 @@ import org.apache.commons.lang3.SystemUtils;
  */
 public class OperatingSystemServiceBean implements OperatingSystemService {
   @Override
-  public OperatingSystem currentOS() {
+  public OperatingSystem currentOs() {
     if (SystemUtils.IS_OS_WINDOWS) {
       try {
         Double version = Double.parseDouble(SystemUtils.OS_VERSION);
@@ -45,7 +45,8 @@ public class OperatingSystemServiceBean implements OperatingSystemService {
         return is64bit;
       case OTHER:
         return is64bit;
+      default:
+        throw new AssertionError("");
     }
-    throw new AssertionError("");
   }
 }

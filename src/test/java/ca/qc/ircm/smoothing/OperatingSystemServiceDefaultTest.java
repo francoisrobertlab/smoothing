@@ -22,7 +22,7 @@ public class OperatingSystemServiceDefaultTest {
 
   @Test
   @Ignore("Cannot test since it would depend on the operating system")
-  public void currentOS() throws Throwable {
+  public void currentOs() throws Throwable {
     // Cannot test since it would depend on the operating system.
   }
 

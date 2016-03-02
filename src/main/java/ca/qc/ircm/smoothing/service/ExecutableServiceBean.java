@@ -30,9 +30,9 @@ import javax.inject.Provider;
  * Default implementation of {@link ExecutableService}.
  */
 public class ExecutableServiceBean implements ExecutableService {
-  private final static Pattern PROGRESS_PATTERN = Pattern.compile("\\s+(\\d+)%");
-  private final static Pattern RAW_DATA_COUNT_PATTERN = Pattern.compile("nbRawData=(\\d+)");
-  private final static Pattern CHROMOSOME_COUNT_PATTERN = Pattern.compile("nbrChrom=(\\d+)");
+  private static final Pattern PROGRESS_PATTERN = Pattern.compile("\\s+(\\d+)%");
+  private static final Pattern RAW_DATA_COUNT_PATTERN = Pattern.compile("nbRawData=(\\d+)");
+  private static final Pattern CHROMOSOME_COUNT_PATTERN = Pattern.compile("nbrChrom=(\\d+)");
 
   private static class SmoothingEventGenerator extends LogOutputStream {
     private final SmoothingEventListener listener;
@@ -108,7 +108,7 @@ public class ExecutableServiceBean implements ExecutableService {
 
   private File extractExecutable(File directory) throws IOException {
     File executable = new File(directory, "smoothing.exe");
-    OperatingSystem operatingSystem = operatingSystemService.currentOS();
+    OperatingSystem operatingSystem = operatingSystemService.currentOs();
     boolean is64bits = operatingSystemService.is64bit(operatingSystem);
     String resource = "/executables/"
         + bundle.getString("smoothing." + operatingSystem.name() + "." + (is64bits ? "64" : "32"));

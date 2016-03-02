@@ -61,6 +61,9 @@ public class SmoothingServiceBeanTest {
   private SmoothingParametersBean parameters;
   private BedTrackDefault track;
 
+  /**
+   * Before test.
+   */
   @Before
   public void beforeTest() throws Throwable {
     smoothingServiceBean = new SmoothingServiceBean(executableService, bedService);

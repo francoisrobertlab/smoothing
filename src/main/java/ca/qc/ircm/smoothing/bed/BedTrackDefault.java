@@ -84,8 +84,9 @@ public class BedTrackDefault implements BedTrack {
   }
 
   private Color parseColor(String colorValue) {
-    if (colorValue == null)
+    if (colorValue == null) {
       return null;
+    }
 
     Pattern pattern = Pattern.compile("(\\d+)(?:,(\\d+),(\\d+))?");
     Matcher matcher = pattern.matcher(colorValue);

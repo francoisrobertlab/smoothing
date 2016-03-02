@@ -13,10 +13,11 @@ import java.text.ParseException;
 
 /**
  * Represents a Windows shortcut (typically visible to Java only as a '.lnk' file).
- * 
+ * <p>
  * Retrieved 2011-09-23 from http://stackoverflow.com/questions/309495/windows-shortcut
  * -lnk-parser-in-java/672775#672775 Originally called LnkParser
- * 
+ * </p>
+ * <p>
  * Written by: (the stack overflow users, obviously!) Headerified, refactored and commented by Code
  * Bling http://stackoverflow.com/users/675721/code-bling Network file support added by Stefan
  * Cordes http://stackoverflow.com/users/81330/stefan-cordes Adapted by Sam Brightman
@@ -24,7 +25,9 @@ import java.text.ParseException;
  * File Format' by Jesse Hager &lt;jessehager@iname.com&gt; And somewhat based on code from the book
  * 'Swing Hacks: Tips and Tools for Killer GUIs' by Joshua Marinacci and Chris Adamson ISBN:
  * 0-596-00907-0 http://www.oreilly.com/catalog/swinghks/
+ * </p>
  */
+@SuppressWarnings("checkstyle:all")
 @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING", justification = "Code copied from stackoverflow")
 public class WindowsShortcut {
   private boolean isDirectory;
@@ -36,7 +39,7 @@ public class WindowsShortcut {
    * WindowShortcut and the link is not valid, Exceptions may be thrown and Exceptions are extremely
    * slow to generate, therefore any code needing to loop through several files should first check
    * this.
-   * 
+   *
    * @param file
    *          the potential link
    * @return true if may be a link, false otherwise
@@ -84,7 +87,7 @@ public class WindowsShortcut {
 
   /**
    * Tests if the shortcut points to a local resource.
-   * 
+   *
    * @return true if the 'local' bit is set in this shortcut, false otherwise
    */
   public boolean isLocal() {
@@ -93,7 +96,7 @@ public class WindowsShortcut {
 
   /**
    * Tests if the shortcut points to a directory.
-   * 
+   *
    * @return true if the 'directory' bit is set in this shortcut, false otherwise
    */
   public boolean isDirectory() {
@@ -102,7 +105,7 @@ public class WindowsShortcut {
 
   /**
    * Gets all the bytes from an InputStream
-   * 
+   *
    * @param in
    *          the InputStream from which to read bytes
    * @return array of all the bytes contained in 'in'
@@ -115,7 +118,7 @@ public class WindowsShortcut {
 
   /**
    * Gets up to max bytes from an InputStream
-   * 
+   *
    * @param in
    *          the InputStream from which to read bytes
    * @param max
@@ -149,7 +152,7 @@ public class WindowsShortcut {
 
   /**
    * Gobbles up link data by parsing it and storing info in member fields
-   * 
+   *
    * @param link
    *          all the bytes from the .lnk file
    */

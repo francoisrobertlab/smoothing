@@ -30,18 +30,23 @@ public class BedWithColor {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (!(obj instanceof BedWithColor))
+    }
+    if (!(obj instanceof BedWithColor)) {
       return false;
+    }
     BedWithColor other = (BedWithColor) obj;
     if (fileProperty == null) {
-      if (other.fileProperty != null)
+      if (other.fileProperty != null) {
         return false;
-    } else if (!fileProperty.equals(other.fileProperty))
+      }
+    } else if (!fileProperty.equals(other.fileProperty)) {
       return false;
+    }
     return true;
   }
 

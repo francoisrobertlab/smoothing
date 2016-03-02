@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public interface BedTrack {
   /**
-   * Track's type
+   * Track's type.
    */
   public static enum Type {
     /**

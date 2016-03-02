@@ -28,7 +28,8 @@ public class AfterburnerGuiceInitializer {
       if (!bindingKey.hasAttributes() && bindingKey.getTypeLiteral().getType() instanceof Class
           && !((Class<?>) bindingKey.getTypeLiteral().getType())
               .isAnnotationPresent(IgnoreAfterburner.class)) {
-        // Only bindings without annotation is supported because afterburner does not use annotations or generics.
+        // Only bindings without annotation is supported because afterburner does not use
+        //   annotations or generics.
         Class<?> rawType = bindingKey.getTypeLiteral().getRawType();
         Object instance = binding.getProvider().get();
         com.airhacks.afterburner.injection.Injector.setModelOrService(rawType, instance);

@@ -9,7 +9,7 @@ public interface OperatingSystemService {
    *
    * @return current operating system
    */
-  public OperatingSystem currentOS();
+  public OperatingSystem currentOs();
 
   /**
    * Returns true if underling OS is 64 bits, false otherwise.
