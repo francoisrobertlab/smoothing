@@ -11,14 +11,14 @@
     <name>smoothing</name>
     <description>Executes smoothing on some bed files</description>
     <scm>
-        <connection>scm:git:git@bitbucket.org:benoitcoulombelab/smoothing.git</connection>
-        <developerConnection>scm:git:git@bitbucket.org:benoitcoulombelab/smoothing.git</developerConnection>
-        <url>https://bitbucket.org/benoitcoulombelab/smoothing</url>
+        <connection>scm:git:git@bitbucket.org:ircm/smoothing.git</connection>
+        <developerConnection>scm:git:git@bitbucket.org:ircm/smoothing.git</developerConnection>
+        <url>https://bitbucket.org/ircm/smoothing</url>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <system>Bitbucket</system>
-        <url>https://bitbucket.org/benoitcoulombelab/smoothing/issues</url>
+        <url>https://bitbucket.org/ircm/smoothing/issues</url>
     </issueManagement>
     <properties>
         <javac.version>1.8</javac.version>
