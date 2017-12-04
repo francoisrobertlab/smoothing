@@ -1,6 +1,6 @@
 package ca.qc.ircm.smoothing.service;
 
-import ca.qc.ircm.progress_bar.ProgressBar;
+import ca.qc.ircm.progressbar.ProgressBar;
 import ca.qc.ircm.smoothing.bed.BedService;
 import ca.qc.ircm.smoothing.bed.BedTrack;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;

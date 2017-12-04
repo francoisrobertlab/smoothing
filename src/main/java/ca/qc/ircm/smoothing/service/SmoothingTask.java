@@ -2,7 +2,7 @@ package ca.qc.ircm.smoothing.service;
 
 import com.google.inject.assistedinject.Assisted;
 
-import ca.qc.ircm.progress_bar.SimpleProgressBar;
+import ca.qc.ircm.progressbar.JavafxProgressBar;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 import javafx.concurrent.Task;
 import org.slf4j.Logger;
@@ -17,20 +17,6 @@ import javax.inject.Inject;
  * Create graphs based on analysis results.
  */
 public class SmoothingTask extends Task<Void> {
-  private class InternalProgressBar extends SimpleProgressBar {
-    private static final long serialVersionUID = 3822582140618354796L;
-
-    @Override
-    public void messageChanged(String newMessage) {
-      updateMessage(newMessage);
-    }
-
-    @Override
-    public void progressChanged(double newProgress) {
-      SmoothingTask.this.updateProgress(newProgress, 1.0);
-    }
-  }
-
   private static final Logger logger = LoggerFactory.getLogger(SmoothingTask.class);
   private final SmoothingService smoothingService;
   private final SmoothingParameters parameters;
@@ -47,7 +33,11 @@ public class SmoothingTask extends Task<Void> {
   protected Void call() throws Exception {
     try {
       WarningHandlerNoter warningHandler = new WarningHandlerNoter();
-      smoothingService.smoothing(parameters, new InternalProgressBar(), warningHandler);
+      JavafxProgressBar progressBar = new JavafxProgressBar();
+      progressBar.message().addListener((observable, ov, nv) -> updateMessage(nv));
+      progressBar.progress()
+          .addListener((observable, ov, nv) -> updateProgress(nv.doubleValue(), 1.0));
+      smoothingService.smoothing(parameters, progressBar, warningHandler);
       warnings.clear();
       warnings.addAll(warningHandler.getWarnings());
       return null;
