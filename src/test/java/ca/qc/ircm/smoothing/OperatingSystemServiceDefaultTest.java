@@ -11,13 +11,13 @@ import org.junit.rules.RuleChain;
  * Tests {@link OperatingSystemServiceDefault}.
  */
 public class OperatingSystemServiceDefaultTest {
-  private OperatingSystemServiceBean operatingSystemServiceBean;
+  private OperatingSystemService operatingSystemServiceBean;
   @Rule
   public RuleChain rules = Rules.defaultRules(this);
 
   @Before
   public void beforeTest() {
-    operatingSystemServiceBean = new OperatingSystemServiceBean();
+    operatingSystemServiceBean = new OperatingSystemService();
   }
 
   @Test
