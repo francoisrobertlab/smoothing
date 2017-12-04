@@ -24,6 +24,15 @@ public class BedService {
     this.bedParser = bedParser;
   }
 
+  /**
+   * Parses first track.
+   *
+   * @param file
+   *          BED file
+   * @return first track
+   * @throws IOException
+   *           could not parse BED file
+   */
   public BedTrack parseFirstTrack(File file) throws IOException {
     class FirstTrackBedHandler implements BedHandler {
       private BedTrack firstTrack;
@@ -50,6 +59,15 @@ public class BedService {
     return handler.firstTrack;
   }
 
+  /**
+   * Counts number of annotations in first track.
+   *
+   * @param file
+   *          BED file
+   * @return number of annotations in first track
+   * @throws IOException
+   *           could not parse BED file
+   */
   public int countFirstTrackData(File file) throws IOException {
     class FirstTrackBedHandler implements BedHandler {
       private BedTrack firstTrack;
@@ -80,6 +98,15 @@ public class BedService {
     return handler.count;
   }
 
+  /**
+   * Counts number of chromosomes in first track.
+   *
+   * @param file
+   *          BED file
+   * @return number of chromosomes in first track
+   * @throws IOException
+   *           could not parse BED file
+   */
   public int countFirstTrackChromosomes(File file) throws IOException {
     class FirstTrackBedHandler implements BedHandler {
       private BedTrack firstTrack;

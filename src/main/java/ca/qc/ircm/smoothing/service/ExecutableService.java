@@ -89,6 +89,16 @@ public class ExecutableService {
     this.executorProvider = executorProvider;
   }
 
+  /**
+   * Executes native smoothing program.
+   * 
+   * @param parameters
+   *          parameters for smoothing
+   * @param listener
+   *          listener for events
+   * @throws IOException
+   *           could not execute smoothing program
+   */
   public void smoothing(SmoothingCoreParameters parameters, SmoothingEventListener listener)
       throws IOException {
     File directory = new File(SystemUtils.getUserHome(), "smoothing");
