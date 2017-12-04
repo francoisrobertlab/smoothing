@@ -23,8 +23,8 @@ import org.mockito.Mock;
 import java.io.File;
 import java.util.Locale;
 
-public class BedParserBeanTest {
-  private BedParserBean bedParser;
+public class BedParserTest {
+  private BedParser bedParser;
   @Mock
   private BedHandler bedHandler;
   @Mock
@@ -42,7 +42,7 @@ public class BedParserBeanTest {
 
   @Before
   public void beforeTest() {
-    bedParser = new BedParserBean();
+    bedParser = new BedParser();
     when(bedHandler.handleInvalid()).thenReturn(true);
   }
 

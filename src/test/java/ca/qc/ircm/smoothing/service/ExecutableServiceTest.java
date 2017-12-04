@@ -30,10 +30,10 @@ import java.nio.charset.Charset;
 import javax.inject.Provider;
 
 /**
- * Tests for {@link ExecutableServiceBean}.
+ * Tests for {@link ExecutableService}.
  */
-public class ExecutableServiceBeanTest {
-  private ExecutableServiceBean executableServiceBean;
+public class ExecutableServiceTest {
+  private ExecutableService executableServiceBean;
   @Mock
   private SmoothingEventListener listener;
   @Mock
@@ -56,7 +56,7 @@ public class ExecutableServiceBeanTest {
    */
   @Before
   public void beforeTest() {
-    executableServiceBean = new ExecutableServiceBean(operatingSystemService, executorProvider);
+    executableServiceBean = new ExecutableService(operatingSystemService, executorProvider);
     when(operatingSystemService.currentOs()).thenReturn(OperatingSystem.WINDOWS);
     when(operatingSystemService.is64bit(any(OperatingSystem.class))).thenReturn(false);
     when(executorProvider.get()).thenReturn(executor);

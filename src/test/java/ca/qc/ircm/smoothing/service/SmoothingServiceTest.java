@@ -39,10 +39,10 @@ import java.util.Collections;
 import java.util.HashMap;
 
 /**
- * Tests for {@link SmoothingServiceBean}.
+ * Tests for {@link SmoothingService}.
  */
-public class SmoothingServiceBeanTest {
-  private SmoothingServiceBean smoothingServiceBean;
+public class SmoothingServiceTest {
+  private SmoothingService smoothingServiceBean;
   @Mock
   private ExecutableService executableService;
   @Mock
@@ -66,7 +66,7 @@ public class SmoothingServiceBeanTest {
    */
   @Before
   public void beforeTest() throws Throwable {
-    smoothingServiceBean = new SmoothingServiceBean(executableService, bedService);
+    smoothingServiceBean = new SmoothingService(executableService, bedService);
     parameters = new SmoothingParametersBean();
     parameters.setStandardDeviation(200);
     parameters.setRounds(2);

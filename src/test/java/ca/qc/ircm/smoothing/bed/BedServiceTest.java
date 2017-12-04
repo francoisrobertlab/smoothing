@@ -18,8 +18,8 @@ import org.mockito.Mock;
 
 import java.io.File;
 
-public class BedServiceBeanTest {
-  private BedServiceBean bedServiceBean;
+public class BedServiceTest {
+  private BedService bedServiceBean;
   @Mock
   private BedParser bedParser;
   @Mock
@@ -37,7 +37,7 @@ public class BedServiceBeanTest {
 
   @Before
   public void beforeTest() {
-    bedServiceBean = new BedServiceBean(bedParser);
+    bedServiceBean = new BedService(bedParser);
   }
 
   @Test
