@@ -23,35 +23,63 @@
   </issueManagement>
   <properties>
     <javac.version>1.8</javac.version>
-    <mainClass>ca.qc.ircm.smoothing.Main</mainClass>
-    <slf4j.version>1.7.5</slf4j.version>
+    <main-class>ca.qc.ircm.smoothing.Main</main-class>
+    <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
     <afterburner.version>1.6.1</afterburner.version>
-    <javafx.ant>${env.JAVA_HOME}/lib/ant-javafx.jar</javafx.ant>
-    <javafx.finalName>${project.build.finalName}-jar-with-dependencies.jar</javafx.finalName>
-    <javafx.bundle>${project.artifactId}</javafx.bundle>
+    <findbugs.version>3.0.0</findbugs.version>
+    <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
   </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>1.9.5</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.5</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
-      <version>1.7.5</version>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
@@ -96,7 +124,7 @@
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
-      <version>2.0.1</version>
+      <version>${findbugs.version}</version>
     </dependency>
   </dependencies>
   <build>
@@ -136,112 +164,31 @@
           </configuration>
         </plugin>
         <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <configuration>
-            <archive>
-              <manifest>
-                <mainClass>${mainClass}</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>javafx-assembly</id>
-              <phase>package</phase>
-              <goals>
-                <goal>run</goal>
-              </goals>
-              <configuration>
-                <target xmlns:fx="javafx:com.sun.javafx.tools.ant">
-                  <echo message="Packaging jar with JavaFX" />
-                  <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
-                    uri="javafx:com.sun.javafx.tools.ant" classpath="${javafx.ant}" />
-                  <fx:application id="fx-application"
-                    name="${javafx.bundle}" mainClass="${mainClass}" />
-                  <fx:jar
-                    destfile="${project.build.directory}/${javafx.finalName}">
-                    <fx:application refId="fx-application" />
-                    <fileset dir="${project.build.outputDirectory}" />
-                    <fileset dir="${project.build.directory}/dependency" />
-                    <manifest>
-                      <attribute name="Built-By" value="${user.name}" />
-                      <attribute name="Build-Jdk" value="${java.version}" />
-                      <attribute name="Specification-Title"
-                        value="${project.name}" />
-                      <attribute name="Specification-Version"
-                        value="${project.version}" />
-                      <attribute name="Specification-Vendor"
-                        value="${project.organization.name}" />
-                      <attribute name="Implementation-Title"
-                        value="${project.name}" />
-                      <attribute name="Implementation-Version"
-                        value="${project.version}" />
-                      <attribute name="Implementation-Vendor-Id"
-                        value="${project.groupId}" />
-                      <attribute name="Implementation-Vendor"
-                        value="${project.organization.name}" />
-                      <attribute name="Implementation-Build"
-                        value="${buildNumber}" />
-                      <attribute name="X-Compile-Source-JDK"
-                        value="${javac.version}" />
-                      <attribute name="X-Compile-Target-JDK"
-                        value="${javac.version}" />
-                    </manifest>
-                  </fx:jar>
-
-                  <echo message="Attach JavaFX jar" />
-                  <attachartifact
-                    file="${project.build.directory}/${javafx.finalName}"
-                    classifier="jar-with-dependencies" type="jar" />
-
-                  <!-- <echo message="Produce native bundles" /> <fx:deploy 
-                    nativeBundles="all" outdir="${project.build.directory}/native" outfile="${javafx.bundle}"> 
-                    <fx:application refId="fx-application" /> <fx:resources> <fx:fileset file="${project.build.directory}/${javafx.finalName}" 
-                    /> </fx:resources> <fx:info title="${project.name}" description="${project.description}" 
-                    copyright="2010 Institut de recherches cliniques de Montreal" /> <fx:preferences 
-                    shortcut="true" menu="true" /> </fx:deploy> -->
-                </target>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>unpack-dependencies</id>
-              <phase>package</phase>
-              <goals>
-                <goal>unpack-dependencies</goal>
-              </goals>
-              <configuration>
-                <includeScope>runtime</includeScope>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <artifactId>maven-release-plugin</artifactId>
           <configuration>
             <goals>install</goals>
             <tagNameFormat>@{project.version}</tagNameFormat>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot-maven-plugin.version}</version>
+          <configuration>
+            <mainClass>${start-class}</mainClass>
+            <executable>true</executable>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-      </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
       </plugin>
@@ -252,19 +199,10 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
       </plugin>
-    </plugins>
-  </build>
-  <reporting>
-    <plugins>
       <plugin>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <configuration>
-          <reportsDirectories>
-            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-            <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
-          </reportsDirectories>
-        </configuration>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
-  </reporting>
+  </build>
 </project>
