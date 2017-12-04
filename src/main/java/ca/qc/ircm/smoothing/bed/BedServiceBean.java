@@ -1,5 +1,7 @@
 package ca.qc.ircm.smoothing.bed;
 
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
@@ -7,6 +9,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+@Component
 public class BedServiceBean implements BedService {
   @Inject
   private BedParser bedParser;

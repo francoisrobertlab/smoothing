@@ -7,10 +7,12 @@ import static ca.qc.ircm.smoothing.OperatingSystem.WINDOWS;
 import static ca.qc.ircm.smoothing.OperatingSystem.WINDOWS_XP_OLDER;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.springframework.stereotype.Component;
 
 /**
  * Default implementation of {@link OperatingSystemService}.
  */
+@Component
 public class OperatingSystemServiceBean implements OperatingSystemService {
   @Override
   public OperatingSystem currentOs() {

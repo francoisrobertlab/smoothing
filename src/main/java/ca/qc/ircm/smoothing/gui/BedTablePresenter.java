@@ -1,5 +1,6 @@
 package ca.qc.ircm.smoothing.gui;
 
+import ca.qc.ircm.javafx.JavafxUtils;
 import ca.qc.ircm.smoothing.BedWithColor;
 import ca.qc.ircm.smoothing.ErrorHandler;
 import ca.qc.ircm.smoothing.bed.BedService;
@@ -10,7 +11,6 @@ import ca.qc.ircm.smoothing.util.drag.DragFilesOverHandler;
 import ca.qc.ircm.smoothing.util.javafx.ColorConverter;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCell;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCellFactory;
-import ca.qc.ircm.util.javafx.JavafxUtils;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleMapProperty;
@@ -44,6 +44,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +63,8 @@ import javax.inject.Inject;
 /**
  * Table containing BED files.
  */
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class BedTablePresenter {
   private static final Color DEFAULT_COLOR = Color.DARKORANGE;
 
@@ -179,7 +184,7 @@ public class BedTablePresenter {
       implements Callback<TableColumn<S, Color>, TableCell<S, Color>> {
     @Override
     public TableCell<S, Color> call(TableColumn<S, Color> column) {
-      return new ColorCell<S>();
+      return new ColorCell<>();
     }
   }
 
@@ -192,7 +197,7 @@ public class BedTablePresenter {
   }
 
   private MapProperty<Integer, ObservableSet<String>> fileCellClassesProperty =
-      new SimpleMapProperty<Integer, ObservableSet<String>>(
+      new SimpleMapProperty<>(
           FXCollections.observableMap(new HashMap<Integer, ObservableSet<String>>() {
             private static final long serialVersionUID = 3092430838184940222L;
 
@@ -200,7 +205,7 @@ public class BedTablePresenter {
             public ObservableSet<String> get(Object key) {
               if (!containsKey(key)) {
                 super.put((Integer) key,
-                    FXCollections.observableSet(new HashSet<String>(fileCellDefaultClasses)));
+                    FXCollections.observableSet(new HashSet<>(fileCellDefaultClasses)));
               }
               return super.get(key);
             }
@@ -253,7 +258,7 @@ public class BedTablePresenter {
         final Dragboard db = table.startDragAndDrop(TransferMode.ANY);
         ClipboardContent content = new ClipboardContent();
         List<BedWithColor> beds = table.getSelectionModel().getSelectedItems();
-        List<File> files = new ArrayList<File>(beds.size());
+        List<File> files = new ArrayList<>(beds.size());
         for (BedWithColor bed : beds) {
           files.add(bed.getFile());
         }
@@ -344,14 +349,13 @@ public class BedTablePresenter {
   }
 
   private void removeSelected() {
-    List<Integer> selections =
-        new ArrayList<Integer>(table.getSelectionModel().getSelectedIndices());
+    List<Integer> selections = new ArrayList<>(table.getSelectionModel().getSelectedIndices());
     Collections.sort(selections);
     Collections.reverse(selections);
     for (Integer selection : selections) {
       if (selection >= 0) {
         table.getItems().remove(selection.intValue());
-        List<Integer> styleClassKeys = new ArrayList<Integer>(fileCellClassesProperty.keySet());
+        List<Integer> styleClassKeys = new ArrayList<>(fileCellClassesProperty.keySet());
         Collections.sort(selections);
         fileCellClassesProperty.remove(selection.intValue());
         for (Integer styleClassKey : styleClassKeys) {
@@ -366,7 +370,7 @@ public class BedTablePresenter {
 
   /**
    * Validate fields.
-   * 
+   *
    * @param errorHandler
    *          handles validation errors
    */

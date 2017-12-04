@@ -1,5 +1,8 @@
 package ca.qc.ircm.smoothing.gui;
 
+import ca.qc.ircm.javafx.NullOnExceptionStringConverter;
+import ca.qc.ircm.javafx.message.MessageDialog;
+import ca.qc.ircm.javafx.message.MessageDialog.MessageDialogType;
 import ca.qc.ircm.smoothing.BedWithColor;
 import ca.qc.ircm.smoothing.ErrorHandler;
 import ca.qc.ircm.smoothing.ErrorHandlerDefault;
@@ -8,9 +11,6 @@ import ca.qc.ircm.smoothing.service.SmoothingParameters;
 import ca.qc.ircm.smoothing.service.SmoothingTask;
 import ca.qc.ircm.smoothing.service.SmoothingTaskFactory;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
-import ca.qc.ircm.util.javafx.NullOnExceptionStringConverter;
-import ca.qc.ircm.util.javafx.message.MessageDialog;
-import ca.qc.ircm.util.javafx.message.MessageDialog.MessageDialogType;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -30,6 +30,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +49,8 @@ import javax.inject.Inject;
 /**
  * Main pane presenter.
  */
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MainPanePresenter {
   private class SmoothingParametersBean implements SmoothingParameters {
     private List<File> files;
@@ -61,8 +66,8 @@ public class MainPanePresenter {
 
     private SmoothingParametersBean() {
       List<BedWithColor> beds = bedTable.getItems();
-      files = new ArrayList<File>(beds.size());
-      colors = new HashMap<File, Color>();
+      files = new ArrayList<>(beds.size());
+      colors = new HashMap<>();
       for (BedWithColor bed : beds) {
         files.add(bed.getFile());
         colors.put(bed.getFile(), bed.getColor());
@@ -180,18 +185,18 @@ public class MainPanePresenter {
         .add(new ExtensionFilter(resources.getString("fileChooser.description"), "*"));
     bedTable.initialDirectoryProperty().bindBidirectional(fileChooser.initialDirectoryProperty());
     standardDeviation.textProperty().bindBidirectional(standardDeviationProperty,
-        new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
+        new NullOnExceptionStringConverter<>(new NumberStringConverter()));
     rounds.textProperty().bindBidirectional(roundsProperty,
-        new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
+        new NullOnExceptionStringConverter<>(new NumberStringConverter()));
     stepLength.textProperty().bindBidirectional(stepLengthProperty,
-        new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
+        new NullOnExceptionStringConverter<>(new NumberStringConverter()));
     includeSmoothedTrack.selectedProperty().bindBidirectional(includeSmoothedTrackProperty);
     includeMaximumTrack.selectedProperty().bindBidirectional(includeMaximumTrackProperty);
     maximumThreshold.textProperty().bindBidirectional(maximumThresholdProperty,
-        new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
+        new NullOnExceptionStringConverter<>(new NumberStringConverter()));
     includeMinimumTrack.selectedProperty().bindBidirectional(includeMinimumTrackProperty);
     minimumThreshold.textProperty().bindBidirectional(minimumThresholdProperty,
-        new NullOnExceptionStringConverter<Number>(new NumberStringConverter()));
+        new NullOnExceptionStringConverter<>(new NumberStringConverter()));
 
     // Default values.
     standardDeviationProperty.set(200);

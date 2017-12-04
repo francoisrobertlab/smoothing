@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,6 +32,7 @@ import javax.inject.Inject;
 /**
  * Default implementation of {@link SmoothingService}.
  */
+@Component
 public class SmoothingServiceBean implements SmoothingService {
   private static class SmoothingCoreParametersDelegate implements SmoothingCoreParameters {
     private final SmoothingParameters parameters;

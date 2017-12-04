@@ -1,6 +1,6 @@
 package ca.qc.ircm.smoothing.gui;
 
-import ca.qc.ircm.util.javafx.JavafxUtils;
+import ca.qc.ircm.javafx.JavafxUtils;
 import javafx.concurrent.Worker;
 import javafx.scene.Scene;
 import javafx.stage.Modality;

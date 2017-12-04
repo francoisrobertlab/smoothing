@@ -12,12 +12,14 @@ public class SplashScreen {
 
   /**
    * Creates splash screen.
+   *
+   * @param stage
+   *          stage
    */
-  public SplashScreen() {
-    stage = new Stage(StageStyle.UNDECORATED);
-
+  public SplashScreen(Stage stage) {
+    this.stage = stage;
+    stage.initStyle(StageStyle.UNDECORATED);
     SplashScreenView view = new SplashScreenView();
-
     Scene scene = new Scene(view.getView());
     stage.setScene(scene);
   }

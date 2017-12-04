@@ -1,4 +1,4 @@
-package ca.qc.ircm.util.javafx;
+package ca.qc.ircm.javafx;
 
 import javafx.util.StringConverter;
 

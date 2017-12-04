@@ -12,12 +12,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Pane;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.ResourceBundle;
 
 /**
  * Progress dialog presenter.
  */
+@Component
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ProgressDialogPresenter {
   private final BooleanProperty cancelledProperty = new SimpleBooleanProperty();
   @FXML

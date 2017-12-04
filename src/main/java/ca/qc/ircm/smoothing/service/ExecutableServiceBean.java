@@ -11,6 +11,7 @@ import org.apache.commons.io.output.TeeOutputStream;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -29,6 +30,7 @@ import javax.inject.Provider;
 /**
  * Default implementation of {@link ExecutableService}.
  */
+@Component
 public class ExecutableServiceBean implements ExecutableService {
   private static final Pattern PROGRESS_PATTERN = Pattern.compile("\\s+(\\d+)%");
   private static final Pattern RAW_DATA_COUNT_PATTERN = Pattern.compile("nbRawData=(\\d+)");
@@ -89,10 +91,12 @@ public class ExecutableServiceBean implements ExecutableService {
     commandLine.addArgument(parameters.isIncludeSmoothedTrack() ? "1" : "0");
     commandLine.addArgument(parameters.isIncludeMaximumTrack() ? "1" : "0");
     commandLine.addArgument(parameters.isIncludeMinimumTrack() ? "1" : "0");
-    commandLine.addArgument(parameters.getMaximumThreshold() != null
-        ? String.valueOf(parameters.getMaximumThreshold()) : "");
-    commandLine.addArgument(parameters.getMinimumThreshold() != null
-        ? String.valueOf(parameters.getMinimumThreshold()) : "");
+    commandLine.addArgument(
+        parameters.getMaximumThreshold() != null ? String.valueOf(parameters.getMaximumThreshold())
+            : "");
+    commandLine.addArgument(
+        parameters.getMinimumThreshold() != null ? String.valueOf(parameters.getMinimumThreshold())
+            : "");
     Executor executor = executorProvider.get();
     if (listener != null) {
       OutputStream output = new TeeOutputStream(System.out, new SmoothingEventGenerator(listener));

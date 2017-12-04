@@ -1,7 +1,5 @@
 package ca.qc.ircm.smoothing.service;
 
-import com.google.inject.assistedinject.Assisted;
-
 import ca.qc.ircm.progressbar.JavafxProgressBar;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 import javafx.concurrent.Task;
@@ -10,8 +8,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 /**
  * Create graphs based on analysis results.
@@ -22,9 +18,7 @@ public class SmoothingTask extends Task<Void> {
   private final SmoothingParameters parameters;
   private List<String> warnings = new ArrayList<>();
 
-  @Inject
-  protected SmoothingTask(SmoothingService smoothingService,
-      @Assisted SmoothingParameters parameters) {
+  protected SmoothingTask(SmoothingService smoothingService, SmoothingParameters parameters) {
     this.smoothingService = smoothingService;
     this.parameters = parameters;
   }

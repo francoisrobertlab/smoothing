@@ -1,4 +1,4 @@
-package ca.qc.ircm.util.javafx;
+package ca.qc.ircm.javafx;
 
 import javafx.geometry.Rectangle2D;
 import javafx.stage.DirectoryChooser;
@@ -25,8 +25,8 @@ public class JavafxUtils {
   }
 
   /**
-   * Sets a valid directory in file chooser if file chooser's initial directory is invalid.
-   * 
+   * Sets a valid directory in file chooser if FileChooser's directory is invalid.
+   *
    * @param fileChooser
    *          file chooser
    */
@@ -39,9 +39,8 @@ public class JavafxUtils {
   }
 
   /**
-   * Sets a valid directory in directory chooser if directory chooser's initial directory is
-   * invalid.
-   * 
+   * Sets a valid directory in directory chooser if FileChooser's directory is invalid.
+   *
    * @param directoryChooser
    *          directory chooser
    */

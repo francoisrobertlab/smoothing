@@ -6,6 +6,7 @@ import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.awt.Color;
 import java.io.File;
@@ -23,6 +24,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class BedParserBean implements BedParser {
   private static class ParsedBedTrackDefault extends BedTrackDefault implements ParsedBedTrack {
     private boolean valid;
@@ -73,13 +75,15 @@ public class BedParserBean implements BedParser {
     /**
      * Number of block starts doesn't match block count.
      */
-    MISSMATCH_BLOCK_STARTS_COUNT, /**
-                                   * First block start must be equal to 0.
-                                   */
-    INVALID_FIRST_BLOCK_START, /**
-                                * For all annotations that have blocks, this must be true: start +
-                                * last block start + last block size == end.
-                                */
+    MISSMATCH_BLOCK_STARTS_COUNT,
+    /**
+     * First block start must be equal to 0.
+     */
+    INVALID_FIRST_BLOCK_START,
+    /**
+     * For all annotations that have blocks, this must be true: start + last block start + last
+     * block size == end.
+     */
     INVALID_LAST_BLOCK, EMPTY_DATA_VALUE, INVALID_DATA_VALUE;
   }
 
@@ -115,7 +119,7 @@ public class BedParserBean implements BedParser {
       if (rawColumns.length == 0) {
         rawColumns = new String[] { "" };
       }
-      columns = new ArrayList<String>();
+      columns = new ArrayList<>();
       // Pad optional columns.
       for (int i = 0; i < Math.max(Column.values().length, rawColumns.length); i++) {
         columns.add("");
@@ -254,7 +258,7 @@ public class BedParserBean implements BedParser {
   private ParsedBedTrackDefault parseTrack(Line line, ResourceBundle bundle,
       WarningHandler warningHandler) {
     ParsedBedTrackDefault track = new ParsedBedTrackDefault();
-    track.allParameters = new HashMap<String, String>();
+    track.allParameters = new HashMap<>();
 
     String value = line.getContent();
     if (!Pattern.matches(bundle.getString("track.pattern"), value)) {
@@ -492,7 +496,7 @@ public class BedParserBean implements BedParser {
           warningHandler.handle(message);
           blockError = true;
         }
-        annotation.blockSizes = new ArrayList<Long>();
+        annotation.blockSizes = new ArrayList<>();
         boolean formatException = false;
         for (String size : sizesAsString) {
           try {
@@ -522,7 +526,7 @@ public class BedParserBean implements BedParser {
           blockError = true;
         }
 
-        annotation.blockStarts = new ArrayList<Long>();
+        annotation.blockStarts = new ArrayList<>();
         boolean formatException = false;
         for (String start : startsAsString) {
           try {
