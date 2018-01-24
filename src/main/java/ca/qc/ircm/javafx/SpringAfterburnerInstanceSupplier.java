@@ -24,8 +24,7 @@ import java.util.function.Function;
 /**
  * Spring instance supplier for afterburner.fx.
  */
-@SuppressWarnings("rawtypes")
-public class SpringAfterburnerInstanceSupplier implements Function<Class, Object> {
+public class SpringAfterburnerInstanceSupplier implements Function<Class<?>, Object> {
   private ApplicationContext applicationContext;
 
   public SpringAfterburnerInstanceSupplier(ApplicationContext applicationContext) {
@@ -33,8 +32,7 @@ public class SpringAfterburnerInstanceSupplier implements Function<Class, Object
   }
 
   @Override
-  @SuppressWarnings("unchecked")
-  public Object apply(Class clazz) {
+  public Object apply(Class<?> clazz) {
     return applicationContext.getBean(clazz);
   }
 }
