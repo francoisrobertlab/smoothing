@@ -24,7 +24,7 @@
   <properties>
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
-    <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
+    <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.6.1</afterburner.version>
     <findbugs.version>3.0.0</findbugs.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
