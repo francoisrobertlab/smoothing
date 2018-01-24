@@ -27,7 +27,7 @@
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
-    <commons-vfs2.version>2.0</commons-vfs2.version>
+    <commons-vfs2.version>2.2</commons-vfs2.version>
     <commons-lang3.version>3.1</commons-lang3.version>
     <commons-exec.version>1.1</commons-exec.version>
     <findbugs.version>3.0.1</findbugs.version>
