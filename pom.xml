@@ -26,6 +26,10 @@
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
+    <commons-io.version>2.4</commons-io.version>
+    <commons-vfs2.version>2.0</commons-vfs2.version>
+    <commons-lang3.version>3.1</commons-lang3.version>
+    <commons-exec.version>1.1</commons-exec.version>
     <findbugs.version>3.0.1</findbugs.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
   </properties>
@@ -76,22 +80,22 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.4</version>
+      <version>${commons-io.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-vfs2</artifactId>
-      <version>2.0</version>
+      <version>${commons-vfs2.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.1</version>
+      <version>${commons-lang3.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-exec</artifactId>
-      <version>1.1</version>
+      <version>${commons-exec.version}</version>
     </dependency>
     <dependency>
       <groupId>com.airhacks</groupId>
