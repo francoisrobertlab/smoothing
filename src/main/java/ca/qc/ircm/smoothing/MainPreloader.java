@@ -53,7 +53,6 @@ public class MainPreloader extends Preloader {
   @Override
   public boolean handleErrorNotification(ErrorNotification info) {
     logger.error("Could not start application", info.getCause());
-    com.airhacks.afterburner.injection.Injector.resetInstanceSupplier();
     ResourceBundle resources = ResourceBundle.getBundle(getClass().getName(), Locale.getDefault());
     new MessageDialog(stage, MessageDialogType.ERROR, resources.getString("error.title"),
         info.getCause().getMessage()).showAndWait();
