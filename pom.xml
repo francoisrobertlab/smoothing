@@ -179,6 +179,8 @@
               <phase>package</phase>
               <configuration>
                 <target>
+                  <property name="project.organization.name" value="${project.organization.name}"/>
+                  <property name="project.url" value="${project.url}"/>
                   <ant antfile="javafx-build.xml">
                     <target name="deploy"/>
                   </ant>
