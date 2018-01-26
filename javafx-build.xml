@@ -1,0 +1,55 @@
+<project name="smoothing" basedir=".">
+  <target name="init-javafx" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${javafx.ant.classpath}"/>
+    <fx:application id="fx-application" name="${project.name}" mainClass="${main-class}" preloaderClass="${preloader-class}" />
+  </target>
+  <target name="create-javafx-jar" depends="init-javafx" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <echo message="Packaging jar with JavaFX" />
+    <manifestclasspath property="manifest.classpath" jarfile="${project.build.directory}/dependency/${project.build.finalName}.jar">
+      <classpath>
+        <fileset dir="${project.build.directory}/dependency" includes="*.jar"/>
+      </classpath>
+    </manifestclasspath>
+    <fx:jar destfile="${project.build.directory}/${javafx.outfile}">
+      <fx:application refId="fx-application" />
+      <fileset dir="${project.build.outputDirectory}" />
+      <manifest>
+        <attribute name="Implementation-Title" value="${project.name}"/>
+        <attribute name="Implementation-Version" value="${project.version}"/>
+        <attribute name="Implementation-Vendor" value="${project.organization.name}"/>
+        <attribute name="Implementation-Vendor-Id" value="${project.groupId}"/>
+        <attribute name="Implementation-Build" value="${buildNumber}"/>
+        <attribute name="Implementation-URL" value="${project.url}"/>
+        <attribute name="Built-By" value="${user.name}"/>
+        <attribute name="Build-Jdk" value="${java.version}"/>
+        <attribute name="X-Compile-Source-JDK" value="${javac.version}"/>
+        <attribute name="X-Compile-Target-JDK" value="${javac.version}"/>
+        <attribute name="Class-Path" value="${manifest.classpath}"/>
+      </manifest>
+    </fx:jar>
+  </target>
+  <target name="deploy-javafx" depends="init-javafx,create-javafx-jar" unless="java9" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <echo message="Produce native bundles" />
+    <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" signBundle="false">
+      <fx:application refId="fx-application" />
+      <fx:resources>
+        <fx:fileset file="${project.build.directory}/${javafx.outfile}" />
+        <fx:fileset dir="${project.build.directory}/dependency" includes="*.jar" />
+      </fx:resources>
+    </fx:deploy>
+  </target>
+  <target name="deploy-javafx-java9" depends="init-javafx,create-javafx-jar" if="java9" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+    <echo message="Produce native bundles" />
+    <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" signBundle="false">
+      <fx:application refId="fx-application" />
+      <fx:runtime strip-native-commands="false">
+        <fx:add-modules value="java.xml.ws.annotation"/>
+      </fx:runtime>
+      <fx:resources>
+        <fx:fileset file="${project.build.directory}/${javafx.outfile}" />
+        <fx:fileset dir="${project.build.directory}/dependency" includes="*.jar" />
+      </fx:resources>
+    </fx:deploy>
+  </target>
+	<target name="deploy" depends="deploy-javafx,deploy-javafx-java9"/>
+</project>
