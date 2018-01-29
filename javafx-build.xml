@@ -32,7 +32,9 @@
     <echo message="Produce native bundles" />
     <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" verbose="true">
       <fx:application refId="fx-application" />
-      <fx:info license="${license.name}" copyright="${copyright}" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
+      <fx:info license="${license.name}" copyright="${copyright}" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" >
+      	  <fx:icon href="${javafx.icon}" />
+      	</fx:info>
       <fx:bundleArgument arg="mac.CFBundleIdentifier" value="${project.groupId}.${project.name}"/>
       <fx:bundleArgument arg="mac.category" value="${javafx.macos.category}"/>
       <fx:resources>
@@ -45,7 +47,9 @@
     <echo message="Produce native bundles" />
     <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" verbose="true">
       <fx:application refId="fx-application" />
-      <fx:info license="${license.name}" copyright="${copyright}" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
+      <fx:info license="${license.name}" copyright="${copyright}" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" >
+      	  <fx:icon href="${javafx.icon}" />
+      	</fx:info>
       <fx:bundleArgument arg="mac.CFBundleIdentifier" value="${project.groupId}.${project.name}"/>
       <fx:bundleArgument arg="mac.category" value="${javafx.macos.category}"/>
       <fx:bundleArgument arg="licenseFile" value="LICENSE.txt"/>

@@ -39,6 +39,7 @@
     <javafx.outfile>${project.build.finalName}-fx.jar</javafx.outfile>
     <javafx.ant.classpath>${java.home}/../lib/ant-javafx.jar</javafx.ant.classpath>
     <javafx.deploy.outdir>${project.build.directory}/deploy</javafx.deploy.outdir>
+    <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.png</javafx.icon>
     <javafx.macos.category>Utilities</javafx.macos.category>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
@@ -252,6 +253,39 @@
       <properties>
         <java9>true</java9>
         <javafx.ant.classpath>${java.home}/lib/ant-javafx.jar</javafx.ant.classpath>
+      </properties>
+    </profile>
+    <profile>
+      <id>unix</id>
+      <activation>
+        <os>
+          <family>unix</family>
+        </os>
+      </activation>
+      <properties>
+        <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.png</javafx.icon>
+      </properties>
+    </profile>
+    <profile>
+      <id>windows</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+      </activation>
+      <properties>
+        <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.ico</javafx.icon>
+      </properties>
+    </profile>
+    <profile>
+      <id>macos</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.icns</javafx.icon>
       </properties>
     </profile>
   </profiles>
