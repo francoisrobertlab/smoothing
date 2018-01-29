@@ -30,7 +30,7 @@
   </target>
   <target name="deploy-javafx" depends="init-javafx,create-javafx-jar" unless="java9" xmlns:fx="javafx:com.sun.javafx.tools.ant">
     <echo message="Produce native bundles" />
-    <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" signBundle="false">
+    <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}">
       <fx:application refId="fx-application" />
       <fx:info license="${license.name}" copyright="${copyright}" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
       <fx:bundleArgument arg="mac.CFBundleIdentifier" value="${project.groupId}.${project.name}"/>
@@ -43,7 +43,7 @@
   </target>
   <target name="deploy-javafx-java9" depends="init-javafx,create-javafx-jar" if="java9" xmlns:fx="javafx:com.sun.javafx.tools.ant">
     <echo message="Produce native bundles" />
-    <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" signBundle="false">
+    <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}">
       <fx:application refId="fx-application" />
       <fx:info license="${license.name}" copyright="${copyright}" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
       <fx:bundleArgument arg="mac.CFBundleIdentifier" value="${project.groupId}.${project.name}"/>
