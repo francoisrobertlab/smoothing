@@ -33,6 +33,8 @@
     <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" signBundle="false">
       <fx:application refId="fx-application" />
       <fx:info category="IRCM-tools" license="The GNU General Public License, Version 3" copyright="Copyright (c) 2006 Institut de recherches cliniques de Montreal (IRCM)" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
+      <fx:bundleArgument arg="mac.CFBundleIdentifier" value="ca.qc.ircm.smoothing"/>
+      <fx:bundleArgument arg="mac.category" value="Utilities"/>
       <fx:resources>
         <fx:fileset file="${project.build.directory}/${javafx.outfile}" />
         <fx:fileset dir="${project.build.directory}/dependency" includes="*.jar" />
@@ -44,6 +46,8 @@
     <fx:deploy nativeBundles="all" outdir="${javafx.deploy.outdir}" outfile="${project.name}" signBundle="false">
       <fx:application refId="fx-application" />
       <fx:info category="IRCM-tools" license="The GNU General Public License, Version 3" copyright="Copyright (c) 2006 Institut de recherches cliniques de Montreal (IRCM)" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
+      <fx:bundleArgument arg="mac.CFBundleIdentifier" value="ca.qc.ircm.smoothing"/>
+      <fx:bundleArgument arg="mac.category" value="Utilities"/>
       <fx:runtime strip-native-commands="false">
         <fx:add-modules value="java.xml.ws.annotation"/>
       </fx:runtime>
