@@ -1,7 +1,7 @@
 <project name="smoothing" basedir=".">
   <target name="init-javafx" xmlns:fx="javafx:com.sun.javafx.tools.ant">
     <taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath="${javafx.ant.classpath}"/>
-    <fx:application id="fx-application" name="${project.name}" mainClass="${main-class}" preloaderClass="${preloader-class}" />
+    <fx:application id="fx-application" name="${project.name}" mainClass="${main-class}" preloaderClass="${preloader-class}" version="${project.version}" />
   </target>
   <target name="create-javafx-jar" depends="init-javafx" xmlns:fx="javafx:com.sun.javafx.tools.ant">
     <echo message="Packaging jar with JavaFX" />
