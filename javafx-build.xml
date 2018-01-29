@@ -48,12 +48,14 @@
       <fx:info category="IRCM-tools" license="The GNU General Public License, Version 3" copyright="Copyright (c) 2006 Institut de recherches cliniques de Montreal (IRCM)" description="${project.description}" title="${project.name}" vendor="${project.organization.name}" />
       <fx:bundleArgument arg="mac.CFBundleIdentifier" value="ca.qc.ircm.smoothing"/>
       <fx:bundleArgument arg="mac.category" value="Utilities"/>
+      <fx:bundleArgument arg="licenseFile" value="LICENSE.txt"/>
       <fx:runtime strip-native-commands="false">
         <fx:add-modules value="java.xml.ws.annotation"/>
       </fx:runtime>
       <fx:resources>
         <fx:fileset file="${project.build.directory}/${javafx.outfile}" />
         <fx:fileset dir="${project.build.directory}/dependency" includes="*.jar" />
+        <fx:fileset file="${project.basedir}/LICENSE.txt" />
       </fx:resources>
     </fx:deploy>
   </target>
