@@ -12,6 +12,13 @@
   <name>smoothing</name>
   <description>Executes smoothing on some bed files</description>
   <url>http://bitbucket.org/ircm/smoothing</url>
+  <licenses>
+    <license>
+      <name>${license.name}</name>
+      <url>${license.url}</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
   <scm>
     <connection>scm:git:git@bitbucket.org:ircm/smoothing.git</connection>
     <developerConnection>scm:git:git@bitbucket.org:ircm/smoothing.git</developerConnection>
@@ -26,10 +33,13 @@
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
     <preloader-class>ca.qc.ircm.smoothing.MainPreloader</preloader-class>
+    <copyright>Copyright (c) 2014 Institut de recherches cliniques de Montreal (IRCM)</copyright>
+    <license.name>GNU General Public License, version 3</license.name>
+    <license.url>https://www.gnu.org/licenses/gpl-3.0.txt</license.url>
     <javafx.outfile>${project.build.finalName}-fx.jar</javafx.outfile>
     <javafx.ant.classpath>${java.home}/../lib/ant-javafx.jar</javafx.ant.classpath>
     <javafx.deploy.outdir>${project.build.directory}/deploy</javafx.deploy.outdir>
-    <fx.runtime></fx.runtime>
+    <javafx.macos.category>Utilities</javafx.macos.category>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
