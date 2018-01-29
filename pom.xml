@@ -184,6 +184,7 @@
                   <property name="project.version" value="${project.version}"/>
                   <property name="project.url" value="${project.url}"/>
                   <property name="project.description" value="${project.description}"/>
+                  <property name="project.basedir" value="${project.basedir}"/>
                   <ant antfile="javafx-build.xml">
                     <target name="deploy"/>
                   </ant>
