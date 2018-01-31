@@ -14,8 +14,8 @@
   <url>http://bitbucket.org/ircm/smoothing</url>
   <licenses>
     <license>
-      <name>${license.name}</name>
-      <url>${license.url}</url>
+      <name>GNU General Public License, version 3</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -33,8 +33,6 @@
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
     <preloader-class>ca.qc.ircm.smoothing.MainPreloader</preloader-class>
-    <license.name>GNU General Public License, version 3</license.name>
-    <license.url>https://www.gnu.org/licenses/gpl-3.0.txt</license.url>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
