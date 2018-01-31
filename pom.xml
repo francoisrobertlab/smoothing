@@ -33,14 +33,8 @@
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
     <preloader-class>ca.qc.ircm.smoothing.MainPreloader</preloader-class>
-    <copyright>Copyright (c) 2014 Institut de recherches cliniques de Montreal (IRCM)</copyright>
     <license.name>GNU General Public License, version 3</license.name>
     <license.url>https://www.gnu.org/licenses/gpl-3.0.txt</license.url>
-    <javafx.outfile>${project.build.finalName}-fx.jar</javafx.outfile>
-    <javafx.ant.classpath>${java.home}/../lib/ant-javafx.jar</javafx.ant.classpath>
-    <javafx.deploy.outdir>${project.build.directory}/deploy</javafx.deploy.outdir>
-    <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.png</javafx.icon>
-    <javafx.macos.category>Utilities</javafx.macos.category>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
@@ -171,41 +165,6 @@
           </configuration>
         </plugin>
         <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>copy-dependencies</id>
-              <goals><goal>copy-dependencies</goal></goals>
-              <configuration>
-                <includeScope>runtime</includeScope>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>create-javafx-jar</id>
-              <goals><goal>run</goal></goals>
-              <phase>package</phase>
-              <configuration>
-                <target>
-                  <property name="project.organization.name" value="${project.organization.name}"/>
-                  <property name="project.name" value="${project.name}"/>
-                  <property name="project.version" value="${project.version}"/>
-                  <property name="project.url" value="${project.url}"/>
-                  <property name="project.description" value="${project.description}"/>
-                  <property name="project.basedir" value="${project.basedir}"/>
-                  <ant antfile="javafx-build.xml">
-                    <target name="deploy"/>
-                  </ant>
-                </target>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <groupId>com.zenjava</groupId>
           <artifactId>javafx-maven-plugin</artifactId>
           <version>${javafx-maven-plugin.version}</version>
@@ -273,11 +232,6 @@
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
       </plugin>
-      <!--
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-      </plugin>
-      -->
       <plugin>
         <groupId>com.zenjava</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -292,49 +246,4 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>java9</id>
-      <activation>
-        <jdk>9</jdk>
-      </activation>
-      <properties>
-        <java9>true</java9>
-        <javafx.ant.classpath>${java.home}/lib/ant-javafx.jar</javafx.ant.classpath>
-      </properties>
-    </profile>
-    <profile>
-      <id>unix</id>
-      <activation>
-        <os>
-          <family>unix</family>
-        </os>
-      </activation>
-      <properties>
-        <javafx.icon>${project.basedir}/src/main/deploy/package/linux/smoothing.png</javafx.icon>
-      </properties>
-    </profile>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>windows</family>
-        </os>
-      </activation>
-      <properties>
-        <javafx.icon>${project.basedir}/src/main/deploy/package/windows/smoothing.ico</javafx.icon>
-      </properties>
-    </profile>
-    <profile>
-      <id>macos</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <javafx.icon>${project.basedir}/src/main/deploy/package/macosx/smoothing.icns</javafx.icon>
-      </properties>
-    </profile>
-  </profiles>
 </project>
