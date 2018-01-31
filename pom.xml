@@ -14,8 +14,8 @@
   <url>http://bitbucket.org/ircm/smoothing</url>
   <licenses>
     <license>
-      <name>${license.name}</name>
-      <url>${license.url}</url>
+      <name>GNU General Public License, version 3</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -33,14 +33,6 @@
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
     <preloader-class>ca.qc.ircm.smoothing.MainPreloader</preloader-class>
-    <copyright>Copyright (c) 2014 Institut de recherches cliniques de Montreal (IRCM)</copyright>
-    <license.name>GNU General Public License, version 3</license.name>
-    <license.url>https://www.gnu.org/licenses/gpl-3.0.txt</license.url>
-    <javafx.outfile>${project.build.finalName}-fx.jar</javafx.outfile>
-    <javafx.ant.classpath>${java.home}/../lib/ant-javafx.jar</javafx.ant.classpath>
-    <javafx.deploy.outdir>${project.build.directory}/deploy</javafx.deploy.outdir>
-    <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.png</javafx.icon>
-    <javafx.macos.category>Utilities</javafx.macos.category>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
@@ -48,7 +40,7 @@
     <commons-lang3.version>3.7</commons-lang3.version>
     <commons-exec.version>1.3</commons-exec.version>
     <findbugs.version>3.0.1</findbugs.version>
-    <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+    <javafx-maven-plugin.version>8.8.3</javafx-maven-plugin.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
   </properties>
   <dependencyManagement>
@@ -170,38 +162,44 @@
           </configuration>
         </plugin>
         <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
+          <groupId>com.zenjava</groupId>
+          <artifactId>javafx-maven-plugin</artifactId>
+          <version>${javafx-maven-plugin.version}</version>
+          <configuration>
+            <mainClass>${main-class}</mainClass>
+            <preLoader>${preloader-class}</preLoader>
+            <identifier>${project.groupId}.${project.name}</identifier>
+            <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
+            <appName>${project.name}</appName>
+            <verbose>true</verbose>
+            <manifestAttributes>
+              <Implementation-Title>${project.name}</Implementation-Title>
+              <Implementation-Version>${project.version}</Implementation-Version>
+              <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
+              <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+              <Implementation-Build>${buildNumber}</Implementation-Build>
+              <Implementation-URL>${project.url}</Implementation-URL>
+              <Built-By>${user.name}</Built-By>
+              <Build-Jdk>${java.version}</Build-Jdk>
+              <X-Compile-Source-JDK>${javac.version}</X-Compile-Source-JDK>
+              <X-Compile-Target-JDK>${javac.version}</X-Compile-Target-JDK>
+            </manifestAttributes>
+          </configuration>
           <executions>
-            <execution>
-              <id>copy-dependencies</id>
-              <goals><goal>copy-dependencies</goal></goals>
-              <configuration>
-                <includeScope>runtime</includeScope>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <id>create-javafx-jar</id>
-              <goals><goal>run</goal></goals>
-              <phase>package</phase>
-              <configuration>
-                <target>
-                  <property name="project.organization.name" value="${project.organization.name}"/>
-                  <property name="project.name" value="${project.name}"/>
-                  <property name="project.version" value="${project.version}"/>
-                  <property name="project.url" value="${project.url}"/>
-                  <property name="project.description" value="${project.description}"/>
-                  <property name="project.basedir" value="${project.basedir}"/>
-                  <ant antfile="javafx-build.xml">
-                    <target name="deploy"/>
-                  </ant>
-                </target>
-              </configuration>
-            </execution>
+           <execution>
+             <id>create-javafx-jar</id>
+             <phase>package</phase>
+             <goals>
+               <goal>build-jar</goal>
+             </goals>
+           </execution>
+           <execution>
+             <id>create-native</id>
+             <phase>package</phase>
+             <goals>
+               <goal>build-native</goal>
+             </goals>
+           </execution>
           </executions>
         </plugin>
         <plugin>
@@ -232,7 +230,8 @@
         <artifactId>maven-dependency-plugin</artifactId>
       </plugin>
       <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
+        <groupId>com.zenjava</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -244,49 +243,4 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>java9</id>
-      <activation>
-        <jdk>9</jdk>
-      </activation>
-      <properties>
-        <java9>true</java9>
-        <javafx.ant.classpath>${java.home}/lib/ant-javafx.jar</javafx.ant.classpath>
-      </properties>
-    </profile>
-    <profile>
-      <id>unix</id>
-      <activation>
-        <os>
-          <family>unix</family>
-        </os>
-      </activation>
-      <properties>
-        <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.png</javafx.icon>
-      </properties>
-    </profile>
-    <profile>
-      <id>windows</id>
-      <activation>
-        <os>
-          <family>windows</family>
-        </os>
-      </activation>
-      <properties>
-        <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.ico</javafx.icon>
-      </properties>
-    </profile>
-    <profile>
-      <id>macos</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <javafx.icon>${project.basedir}/src/main/icons/ircm-logo.icns</javafx.icon>
-      </properties>
-    </profile>
-  </profiles>
 </project>
