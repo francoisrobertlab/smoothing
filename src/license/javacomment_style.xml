@@ -17,16 +17,18 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?scenebuilder-preview-i18n-resources bedtable.properties?>
+<additionalHeaders>
+    <javacomment_style>
+        <firstLine>/*</firstLine>
+        <beforeEachLine> * </beforeEachLine>
+        <endLine> */
+</endLine>
+        <!--skipLine></skipLine-->
+        <firstLineDetectionPattern>(\s|\t)*/\*.*$</firstLineDetectionPattern>
+        <lastLineDetectionPattern>.*\*/(\s|\t)*$</lastLineDetectionPattern>
+        <allowBlankLines>false</allowBlankLines>
+        <isMultiline>true</isMultiline>
+        <padLines>false</padLines>
+    </javacomment_style>
+</additionalHeaders>
 
-<HBox fx:id="view" styleClass="bed-files" fx:controller="ca.qc.ircm.smoothing.gui.BedTablePresenter" xmlns:fx="http://javafx.com/fxml">
-	<Button mnemonicParsing="false" onAction="#browse" text="%browse"/>
-	<TableView fx:id="table" prefHeight="200">
-		<columns>
-			<TableColumn fx:id="fileColumn" text="%fileLabel" prefWidth="400"/>
-			<TableColumn fx:id="colorColumn" text="%colorLabel" prefWidth="150"/>
-		</columns>
-	</TableView>
-</HBox>
