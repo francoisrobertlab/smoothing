@@ -28,6 +28,7 @@ import org.junit.rules.RuleChain;
  * Tests {@link OperatingSystemServiceDefault}.
  */
 public class OperatingSystemServiceDefaultTest {
+  @SuppressWarnings("unused")
   private OperatingSystemService operatingSystemServiceBean;
   @Rule
   public RuleChain rules = Rules.defaultRules(this);
