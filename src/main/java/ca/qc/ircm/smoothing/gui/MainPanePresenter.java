@@ -28,6 +28,15 @@ import ca.qc.ircm.smoothing.service.SmoothingParameters;
 import ca.qc.ircm.smoothing.service.SmoothingTask;
 import ca.qc.ircm.smoothing.service.SmoothingTaskFactory;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -47,21 +56,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 import javafx.util.converter.NumberStringConverter;
+import javax.inject.Inject;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-
-import javax.inject.Inject;
 
 /**
  * Main pane presenter.

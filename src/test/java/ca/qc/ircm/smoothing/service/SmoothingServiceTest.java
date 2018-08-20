@@ -31,6 +31,15 @@ import ca.qc.ircm.smoothing.bed.BedTrackDefault;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
 import ca.qc.ircm.smoothing.test.config.Rules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Collections;
+import java.util.HashMap;
 import javafx.scene.paint.Color;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -44,16 +53,6 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Tests for {@link SmoothingService}.

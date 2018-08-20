@@ -19,12 +19,11 @@ package ca.qc.ircm.smoothing.service;
 
 import ca.qc.ircm.progressbar.JavafxProgressBar;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.concurrent.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Create graphs based on analysis results.

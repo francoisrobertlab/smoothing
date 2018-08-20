@@ -29,6 +29,8 @@ import static org.mockito.Mockito.when;
 import ca.qc.ircm.smoothing.bio.Strand;
 import ca.qc.ircm.smoothing.test.config.Rules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
+import java.io.File;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,9 +38,6 @@ import org.junit.rules.RuleChain;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-
-import java.io.File;
-import java.util.Locale;
 
 public class BedParserTest {
   private BedParser bedParser;

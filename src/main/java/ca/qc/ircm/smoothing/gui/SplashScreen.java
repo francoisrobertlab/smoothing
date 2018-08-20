@@ -17,15 +17,14 @@
 
 package ca.qc.ircm.smoothing.gui;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Splash screen.

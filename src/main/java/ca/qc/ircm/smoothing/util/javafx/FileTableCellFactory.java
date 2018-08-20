@@ -17,11 +17,10 @@
 
 package ca.qc.ircm.smoothing.util.javafx;
 
+import java.io.File;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
-
-import java.io.File;
 
 /**
  * Cell factory for {@link File}.

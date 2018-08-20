@@ -27,6 +27,10 @@ import ca.qc.ircm.smoothing.OperatingSystem;
 import ca.qc.ircm.smoothing.OperatingSystemService;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
 import ca.qc.ircm.smoothing.test.config.Rules;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.nio.charset.Charset;
+import javax.inject.Provider;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.ExecuteStreamHandler;
 import org.apache.commons.exec.Executor;
@@ -39,12 +43,6 @@ import org.junit.rules.RuleChain;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.nio.charset.Charset;
-
-import javax.inject.Provider;
 
 /**
  * Tests for {@link ExecutableService}.

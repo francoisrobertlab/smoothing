@@ -17,11 +17,10 @@
 
 package ca.qc.ircm.smoothing.util.javafx;
 
+import java.io.File;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
-
-import java.io.File;
 
 /**
  * {@link TextFieldTableCell} that shows files.

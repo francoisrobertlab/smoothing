@@ -19,17 +19,6 @@ package ca.qc.ircm.smoothing.service;
 
 import ca.qc.ircm.smoothing.OperatingSystem;
 import ca.qc.ircm.smoothing.OperatingSystemService;
-import org.apache.commons.exec.CommandLine;
-import org.apache.commons.exec.Executor;
-import org.apache.commons.exec.LogOutputStream;
-import org.apache.commons.exec.PumpStreamHandler;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.TeeOutputStream;
-import org.apache.commons.lang3.SystemUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -40,9 +29,18 @@ import java.io.OutputStream;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
+import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.Executor;
+import org.apache.commons.exec.LogOutputStream;
+import org.apache.commons.exec.PumpStreamHandler;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.TeeOutputStream;
+import org.apache.commons.lang3.SystemUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Launch external programs.

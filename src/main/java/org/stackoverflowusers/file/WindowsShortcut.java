@@ -18,15 +18,14 @@
 package org.stackoverflowusers.file;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.apache.commons.vfs2.FileObject;
-import org.apache.commons.vfs2.FileType;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileType;
 
 /**
  * Represents a Windows shortcut (typically visible to Java only as a '.lnk' file).

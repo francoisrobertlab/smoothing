@@ -17,11 +17,10 @@
 
 package ca.qc.ircm.smoothing.service;
 
-import javafx.scene.paint.Color;
-
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.paint.Color;
 
 /**
  * Simple implementation of {@link SmoothingParameters}.

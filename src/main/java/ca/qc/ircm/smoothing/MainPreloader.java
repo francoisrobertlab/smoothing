@@ -20,13 +20,12 @@ package ca.qc.ircm.smoothing;
 import ca.qc.ircm.javafx.message.MessageDialog;
 import ca.qc.ircm.javafx.message.MessageDialog.MessageDialogType;
 import ca.qc.ircm.smoothing.gui.SplashScreen;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * JavaFX application preloader.

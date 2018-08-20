@@ -17,12 +17,11 @@
 
 package ca.qc.ircm.smoothing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ErrorHandlerDefault implements ErrorHandler {
   private static class ValidationErrorDefault implements ValidationError {

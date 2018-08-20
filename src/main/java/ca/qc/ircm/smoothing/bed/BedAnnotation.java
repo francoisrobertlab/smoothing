@@ -18,7 +18,6 @@
 package ca.qc.ircm.smoothing.bed;
 
 import ca.qc.ircm.smoothing.bio.Annotation;
-
 import java.awt.Color;
 import java.util.List;
 

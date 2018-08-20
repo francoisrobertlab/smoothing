@@ -17,9 +17,8 @@
 
 package ca.qc.ircm.smoothing.service;
 
-import org.springframework.stereotype.Component;
-
 import javax.inject.Inject;
+import org.springframework.stereotype.Component;
 
 /**
  * Factory for {@link SmoothingTask}.

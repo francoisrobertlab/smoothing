@@ -28,6 +28,15 @@ import ca.qc.ircm.smoothing.util.drag.DragFilesOverHandler;
 import ca.qc.ircm.smoothing.util.javafx.ColorConverter;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCell;
 import ca.qc.ircm.smoothing.util.javafx.FileTableCellFactory;
+import java.io.File;
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ResourceBundle;
 import javafx.beans.property.MapProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleMapProperty;
@@ -61,21 +70,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
+import javax.inject.Inject;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import javax.inject.Inject;
 
 /**
  * Table containing BED files.

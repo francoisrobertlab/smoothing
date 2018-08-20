@@ -17,11 +17,10 @@
 
 package ca.qc.ircm.smoothing;
 
+import java.io.File;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
-
-import java.io.File;
 
 /**
  * Bed file with track color.

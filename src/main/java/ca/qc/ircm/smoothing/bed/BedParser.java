@@ -20,11 +20,6 @@ package ca.qc.ircm.smoothing.bed;
 import ca.qc.ircm.smoothing.bio.Strand;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 import ca.qc.ircm.smoothing.validation.WarningHandlerNoter;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +35,10 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Parses annotations present in a file.

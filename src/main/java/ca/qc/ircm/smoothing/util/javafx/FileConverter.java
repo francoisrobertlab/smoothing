@@ -17,9 +17,8 @@
 
 package ca.qc.ircm.smoothing.util.javafx;
 
-import javafx.util.StringConverter;
-
 import java.io.File;
+import javafx.util.StringConverter;
 
 /**
  * {@link StringConverter} for {@link File}.

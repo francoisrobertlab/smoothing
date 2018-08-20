@@ -27,13 +27,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import ca.qc.ircm.smoothing.test.config.Rules;
+import java.io.File;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.mockito.Mock;
-
-import java.io.File;
 
 public class BedServiceTest {
   private BedService bedServiceBean;

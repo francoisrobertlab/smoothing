@@ -22,13 +22,6 @@ import ca.qc.ircm.smoothing.bed.BedService;
 import ca.qc.ircm.smoothing.bed.BedTrack;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
-import javafx.scene.paint.Color;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -43,8 +36,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import javafx.scene.paint.Color;
 import javax.inject.Inject;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Services for smoothing BED files.

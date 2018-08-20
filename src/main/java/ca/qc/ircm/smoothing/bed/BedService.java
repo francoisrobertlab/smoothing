@@ -17,14 +17,12 @@
 
 package ca.qc.ircm.smoothing.bed;
 
-import org.springframework.stereotype.Service;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.inject.Inject;
+import org.springframework.stereotype.Service;
 
 /**
  * Services for BED files.
