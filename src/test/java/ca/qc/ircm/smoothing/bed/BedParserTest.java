@@ -12,6 +12,8 @@ import static org.mockito.Mockito.when;
 import ca.qc.ircm.smoothing.bio.Strand;
 import ca.qc.ircm.smoothing.test.config.Rules;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
+import java.io.File;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,9 +21,6 @@ import org.junit.rules.RuleChain;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-
-import java.io.File;
-import java.util.Locale;
 
 public class BedParserTest {
   private BedParser bedParser;
@@ -3652,7 +3651,7 @@ public class BedParserTest {
     assertEquals("22", annotation.getChromosome());
     assertEquals((Long) 2000L, annotation.getStart());
     assertEquals((Long) 6000L, annotation.getEnd());
-    assertEquals(new Double(-0.15), annotation.getDataValue());
+    assertEquals((Double) (-0.15), annotation.getDataValue());
     assertEquals(2, annotationsTrackCaptor.getAllValues().size());
     track = annotationsTrackCaptor.getAllValues().get(0);
     assertEquals(BedTrack.Type.WIGGLE, track.getType());
@@ -3779,7 +3778,7 @@ public class BedParserTest {
     assertEquals("22", annotation.getChromosome());
     assertEquals((Long) 2000L, annotation.getStart());
     assertEquals((Long) 6000L, annotation.getEnd());
-    assertEquals(new Double(-0.15), annotation.getDataValue());
+    assertEquals((Double) (-0.15), annotation.getDataValue());
     assertEquals(2, annotationsTrackCaptor.getAllValues().size());
     track = annotationsTrackCaptor.getAllValues().get(0);
     assertEquals(BedTrack.Type.WIGGLE, track.getType());
@@ -3861,7 +3860,7 @@ public class BedParserTest {
     assertEquals("12", annotation.getChromosome());
     assertEquals((Long) 2000L, annotation.getStart());
     assertEquals((Long) 6000L, annotation.getEnd());
-    assertEquals(new Double(-0.15), annotation.getDataValue());
+    assertEquals((Double) (-0.15), annotation.getDataValue());
     assertEquals(4, annotationsTrackCaptor.getAllValues().size());
     track = annotationsTrackCaptor.getAllValues().get(0);
     assertEquals(BedTrack.Type.BED, track.getType());
