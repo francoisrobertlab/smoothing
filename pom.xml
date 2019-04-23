@@ -51,7 +51,6 @@
   <properties>
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
-    <preloader-class>ca.qc.ircm.smoothing.MainPreloader</preloader-class>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
@@ -59,7 +58,6 @@
     <commons-lang3.version>3.7</commons-lang3.version>
     <commons-exec.version>1.3</commons-exec.version>
     <findbugs.version>3.0.1</findbugs.version>
-    <javafx-maven-plugin.version>8.8.3</javafx-maven-plugin.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
   </properties>
   <dependencyManagement>
@@ -181,47 +179,6 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>com.zenjava</groupId>
-          <artifactId>javafx-maven-plugin</artifactId>
-          <version>${javafx-maven-plugin.version}</version>
-          <configuration>
-            <mainClass>${main-class}</mainClass>
-            <preLoader>${preloader-class}</preLoader>
-            <identifier>${project.groupId}.${project.name}</identifier>
-            <nativeReleaseVersion>${project.version}</nativeReleaseVersion>
-            <appName>${project.name}</appName>
-            <verbose>true</verbose>
-            <manifestAttributes>
-              <Implementation-Title>${project.name}</Implementation-Title>
-              <Implementation-Version>${project.version}</Implementation-Version>
-              <Implementation-Vendor>${project.organization.name}</Implementation-Vendor>
-              <Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
-              <Implementation-Build>${buildNumber}</Implementation-Build>
-              <Implementation-URL>${project.url}</Implementation-URL>
-              <Built-By>${user.name}</Built-By>
-              <Build-Jdk>${java.version}</Build-Jdk>
-              <X-Compile-Source-JDK>${javac.version}</X-Compile-Source-JDK>
-              <X-Compile-Target-JDK>${javac.version}</X-Compile-Target-JDK>
-            </manifestAttributes>
-          </configuration>
-          <executions>
-           <execution>
-             <id>create-javafx-jar</id>
-             <phase>package</phase>
-             <goals>
-               <goal>build-jar</goal>
-             </goals>
-           </execution>
-           <execution>
-             <id>create-native</id>
-             <phase>package</phase>
-             <goals>
-               <goal>build-native</goal>
-             </goals>
-           </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-maven-plugin</artifactId>
           <version>${spring-boot-maven-plugin.version}</version>
@@ -274,10 +231,6 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>com.zenjava</groupId>
-        <artifactId>javafx-maven-plugin</artifactId>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
