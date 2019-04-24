@@ -260,6 +260,10 @@
           <version>${javafx-11.version}</version>
         </dependency>
       </dependencies>
+      <properties>
+        <!-- Fails in Java 11.0.2 -->
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+      </properties>
     </profile>
   </profiles>
 </project>
