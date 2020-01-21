@@ -49,6 +49,7 @@
     <url>https://bitbucket.org/ircm/smoothing/issues</url>
   </issueManagement>
   <properties>
+    <resource.delimiter>$[*]</resource.delimiter>
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
     <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
@@ -164,6 +165,15 @@
     </testResources>
     <pluginManagement>
       <plugins>
+        <plugin>
+          <artifactId>maven-resources-plugin</artifactId>
+          <configuration>
+            <delimiters>
+              <delimiter>${resource.delimiter}</delimiter>
+            </delimiters>
+            <useDefaultDelimiters>false</useDefaultDelimiters>
+          </configuration>
+        </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
