@@ -52,7 +52,7 @@
     <resource.delimiter>$[*]</resource.delimiter>
     <javac.version>1.8</javac.version>
     <main-class>ca.qc.ircm.smoothing.Main</main-class>
-    <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+    <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
     <afterburner.version>1.7.0</afterburner.version>
     <commons-io.version>2.6</commons-io.version>
     <commons-vfs2.version>2.2</commons-vfs2.version>
