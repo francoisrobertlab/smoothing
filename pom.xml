@@ -60,7 +60,28 @@
     <commons-exec.version>1.3</commons-exec.version>
     <spotbugs.version>4.0.0-beta1</spotbugs.version>
     <javafx-11.version>11.0.2</javafx-11.version>
+    <javafx-14.version>14-ea+1</javafx-14.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
+    <javafx.finalName>${project.build.finalName}.jar</javafx.finalName>
+    <jpackage>${java.home}/bin/jpackage</jpackage>
+    <jpackage.skip>true</jpackage.skip>
+    <jpackage.input>${project.build.directory}/jpackage</jpackage.input>
+    <jpackage.options.windows>${project.build.directory}/classes/jpackage/windows.txt</jpackage.options.windows>
+    <jpackage.options.mac>${project.build.directory}/classes/jpackage/mac.txt</jpackage.options.mac>
+    <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux.txt</jpackage.options.linux>
+    <jpackage.options>${jpackage.options.windows}</jpackage.options>
+    <copyright>Copyright (c) ${project.inceptionYear} ${organization.name}</copyright>
+    <icon.windows>${project.basedir}/src/main/resources/icons/smoothing.ico</icon.windows>
+    <icon.mac>${project.basedir}/src/main/resources/icons/smoothing.icns</icon.mac>
+    <icon.linux>${project.basedir}/src/main/resources/icons/smoothing.png</icon.linux>
+    <icon>${icon.windows}</icon>
+    <license.file>${project.basedir}/LICENSE.txt</license.file>
+    <win.uuid>dda626b4-8b0b-45e8-9d4e-ffd8ea61931a</win.uuid>
+    <mac.package.identifier>Smoothing</mac.package.identifier>
+    <linux.deb.maintainer>christian.poitras@ircm.qc.ca</linux.deb.maintainer>
+    <linux.rpm.license.type>GPLv3+</linux.rpm.license.type>
+    <linux.app.release>1</linux.app.release>
+    <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -156,6 +177,16 @@
       </resource>
       <resource>
         <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>jpackage/**</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>jpackage/**</include>
+        </includes>
       </resource>
     </resources>
     <testResources>
@@ -205,6 +236,45 @@
           </executions>
         </plugin>
         <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>copy-jar-jpackage</id>
+              <phase>package</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <target>
+                  <echo message="Copy jar for jpackage" />
+                  <copy file="${project.build.directory}/${javafx.finalName}" todir="${jpackage.input}"></copy>
+                </target>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>1.6.0</version>
+          <executions>
+            <execution>
+              <id>package-application</id>
+              <goals>
+                <goal>exec</goal>
+              </goals>
+              <phase>package</phase>
+              <configuration>
+                <skip>${jpackage.skip}</skip>
+                <executable>${jpackage}</executable>
+                <arguments>
+                  <argument>@${jpackage.options}</argument>
+                </arguments>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
           <groupId>com.mycila</groupId>
           <artifactId>license-maven-plugin</artifactId>
           <configuration>
@@ -231,6 +301,26 @@
             </executions>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${build-helper-maven-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>format-windows-product-version</id>
+                <goals>
+                  <goal>regex-property</goal>
+                </goals>
+                <phase>validate</phase>
+                <configuration>
+                  <name>win.version</name>
+                  <value>${project.version}</value>
+                  <regex>^(\d+)(\.\d+)?(\.\d+)?(-SNAPSHOT)?$</regex>
+                  <replacement>$1$2$3</replacement>
+                </configuration>
+              </execution>
+            </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -251,9 +341,99 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
   <profiles>
+    <profile>
+      <id>java14</id>
+      <activation>
+        <jdk>14</jdk>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+          <version>${javafx-14.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-fxml</artifactId>
+          <version>${javafx-14.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-web</artifactId>
+          <version>${javafx-14.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-swing</artifactId>
+          <version>${javafx-14.version}</version>
+        </dependency>
+      </dependencies>
+      <properties>
+        <!-- Fails in Java 14-ea+1 -->
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+      </properties>
+    </profile>
+    <profile>
+      <id>windows</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+      </activation>
+      <properties>
+        <jpackage.options>${jpackage.options.windows}</jpackage.options>
+        <icon>${icon.windows}</icon>
+      </properties>
+    </profile>
+    <profile>
+      <id>mac</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <jpackage.options>${jpackage.options.mac}</jpackage.options>
+        <icon>${icon.mac}</icon>
+      </properties>
+    </profile>
+    <profile>
+      <id>linux</id>
+      <activation>
+        <os>
+          <family>unix</family>
+          <name>Linux</name>
+        </os>
+      </activation>
+      <properties>
+        <jpackage.options>${jpackage.options.linux}</jpackage.options>
+        <icon>${icon.linux}</icon>
+      </properties>
+    </profile>
+    <profile>
+      <id>installer</id>
+      <properties>
+        <jpackage.skip>false</jpackage.skip>
+      </properties>
+    </profile>
     <profile>
       <id>java11</id>
       <activation>
