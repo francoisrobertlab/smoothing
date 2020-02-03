@@ -433,5 +433,11 @@
         <jpackage.skip>false</jpackage.skip>
       </properties>
     </profile>
+    <profile>
+      <id>app-image</id>
+      <properties>
+	    <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux-app-image.txt</jpackage.options.linux>
+      </properties>
+    </profile>
   </profiles>
 </project>
