@@ -17,6 +17,7 @@
 
 package ca.qc.ircm.smoothing;
 
+import static ca.qc.ircm.smoothing.OperatingSystem.LINUX;
 import static ca.qc.ircm.smoothing.OperatingSystem.MAC;
 import static ca.qc.ircm.smoothing.OperatingSystem.OTHER;
 import static ca.qc.ircm.smoothing.OperatingSystem.UNIX;
@@ -49,6 +50,8 @@ public class OperatingSystemService {
       return WINDOWS;
     } else if (SystemUtils.IS_OS_MAC) {
       return MAC;
+    } else if (SystemUtils.IS_OS_LINUX) {
+      return LINUX;
     } else if (SystemUtils.IS_OS_UNIX) {
       return UNIX;
     }

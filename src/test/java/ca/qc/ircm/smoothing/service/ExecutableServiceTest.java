@@ -18,7 +18,7 @@
 package ca.qc.ircm.smoothing.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -198,6 +198,24 @@ public class ExecutableServiceTest {
     assertEquals(true, executable.exists());
     assertEquals(true, executable.canExecute());
     String executableResource = "/executables/smoothing_mac_64";
+    File expectedExecutable = new File(this.getClass().getResource(executableResource).toURI());
+    assertEquals(FileUtils.checksumCRC32(expectedExecutable), FileUtils.checksumCRC32(executable));
+  }
+
+  @Test
+  public void smoothing_Linux64() throws Throwable {
+    when(operatingSystemService.currentOs()).thenReturn(OperatingSystem.LINUX);
+    when(operatingSystemService.is64bit(any(OperatingSystem.class))).thenReturn(true);
+    SmoothingCoreParametersBean parameters = parameters();
+
+    executableServiceBean.smoothing(parameters, listener);
+
+    verify(executor).execute(commandLineCaptor.capture());
+    CommandLine commandLine = commandLineCaptor.getValue();
+    File executable = new File(commandLine.getExecutable());
+    assertEquals(true, executable.exists());
+    assertEquals(true, executable.canExecute());
+    String executableResource = "/executables/smoothing_linux_64";
     File expectedExecutable = new File(this.getClass().getResource(executableResource).toURI());
     assertEquals(FileUtils.checksumCRC32(expectedExecutable), FileUtils.checksumCRC32(executable));
   }
