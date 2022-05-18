@@ -3668,7 +3668,7 @@ public class BedParserTest {
     assertEquals("22", annotation.getChromosome());
     assertEquals((Long) 2000L, annotation.getStart());
     assertEquals((Long) 6000L, annotation.getEnd());
-    assertEquals(new Double(-0.15), annotation.getDataValue());
+    assertEquals((Double) (-0.15), annotation.getDataValue());
     assertEquals(2, annotationsTrackCaptor.getAllValues().size());
     track = annotationsTrackCaptor.getAllValues().get(0);
     assertEquals(BedTrack.Type.WIGGLE, track.getType());
@@ -3795,7 +3795,7 @@ public class BedParserTest {
     assertEquals("22", annotation.getChromosome());
     assertEquals((Long) 2000L, annotation.getStart());
     assertEquals((Long) 6000L, annotation.getEnd());
-    assertEquals(new Double(-0.15), annotation.getDataValue());
+    assertEquals((Double) (-0.15), annotation.getDataValue());
     assertEquals(2, annotationsTrackCaptor.getAllValues().size());
     track = annotationsTrackCaptor.getAllValues().get(0);
     assertEquals(BedTrack.Type.WIGGLE, track.getType());
@@ -3877,7 +3877,7 @@ public class BedParserTest {
     assertEquals("12", annotation.getChromosome());
     assertEquals((Long) 2000L, annotation.getStart());
     assertEquals((Long) 6000L, annotation.getEnd());
-    assertEquals(new Double(-0.15), annotation.getDataValue());
+    assertEquals((Double) (-0.15), annotation.getDataValue());
     assertEquals(4, annotationsTrackCaptor.getAllValues().size());
     track = annotationsTrackCaptor.getAllValues().get(0);
     assertEquals(BedTrack.Type.BED, track.getType());
