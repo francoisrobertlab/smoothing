@@ -429,7 +429,7 @@ public class BedParser {
       value = line.getColumns().get(Column.SCORE.ordinal());
       if (!value.equals("")) {
         try {
-          annotation.score = new Integer(value);
+          annotation.score = Integer.parseInt(value);
         } catch (NumberFormatException e) {
           String message = message(bundle, Warning.INVALID_SCORE, line.getLineNumber(), value);
           logger.debug("{}", message);
@@ -462,7 +462,7 @@ public class BedParser {
       value = line.getColumns().get(Column.THICK_START.ordinal());
       if (!value.equals("")) {
         try {
-          annotation.thickStart = new Long(value);
+          annotation.thickStart = Long.parseLong(value);
         } catch (NumberFormatException e) {
           String message =
               message(bundle, Warning.INVALID_THICK_START, line.getLineNumber(), value);
@@ -483,7 +483,7 @@ public class BedParser {
       value = line.getColumns().get(Column.THICK_END.ordinal());
       if (!value.equals("")) {
         try {
-          annotation.thickEnd = new Long(value);
+          annotation.thickEnd = Long.parseLong(value);
         } catch (NumberFormatException e) {
           String message = message(bundle, Warning.INVALID_THICK_END, line.getLineNumber(), value);
           logger.debug("{}", message);
@@ -514,7 +514,7 @@ public class BedParser {
       value = line.getColumns().get(Column.BLOCK_COUNT.ordinal());
       if (!value.equals("")) {
         try {
-          annotation.blockCount = new Integer(value);
+          annotation.blockCount = Integer.parseInt(value);
         } catch (NumberFormatException e) {
           String message =
               message(bundle, Warning.INVALID_BLOCK_COUNT, line.getLineNumber(), value);
@@ -539,7 +539,7 @@ public class BedParser {
         boolean formatException = false;
         for (String size : sizesAsString) {
           try {
-            annotation.blockSizes.add(new Long(size));
+            annotation.blockSizes.add(Long.parseLong(size));
           } catch (NumberFormatException e) {
             if (!formatException) {
               String message =
@@ -569,7 +569,7 @@ public class BedParser {
         boolean formatException = false;
         for (String start : startsAsString) {
           try {
-            annotation.blockStarts.add(new Long(start));
+            annotation.blockStarts.add(Long.parseLong(start));
           } catch (NumberFormatException e) {
             if (!formatException) {
               String message =
@@ -616,7 +616,7 @@ public class BedParser {
         warningHandler.handle(message);
       } else {
         try {
-          annotation.dataValue = new Double(value);
+          annotation.dataValue = Double.parseDouble(value);
         } catch (NumberFormatException e) {
           String message = message(bundle, Warning.INVALID_DATA_VALUE, line.getLineNumber(), value);
           logger.debug("{}", message);
