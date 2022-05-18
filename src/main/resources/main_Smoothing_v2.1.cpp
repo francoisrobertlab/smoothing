@@ -1,5 +1,22 @@
-//The core script is from Mathieu Blanchette, used in the paper: 
-//	Guillemette, B.*, Bataille, A.*, Gévry, N., Adam, M., Blanchette, Robert, F. and Gaudreau, L. (2005) Variant Histone H2A.Z is 
+/**
+ * Copyright (c) 2015 Institut de recherches cliniques de Montreal (IRCM)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+//The core script is from Mathieu Blanchette, used in the paper:
+//	Guillemette, B.*, Bataille, A.*, Gï¿½vry, N., Adam, M., Blanchette, Robert, F. and Gaudreau, L. (2005) Variant Histone H2A.Z is 
 //	Globally Localized to the Promoters of Inactive Yeast Genes and Regulates Nucleosome Positioning. PLoS Biology 3(12), e384.
 //After verification, the absolute maximal difference between results obtained from this script and the published smoothed results is 0.367,
 //principally because there was a small error in the orginal version (j+=StepLength instead of j++).
@@ -12,13 +29,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <assert.h>	//éventuellement remplacer les assert par des if(!)return ou exit pour l'intéractivité
+#include <assert.h>	//ï¿½ventuellement remplacer les assert par des if(!)return ou exit pour l'intï¿½ractivitï¿½
 #include <time.h>
 
 using namespace std; //introduces namespace std
 
-//----------------------------------DÉCLARATIONS---------------------------------------
-const int MAXrounds=10, MAXnbrChrom=25, MAXfloatMem=950000000;		//nécessaires pour s'assurer que dépassera pas mémoire!
+//----------------------------------Dï¿½CLARATIONS---------------------------------------
+const int MAXrounds=10, MAXnbrChrom=25, MAXfloatMem=950000000;		//nï¿½cessaires pour s'assurer que dï¿½passera pas mï¿½moire!
 const int MAXwindowSize=10000, MAXnbrExtrm=50000, MAXnbrData=10000000;
 const int MAXtempC=10000, NBRvalChqCote=3;
 
@@ -105,11 +122,11 @@ int main(int argc, char *argv[]) {
 	//cout<<"nomFichierEntree="<<nomFichierEntree<<endl;
 	//cout<<isCheckedSmooth<<isCheckedMax<<isCheckedMin<<maxThreshold<<minThreshold<<endl;
 	assert(stdDev>0);
-	int window_size=(int)(6*stdDev); //?éventually param?
+	int window_size=(int)(6*stdDev); //?ï¿½ventually param?
 	assert(window_size<MAXwindowSize);
 	assert(nbRounds>0 && nbRounds<MAXrounds);
 	assert(StepLength>0);
-//AJOUTER LIMITE datasetName AUX 64 PREMIERS CARACT SLMT PR ÉVITER OVERFLOW DE UCSC!!! ==> semble plutôt être limite ~115...
+//AJOUTER LIMITE datasetName AUX 64 PREMIERS CARACT SLMT PR ï¿½VITER OVERFLOW DE UCSC!!! ==> semble plutï¿½t ï¿½tre limite ~115...
 
 
 
@@ -119,7 +136,7 @@ int main(int argc, char *argv[]) {
 	bool isCheckedRatio=atoi(argv[3]);
 	float stdDev=atof(argv[4]);			//default=200bp
 	assert(stdDev>0);
-	int window_size=(int)(6*stdDev); //?éventually param?
+	int window_size=(int)(6*stdDev); //?ï¿½ventually param?
 	assert(window_size<MAXwindowSize);
 	float ***bedSmooth;//[MAXrounds+1][MAXnbrChrom];	//bedSmooth[0]=raw_data
 	int nbRounds=atoi(argv[5]);			//default=2
@@ -135,13 +152,13 @@ int main(int argc, char *argv[]) {
 	assert(out1);
 MB*/
 	
-	//s'assurer qu'au moins une piste de lissage est désirée!!
+	//s'assurer qu'au moins une piste de lissage est dï¿½sirï¿½e!!
 	assert(isCheckedSmooth || isCheckedMax || isCheckedMin);
 
 
-	//supporter les fichiers param créés autant win que unix
+	//supporter les fichiers param crï¿½ï¿½s autant win que unix
 	ifstream inBed, inTest(nomFichierEntree.c_str());
-	ofstream outBED;	//fichier possédant d'autres infos pour l'usager donc se positionner à la fin pour ajouter les données smth
+	ofstream outBED;	//fichier possï¿½dant d'autres infos pour l'usager donc se positionner ï¿½ la fin pour ajouter les donnï¿½es smth
 	string tempS1(""), tempS2(""), tempS3(""), tempS4("");
 	if(inTest){
 //		cout<<"fichier param format unix"<<endl;	
@@ -150,23 +167,23 @@ MB*/
 	}
 	else{	
 //		cout<<"fichier param format dos"<<endl;
-		for(int i=0;i<nomFichierEntree.length()-1;i++)	tempS1+=nomFichierEntree[i];		//enlever le dernier caractère dans nom de fichier
-		for(int i=0;i<nomFichierSortie.length()-1;i++)	tempS2+=nomFichierSortie[i];		//enlever le dernier caractère dans nom de fichier
+		for(int i=0;i<nomFichierEntree.length()-1;i++)	tempS1+=nomFichierEntree[i];		//enlever le dernier caractï¿½re dans nom de fichier
+		for(int i=0;i<nomFichierSortie.length()-1;i++)	tempS2+=nomFichierSortie[i];		//enlever le dernier caractï¿½re dans nom de fichier
 //cout<<"nomFichierEntree="<<tempS1<<"_"<<endl<<"nomFichierSortie="<<tempS2<<"_"<<endl;
 		inBed.open(tempS1.c_str());	
 		outBED.open(tempS2.c_str(), ios_base::app);		//app	(append) Set the stream's position indicator to the end of the stream before each output operation
-	    //traiter également ces deux noms
+	    //traiter ï¿½galement ces deux noms
 	    tempS3=datasetName;	    datasetName="";
-		for(int i=0;i<tempS3.length()-1;i++)	datasetName+=tempS3[i];		//enlever le dernier caractère dans nom de fichier
+		for(int i=0;i<tempS3.length()-1;i++)	datasetName+=tempS3[i];		//enlever le dernier caractï¿½re dans nom de fichier
 	    tempS4=dbName;	    dbName="";
-		for(int i=0;i<tempS4.length()-1;i++)	dbName+=tempS4[i];		//enlever le dernier caractère dans nom de fichier
+		for(int i=0;i<tempS4.length()-1;i++)	dbName+=tempS4[i];		//enlever le dernier caractï¿½re dans nom de fichier
 	}
 	assert(inBed);
 	assert(outBED);
 	inTest.close();
 
 	
-	//lire toutes les données et les trier pour détecter le nbr de chr diff et la longueur à couvrir pour chq chrom (conserver min et max)
+	//lire toutes les donnï¿½es et les trier pour dï¿½tecter le nbr de chr diff et la longueur ï¿½ couvrir pour chq chrom (conserver min et max)
 	BED *tabRawData;	int nbRawData(0);
 	tabRawData = new BED [MAXnbrData];
 	for(int a=0;a<MAXnbrData;a++)	tabRawData[a].Init();
@@ -180,7 +197,7 @@ MB*/
 		tabRawData[nbRawData].debut=int(tempF1);
 		tabRawData[nbRawData].fin=int(tempF2);
 		tabRawData[nbRawData].centre=(tabRawData[nbRawData].debut+tabRawData[nbRawData].fin)/2;
-		//vérifier si chromosome numérique ou alphanumérique afin de trier en conséquence
+		//vï¿½rifier si chromosome numï¿½rique ou alphanumï¿½rique afin de trier en consï¿½quence
 		estNum=true;
 		for(int i=0;i<tabRawData[nbRawData].chromAlpha.length();i++){
 			tabTempC[i]=tabRawData[nbRawData].chromAlpha[i];
@@ -200,7 +217,7 @@ MB*/
 //	cout<<"tabRawData[nbRawData-1].chromAlpha="<<tabRawData[nbRawData-1].chromAlpha<<"   tabRawData[nbRawData-1].chromNum="<<tabRawData[nbRawData-1].chromNum<<endl;
 
 
-	//trier tabRawData puis créer tabChrom (réinitialiser tabRawData[i].chromNum)
+	//trier tabRawData puis crï¿½er tabChrom (rï¿½initialiser tabRawData[i].chromNum)
 	Chrom *tabChrom = new Chrom[MAXnbrChrom];
 	int nbrChrom(0), nbrNt(0), tempDeb;
 	qsort(tabRawData, nbRawData, sizeof(BED), ComparerBED);
@@ -208,12 +225,12 @@ MB*/
 	tabChrom[nbrChrom].nom=tabRawData[0].chromAlpha;
 //tabChrom[nbrChrom].coordMin=0;//pr comp H2AZ
 	tempDeb=tabRawData[0].debut;
-	while(tempDeb%10!=0 && tempDeb>0)	tempDeb--;	//pr initialiser la valeur début à min%10!!
+	while(tempDeb%10!=0 && tempDeb>0)	tempDeb--;	//pr initialiser la valeur dï¿½but ï¿½ min%10!!
 	tabChrom[nbrChrom].coordMin=tempDeb;
 	tabRawData[0].chromNum=nbrChrom;
 	for(int i=1;i<nbRawData;i++){
 		if(tabRawData[i].chromAlpha!=tabRawData[i-1].chromAlpha){
-			//finaliser traitement chrom précédent
+			//finaliser traitement chrom prï¿½cï¿½dent
 			tabChrom[nbrChrom].coordMax=tabRawData[i-1].fin;
 			nbrNt+=tabChrom[nbrChrom].longueur=(tabChrom[nbrChrom].coordMax-tabChrom[nbrChrom].coordMin+1);
 			nbrChrom++;
@@ -221,7 +238,7 @@ MB*/
 			tabChrom[nbrChrom].nom=tabRawData[i].chromAlpha;
 //		tabChrom[nbrChrom].coordMin=0;//pr comp H2AZ			
 			tempDeb=tabRawData[i].debut;
-			while(tempDeb%10!=0 && tempDeb>0)	tempDeb--;	//pr initialiser la valeur début à min%10!!
+			while(tempDeb%10!=0 && tempDeb>0)	tempDeb--;	//pr initialiser la valeur dï¿½but ï¿½ min%10!!
 			tabChrom[nbrChrom].coordMin=tempDeb;			
 		}
 		tabRawData[i].chromNum=nbrChrom;
@@ -234,18 +251,18 @@ MB*/
 //	for(int b=0;b<nbrChrom;b++)	cout<<b<<" "<<tabChrom[b].nom<<" "<<tabChrom[b].coordMin<<" "<<tabChrom[b].coordMax<<" "<<tabChrom[b].longueur<<endl;
 	
 	
-	//évaluer la qté de mémoire nécessaire et sortir du programme avec erreur -1 si trop demandé
+	//ï¿½valuer la qtï¿½ de mï¿½moire nï¿½cessaire et sortir du programme avec erreur -1 si trop demandï¿½
 	if(nbRounds*nbrNt>MAXfloatMem) return -1;
-	//AMÉLIORATIONS POTENTIELLES POUR DIMINUER CONSOMMATION DE MÉMOIRE :
-	//	- TRAITER UN CHR À LA FOIS (ÉQUIVALENT D'ENLEVER UNE DIMENSION À tabSmthData);
-	//	- CONSERVER L'INFORMATION DE 2 RONDES SLMT (LA PRÉSENTE ET LA PRÉCÉDENTE) ET FAIRE %2 POUR DÉTERMINER QUEL INDICE UTILISER;
-	//	- TRAITER LES DONNEES SOUS FORME DE "unsigned short"*10000 (ÉQUIVALENT DE PRÉCISION 5) PLUTÔT QUE FLOAT;
-	//	- UTILISER COMPILATEUR et librairies 64 BITS POUR DÉPASSER LA LIMITE DE 4Go!!!
+	//AMï¿½LIORATIONS POTENTIELLES POUR DIMINUER CONSOMMATION DE Mï¿½MOIRE :
+	//	- TRAITER UN CHR ï¿½ LA FOIS (ï¿½QUIVALENT D'ENLEVER UNE DIMENSION ï¿½ tabSmthData);
+	//	- CONSERVER L'INFORMATION DE 2 RONDES SLMT (LA PRï¿½SENTE ET LA PRï¿½Cï¿½DENTE) ET FAIRE %2 POUR Dï¿½TERMINER QUEL INDICE UTILISER;
+	//	- TRAITER LES DONNEES SOUS FORME DE "unsigned short"*10000 (ï¿½QUIVALENT DE PRï¿½CISION 5) PLUTï¿½T QUE FLOAT;
+	//	- UTILISER COMPILATEUR et librairies 64 BITS POUR Dï¿½PASSER LA LIMITE DE 4Go!!!
 	// 	- OU ENCORE CHANGER DE SERVEUR...
 
 
-	//créer tabSmthData[nbRound][nbrChrom][tabChrom[nbrChrom].longueur] + bedMax/Min et TEMPORAIREMENT tabNbrData[nbrChrom][tabChrom[nbrChrom].longueur]
-	float ***tabSmthData = new float**[nbRounds+1];		//nbRounds+1 car le 0 représente initialisation
+	//crï¿½er tabSmthData[nbRound][nbrChrom][tabChrom[nbrChrom].longueur] + bedMax/Min et TEMPORAIREMENT tabNbrData[nbrChrom][tabChrom[nbrChrom].longueur]
+	float ***tabSmthData = new float**[nbRounds+1];		//nbRounds+1 car le 0 reprï¿½sente initialisation
 	for(int a=0;a<nbRounds+1;a++){
 		tabSmthData[a] = new float*[nbrChrom];
 		for(int b=0;b<nbrChrom;b++){
@@ -274,7 +291,7 @@ MB*/
 		for(int a=0;a<MAXnbrExtrm;a++)	bedMin[a].Init();
 	}
 /*MB
-	//création de bedSmooth[nbRounds][nbrChrom][nbrNtChrom]
+	//crï¿½ation de bedSmooth[nbRounds][nbrChrom][nbrNtChrom]
 	for (int a=0;a<=nbRounds;a++) {
 		for (int i=0;i<MAXnbrChrom;i++) {
 			bedSmooth[a][i]=(float*) malloc(MAXntChrom*sizeof(float));
@@ -297,8 +314,8 @@ MB*/
 			if(tabNbrData[b][c])	tabSmthData[0][b][c]/=tabNbrData[b][c];
 		}
 	}
-//cout<<"avant détruire"<<endl;	
-	//détruire tab qui ne sont plus utiles
+//cout<<"avant dï¿½truire"<<endl;	
+	//dï¿½truire tab qui ne sont plus utiles
 	for(int b=0;b<nbrChrom;b++)		delete[] tabNbrData[b];
 //cout<<"1"<<endl;	
 	delete tabNbrData;
@@ -316,7 +333,7 @@ MB*/
 	char foo[10000];
 	//ligne titre
 	fscanf(f,"%[^\n]\n",foo);
-PRÉSENTEMENT L,ORDRE N,A PAS D,IMPORTANCE PUISQU,INITIALISATION DE CHQ POSITION DE FAÇON INDÉPENDANTE!!
+PRï¿½SENTEMENT L,ORDRE N,A PAS D,IMPORTANCE PUISQU,INITIALISATION DE CHQ POSITION DE FAï¿½ON INDï¿½PENDANTE!!
 	while (fscanf(f,"chr%s %d %d %f\n",chr,&start,&stop,&x1)!=EOF) {
 		//chrM= chrom 0
 		if (chr[0]!='M') ch=atoi(chr); else ch=0;
@@ -324,12 +341,12 @@ TRAITER CHR DIFF CAR SI UN SEUL ET QUE C,EST 22 OU ENCORE CHR DROSO!!!
 //		cerr<<ch<<" "<<start<<endl;
 		assert(ch<MAXnbrChrom);
 		if (nbrChrom<ch) nbrChrom=ch;
-		//init chq nt d'un oligo à la valeur associée (round=0)(??lorsque oligos chevauchants??!!!=>N/A puisque fichier entrée est un bed!!)
+		//init chq nt d'un oligo ï¿½ la valeur associï¿½e (round=0)(??lorsque oligos chevauchants??!!!=>N/A puisque fichier entrï¿½e est un bed!!)
 		for (int i=start;i<stop;i++) {
-//		for (int i=start-30;i<stop+30;i++) {	//puisque oligo représenté slmt par centre plutôt que long totale
+//		for (int i=start-30;i<stop+30;i++) {	//puisque oligo reprï¿½sentï¿½ slmt par centre plutï¿½t que long totale
 			bedSmooth[0][ch][i]=x1;
-MODIFIER DE SORTE À FAIRE MOYENNE LORSQUE CHEV!!!
-			//conserver debut dernière sonde chrom
+MODIFIER DE SORTE ï¿½ FAIRE MOYENNE LORSQUE CHEV!!!
+			//conserver debut derniï¿½re sonde chrom
 			if (maxPos[ch]<start) maxPos[ch]=start;
 		}
 	}
@@ -367,9 +384,9 @@ MB*/
 	//pr chq chrom
 	for (int c=0;c<nbrChrom;c++) {
 		//pr chq ronde
-		for (int sm=1;sm<=nbRounds;sm++) {	//sm=1 et sm<=nbRounds car 0 était l'initialisation
-			//départ centre Gauss jusqu'à fin chrom-centre Gauss
-//LE "i+=STEPlength" IMPLIQUE QUE LES DONNÉES DE LA RONDE PRÉCÉDENTE N'ONT PAS TOUTES ÉTÉ MISES À JOUR... VÉRIF AUPRÈS DE MB!	=>À REMPLACER PAR i++!!!
+		for (int sm=1;sm<=nbRounds;sm++) {	//sm=1 et sm<=nbRounds car 0 ï¿½tait l'initialisation
+			//dï¿½part centre Gauss jusqu'ï¿½ fin chrom-centre Gauss
+//LE "i+=STEPlength" IMPLIQUE QUE LES DONNï¿½ES DE LA RONDE PRï¿½Cï¿½DENTE N'ONT PAS TOUTES ï¿½Tï¿½ MISES ï¿½ JOUR... Vï¿½RIF AUPRï¿½S DE MB!	=>ï¿½ REMPLACER PAR i++!!!
 //			for (int i=demiWindowSize;i<tabChrom[c].longueur-demiWindowSize;i+=StepLength) {
 			for (int i=demiWindowSize;i<tabChrom[c].longueur-demiWindowSize;i++) {
 				if(100*nbrOp/nbrOpTot>=nbrDixieme*10){cout<<"\t"<<100*nbrOp/nbrOpTot<<"%"<<endl;	nbrDixieme++;}
@@ -379,10 +396,10 @@ MB*/
 
 				//pour largeur Gauss
 				for (int j=0;j<window_size;j++) {
-					//si valeur round préc!=0
+					//si valeur round prï¿½c!=0
 					valeurTemp=tabSmthData[sm-1][c][i+j-demiWindowSize];
 					if (valeurTemp!=0) {
-						//sommePonderee+= valeur pondérée Gauss de chq fenêtre sur l'intervalle window_size!
+						//sommePonderee+= valeur pondï¿½rï¿½e Gauss de chq fenï¿½tre sur l'intervalle window_size!
 						sommePonderee+=valeurTemp*normal[j];
 						sommePonderation+=normal[j];
 //test	if(sm==1 && c==0 && i==demiWindowSize)	outBED<<j<<"\t"<<valeurTemp<<"\t"<<valeurTemp*normal[j]<<"\t"<<sommePonderee<<"\t"<<normal[j]<<"\t"<<sommePonderation<<"\n";
@@ -399,25 +416,25 @@ MB*/
 		}	//fin rounds
 
 		if(isCheckedSmooth){
-			//afficher résultats du dernier round, bons de STEPlength nt
+			//afficher rï¿½sultats du dernier round, bons de STEPlength nt
 			for (int i=demiWindowSize;i<tabChrom[c].longueur-demiWindowSize;i+=StepLength) {
 				//<<setw(4);
-				//sortie si cochée
+				//sortie si cochï¿½e
 	//MB			fprintf(out1,"chr%d\t%d\t%d\t%f\n",c,i-5,i+5,bedSmooth[nbRounds][c][i]);
-				if(tabSmthData[nbRounds][c][i]>0.00001 || tabSmthData[nbRounds][c][i]<(0-0.00001)){		//de sorte à afficher 0.0000 lorsque >0.00001 et <0.0001 (idem nég), mais ne rien afficher si <=0.00001 pour ne pas occuper d'espace pour rien
+				if(tabSmthData[nbRounds][c][i]>0.00001 || tabSmthData[nbRounds][c][i]<(0-0.00001)){		//de sorte ï¿½ afficher 0.0000 lorsque >0.00001 et <0.0001 (idem nï¿½g), mais ne rien afficher si <=0.00001 pour ne pas occuper d'espace pour rien
 					outBED<<"chr"<<tabChrom[c].nom<<"\t"<<i-demiStepLength+tabChrom[c].coordMin<<"\t"<<i+demiStepLength+tabChrom[c].coordMin<<"\t";
 					outBED<<tabSmthData[nbRounds][c][i]<<"\n";
 				}
 			}
 		}
-		//analyse max si cochée
+		//analyse max si cochï¿½e
 		if(isCheckedMax){
 			for (int i=demiWindowSize;i<tabChrom[c].longueur-demiWindowSize;i+=StepLength) {
 				//si valeur > seuil
 				if(tabSmthData[nbRounds][c][i]>=maxThreshold){
 					estMax=true;
-					//éliminer si trouve valeur plus grande parmi les NBRvalChqCote
-					//éventuellement à modifier pour remplacer par détection de plateau...
+					//ï¿½liminer si trouve valeur plus grande parmi les NBRvalChqCote
+					//ï¿½ventuellement ï¿½ modifier pour remplacer par dï¿½tection de plateau...
 					for (int j=max(0,i-(NBRvalChqCote*StepLength));j<min(i+(NBRvalChqCote*StepLength),tabChrom[c].longueur);j+=StepLength)	if(tabSmthData[nbRounds][c][i]<tabSmthData[nbRounds][c][j]){estMax=false;	break;}
 					if(estMax){
 						bedMax[nbrMax].chromAlpha=tabChrom[c].nom;	bedMax[nbrMax].debut=i-demiStepLength+tabChrom[c].coordMin;	bedMax[nbrMax].fin=i+demiStepLength+tabChrom[c].coordMin;
@@ -428,14 +445,14 @@ MB*/
 				}
 			}
 		}
-		//analyse min si cochée
+		//analyse min si cochï¿½e
 		if(isCheckedMin){
 			for (int i=demiWindowSize;i<tabChrom[c].longueur-demiWindowSize;i+=StepLength) {
 				//si valeur > seuil
 				if(tabSmthData[nbRounds][c][i]<=minThreshold){
 					estMin=true;
-					//éliminer si trouve valeur plus grande parmi les NBRvalChqCote
-					//éventuellement à modifier pour remplacer par détection de plateau...
+					//ï¿½liminer si trouve valeur plus grande parmi les NBRvalChqCote
+					//ï¿½ventuellement ï¿½ modifier pour remplacer par dï¿½tection de plateau...
 					for (int j=max(0,i-(NBRvalChqCote*StepLength));j<min(i+(NBRvalChqCote*StepLength),tabChrom[c].longueur);j+=StepLength)	if(tabSmthData[nbRounds][c][i]>tabSmthData[nbRounds][c][j]){estMin=false;	break;}
 					if(estMin){
 						bedMin[nbrMin].chromAlpha=tabChrom[c].nom;	bedMin[nbrMin].debut=i-demiStepLength+tabChrom[c].coordMin;	bedMin[nbrMin].fin=i+demiStepLength+tabChrom[c].coordMin;
@@ -465,16 +482,16 @@ for(int i=0;i<3100;i++)	outBED<<i<<"\t"<<tabChrom[0].nom<<"\t"<<i+tabChrom[0].co
 //pr chq round
 	for (int sm=1;sm<=nbRounds;sm++) {
 		cerr<<"Round "<<sm<<endl;
-//départ centre Gauss jusqu'à fin chrom, bons de 10nt
+//dï¿½part centre Gauss jusqu'ï¿½ fin chrom, bons de 10nt
 		for (int i=window_size/2;i<maxPos[c];i+=10) {
 		  float x=0;
 		  float n2=normal[window_size/2];
 		  
 //pour largeur Gauss
 		  for (int j=0;j<window_size;j++) {
-//si valeur round préc!=0
+//si valeur round prï¿½c!=0
 		    if (bedSmooth[sm-1][c][j+i-window_size/2]!=0) {
-//x+= valeur pondérée Gauss de chq fenêtre intervalle window_size!
+//x+= valeur pondï¿½rï¿½e Gauss de chq fenï¿½tre intervalle window_size!
 		      x+=bedSmooth[sm-1][c][j+i-window_size/2]*normal[j];
 		      n2+=normal[j];
 		      
@@ -491,7 +508,7 @@ for(int i=0;i<3100;i++)	outBED<<i<<"\t"<<tabChrom[0].nom<<"\t"<<i+tabChrom[0].co
 		}
     }	//fin round
     
-//sortie des résultats du dernier round, mêmes bons de 10nt
+//sortie des rï¿½sultats du dernier round, mï¿½mes bons de 10nt
 	for (int i=window_size/2;i<maxPos[c];i+=10) {
 	  fprintf(out1,"chr%d\t%d\t%d\t%f\n",c,i-5,i+5,bedSmooth[nbRounds][c][i]);
 //si i-10>i-20 && i-10>i =>peak!
@@ -529,7 +546,7 @@ return 0;
 }
 
 
-//----------------------------------DÉFINITIONS---------------------------------------
+//----------------------------------Dï¿½FINITIONS---------------------------------------
 ///////////////////////////////////////////////////
 //The function should receive two parameters (elem1 and elem2) that are pointers to elements, and should return 
 //	an int value with the result of comparing them:
@@ -554,13 +571,13 @@ int	ComparerBED (const void * elem1, const void * elem2){
 	BED* e1 = (BED*)elem1;
 	BED* e2 = (BED*)elem2;
 
-	//chromosome numérique, ascendant
+	//chromosome numï¿½rique, ascendant
 	if(e1->chromNum < e2->chromNum){return -1;}
 	else if(e1->chromNum > e2->chromNum){return 1;}
 	//chromosome alpha, ascendant
 	if(e1->chromAlpha < e2->chromAlpha){return -1;}
 	else if(e1->chromAlpha > e2->chromAlpha){return 1;}
-	//si même chr:centre, ascendant
+	//si mï¿½me chr:centre, ascendant
 	else return (e1->centre - e2->centre);
 }
 
