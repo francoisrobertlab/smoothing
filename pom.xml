@@ -45,7 +45,7 @@
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
-    <system>Bitbucket</system>
+    <system>GitHub</system>
     <url>https://github.com/francoisrobertlab/smoothing/issues</url>
   </issueManagement>
   <properties>
