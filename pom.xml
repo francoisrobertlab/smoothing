@@ -39,14 +39,14 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:git@bitbucket.org:ircm/smoothing.git</connection>
-    <developerConnection>scm:git:git@bitbucket.org:ircm/smoothing.git</developerConnection>
-    <url>https://bitbucket.org/ircm/smoothing</url>
+    <connection>scm:git:https://github.com/francoisrobertlab/smoothing.git</connection>
+    <developerConnection>scm:git:https://github.com/francoisrobertlab/smoothing.git</developerConnection>
+    <url>https://github.com/francoisrobertlab/smoothing</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>Bitbucket</system>
-    <url>https://bitbucket.org/ircm/smoothing/issues</url>
+    <url>https://github.com/francoisrobertlab/smoothing/issues</url>
   </issueManagement>
   <properties>
     <resource.delimiter>$[*]</resource.delimiter>
