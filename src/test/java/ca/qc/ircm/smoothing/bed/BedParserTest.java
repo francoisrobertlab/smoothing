@@ -17,28 +17,27 @@
 
 package ca.qc.ircm.smoothing.bed;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import ca.qc.ircm.smoothing.bio.Strand;
-import ca.qc.ircm.smoothing.test.config.Rules;
+import ca.qc.ircm.smoothing.test.config.ServiceTestAnnotations;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 import java.io.File;
 import java.util.Locale;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
+@ServiceTestAnnotations
 public class BedParserTest {
   private BedParser bedParser;
   @Mock
@@ -53,10 +52,8 @@ public class BedParserTest {
   private ArgumentCaptor<ParsedBedTrack> annotationsTrackCaptor;
   @Captor
   private ArgumentCaptor<String> warningCaptor;
-  @Rule
-  public RuleChain rules = Rules.defaultRules(this);
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     bedParser = new BedParser();
     when(bedHandler.handleInvalid()).thenReturn(true);
@@ -68,7 +65,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -77,7 +74,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -86,7 +83,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -95,7 +92,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -104,7 +101,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -113,7 +110,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -122,7 +119,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -131,7 +128,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -141,7 +138,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -150,7 +147,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -159,7 +156,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -168,7 +165,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -177,7 +174,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -295,7 +292,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -304,7 +301,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -324,7 +321,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -344,7 +341,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -376,7 +373,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -408,7 +405,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -440,7 +437,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -529,7 +526,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -560,7 +557,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -569,7 +566,7 @@ public class BedParserTest {
 
     bedParser.validate(file, Locale.CANADA, warningHandler);
 
-    verifyZeroInteractions(warningHandler);
+    verifyNoInteractions(warningHandler);
   }
 
   @Test
@@ -1323,7 +1320,7 @@ public class BedParserTest {
 
     bedParser.parse(file, bedHandler);
 
-    verifyZeroInteractions(bedHandler);
+    verifyNoInteractions(bedHandler);
   }
 
   @Test

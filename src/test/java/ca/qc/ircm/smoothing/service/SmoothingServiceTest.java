@@ -17,8 +17,8 @@
 
 package ca.qc.ircm.smoothing.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.never;
@@ -29,7 +29,7 @@ import ca.qc.ircm.progressbar.ProgressBar;
 import ca.qc.ircm.smoothing.bed.BedService;
 import ca.qc.ircm.smoothing.bed.BedTrackDefault;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
-import ca.qc.ircm.smoothing.test.config.Rules;
+import ca.qc.ircm.smoothing.test.config.ServiceTestAnnotations;
 import ca.qc.ircm.smoothing.validation.WarningHandler;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -43,11 +43,9 @@ import java.util.HashMap;
 import javafx.scene.paint.Color;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -57,6 +55,7 @@ import org.mockito.stubbing.Answer;
 /**
  * Tests for {@link SmoothingService}.
  */
+@ServiceTestAnnotations
 public class SmoothingServiceTest {
   private SmoothingService smoothingServiceBean;
   @Mock
@@ -71,16 +70,15 @@ public class SmoothingServiceTest {
   private ArgumentCaptor<File> fileCaptor;
   @Captor
   private ArgumentCaptor<SmoothingCoreParameters> smoothingCoreParametersCaptor;
-  public TemporaryFolder temporaryFolder = new TemporaryFolder();
-  @Rule
-  public RuleChain rules = Rules.defaultRules(this).around(temporaryFolder);
+  @TempDir
+  File temporaryFolder;
   private SmoothingParametersBean parameters;
   private BedTrackDefault track;
 
   /**
    * Before test.
    */
-  @Before
+  @BeforeEach
   public void beforeTest() throws Throwable {
     smoothingServiceBean = new SmoothingService(executableService, bedService);
     parameters = new SmoothingParametersBean();
@@ -205,12 +203,12 @@ public class SmoothingServiceTest {
 
   @Test
   public void smoothing_Color() throws Throwable {
-    final File bed = temporaryFolder.newFile("abc.bed");
+    final File bed = new File(temporaryFolder, "abc.bed");
     try (BufferedWriter writer =
         new BufferedWriter(new OutputStreamWriter(new FileOutputStream(bed), "UTF-8"))) {
       writer.write("track color=128,0,128");
     }
-    final File smoothedBed = temporaryFolder.newFile("abc_smoothed.bed");
+    final File smoothedBed = new File(temporaryFolder, "abc_smoothed.bed");
     doAnswer(new Answer<Void>() {
       @Override
       public Void answer(InvocationOnMock invocation) throws Throwable {

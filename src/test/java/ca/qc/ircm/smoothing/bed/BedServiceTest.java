@@ -17,23 +17,22 @@
 
 package ca.qc.ircm.smoothing.bed;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import ca.qc.ircm.smoothing.test.config.Rules;
+import ca.qc.ircm.smoothing.test.config.ServiceTestAnnotations;
 import java.io.File;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+@ServiceTestAnnotations
 public class BedServiceTest {
   private BedService bedServiceBean;
   @Mock
@@ -48,10 +47,8 @@ public class BedServiceTest {
   private ParsedBedAnnotation annotation2;
   @Mock
   private ParsedBedAnnotation annotation3;
-  @Rule
-  public RuleChain rules = Rules.defaultRules(this);
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     bedServiceBean = new BedService(bedParser);
   }

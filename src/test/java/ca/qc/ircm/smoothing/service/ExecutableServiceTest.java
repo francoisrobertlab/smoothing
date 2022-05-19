@@ -17,7 +17,7 @@
 
 package ca.qc.ircm.smoothing.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 import ca.qc.ircm.smoothing.OperatingSystem;
 import ca.qc.ircm.smoothing.OperatingSystemService;
 import ca.qc.ircm.smoothing.service.ExecutableService.SmoothingEventListener;
-import ca.qc.ircm.smoothing.test.config.Rules;
+import ca.qc.ircm.smoothing.test.config.ServiceTestAnnotations;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.nio.charset.Charset;
@@ -36,10 +36,8 @@ import org.apache.commons.exec.ExecuteStreamHandler;
 import org.apache.commons.exec.Executor;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
@@ -47,6 +45,7 @@ import org.mockito.Mock;
 /**
  * Tests for {@link ExecutableService}.
  */
+@ServiceTestAnnotations
 public class ExecutableServiceTest {
   private ExecutableService executableServiceBean;
   @Mock
@@ -63,13 +62,11 @@ public class ExecutableServiceTest {
   private ArgumentCaptor<ExecuteStreamHandler> streamHandlerCaptor;
   @Captor
   private ArgumentCaptor<CommandLine> commandLineCaptor;
-  @Rule
-  public RuleChain rules = Rules.defaultRules(this);
 
   /**
    * Before test.
    */
-  @Before
+  @BeforeEach
   public void beforeTest() {
     executableServiceBean = new ExecutableService(operatingSystemService, executorProvider);
     when(operatingSystemService.currentOs()).thenReturn(OperatingSystem.WINDOWS);

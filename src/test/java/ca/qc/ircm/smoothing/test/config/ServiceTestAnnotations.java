@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015 Institut de recherches cliniques de Montreal (IRCM)
+ * Copyright (c) 2014 Institut de recherches cliniques de Montreal (IRCM)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,26 +17,18 @@
 
 package ca.qc.ircm.smoothing.test.config;
 
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import ca.qc.ircm.smoothing.Main;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
-/**
- * Logs test method's name.
- */
-public class LogTestRule implements TestRule {
-  private final Logger logger = LoggerFactory.getLogger(LogTestRule.class);
+@Target({ ElementType.TYPE })
+@Retention(RetentionPolicy.RUNTIME)
+@SpringBootTest(classes = Main.class)
+@ActiveProfiles("test")
+public @interface ServiceTestAnnotations {
 
-  @Override
-  public Statement apply(final Statement base, final Description description) {
-    return new Statement() {
-      @Override
-      public void evaluate() throws Throwable {
-        logger.trace("Running test " + description.getMethodName());
-        base.evaluate();
-      }
-    };
-  }
 }

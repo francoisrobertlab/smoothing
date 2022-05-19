@@ -17,35 +17,32 @@
 
 package ca.qc.ircm.smoothing;
 
-import ca.qc.ircm.smoothing.test.config.Rules;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.RuleChain;
+import ca.qc.ircm.smoothing.test.config.ServiceTestAnnotations;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 /**
- * Tests {@link OperatingSystemServiceDefault}.
+ * Tests {@link OperatingSystemService}.
  */
+@ServiceTestAnnotations
 public class OperatingSystemServiceDefaultTest {
   @SuppressWarnings("unused")
   private OperatingSystemService operatingSystemServiceBean;
-  @Rule
-  public RuleChain rules = Rules.defaultRules(this);
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     operatingSystemServiceBean = new OperatingSystemService();
   }
 
   @Test
-  @Ignore("Cannot test since it would depend on the operating system")
+  @Disabled("Cannot test since it would depend on the operating system")
   public void currentOs() throws Throwable {
     // Cannot test since it would depend on the operating system.
   }
 
   @Test
-  @Ignore("Cannot test since it would depend on the operating system")
+  @Disabled("Cannot test since it would depend on the operating system")
   public void is64bit() {
     // Cannot test since it would depend on the operating system.
   }
