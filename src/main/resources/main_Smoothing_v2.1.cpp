@@ -1,20 +1,3 @@
-/**
- * Copyright (c) 2015 Institut de recherches cliniques de Montreal (IRCM)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
 //The core script is from Mathieu Blanchette, used in the paper:
 //	Guillemette, B.*, Bataille, A.*, G�vry, N., Adam, M., Blanchette, Robert, F. and Gaudreau, L. (2005) Variant Histone H2A.Z is 
 //	Globally Localized to the Promoters of Inactive Yeast Genes and Regulates Nucleosome Positioning. PLoS Biology 3(12), e384.
