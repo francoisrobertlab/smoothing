@@ -4,7 +4,7 @@ Smoothing
 Smoothes BED files.
 
 
-# Interface
+## Interface
 
 ![Graphic user interface of the smoothing program showing file selection and parameters](docs/smoothing-gui.png)
 
